@@ -5,3 +5,6 @@ pmart:
     opensearch-url: 'http://opensearch:9200'
     # 콘텐츠 사건에 상품명·이미지가 없어 공개 카드 API 로 보강한다(product-content-service, Service DNS)
     content-base-url: http://product-content-service:8102
+    # 검색 결과의 카테고리 이름 경로(공개 트리, 5분 사본)와 mfcId 를 준 검색의 취급 여부(내부 가용 조회). 2026-11-02
+    product-base-url: http://product-service:8101
+    inventory-base-url: http://mfc-inventory-service:8301

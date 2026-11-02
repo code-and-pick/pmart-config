@@ -3,3 +3,5 @@ pmart:
   search:
     opensearch-url: http://localhost:9200
     content-base-url: http://localhost:8102
+    product-base-url: http://localhost:8101
+    inventory-base-url: http://localhost:8301
