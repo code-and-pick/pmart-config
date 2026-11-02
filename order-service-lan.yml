@@ -12,3 +12,4 @@ pmart:
     center-master-base-url: http://center-master-service:8507
     capacity-base-url: http://delivery-capacity-service:8402
     orchestration-base-url: http://order-orchestration-service:8202 # 결제 진입 사가(내부, 서비스 토큰)
+    content-base-url: http://product-content-service:8102 # 상품명·옵션 라벨 사본(BR-35)
