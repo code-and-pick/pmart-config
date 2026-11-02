@@ -1,0 +1,11 @@
+# payment-service lan 프로필 — pc2 PostgreSQL, 토스 결제위젯 테스트 키(비밀값은 {cipher}, 암호화: configCipher 태스크)
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres-pc2:15432/payment_service
+    username: pmart
+    password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
+pmart:
+  payment:
+    toss:
+      secret-key: '{cipher}e2808ca774edfb9fa633bcef678e8f0520dc703c53a9acfba18bfdbd4b755282b293f2da3f5b6565d401818747cae3c44f71b78c33ce96337424fcb9c5f0e740'
+      client-key: test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm

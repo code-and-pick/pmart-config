@@ -1,0 +1,12 @@
+# 모든 서비스 공통 설정(모든 프로필). 서비스별은 <spring.application.name>.yml, 환경별은 application-<프로필>.yml.
+# 프로필: local(개발자 PC) · lan(LAN 공유 개발 환경) · prod(AWS, 아직 없음). ADR-0029
+spring:
+  mvc:
+    problemdetails:
+      enabled: true # Spring MVC 자체 예외도 RFC 9457
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate # 스키마 변경은 Flyway 만 (service-architecture.md)
+  flyway:
+    locations: classpath:db/migration # common-messaging 이 classpath:db/migration/common 을 추가한다

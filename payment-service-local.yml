@@ -1,0 +1,11 @@
+# payment-service local 프로필 — deploy/local PostgreSQL. 토스 테스트 키는 개발자 PC 환경변수로(없으면 CONFIG_REQUIRED)
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/payment_service
+    username: pmart
+    password: pmart-local
+pmart:
+  payment:
+    toss:
+      secret-key: ${PMART_TOSS_SECRET_KEY:}
+      client-key: ${PMART_TOSS_CLIENT_KEY:}

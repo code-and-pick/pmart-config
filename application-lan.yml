@@ -1,0 +1,17 @@
+# lan 프로필 공통 — LAN 공유 개발 환경(pc2·pc3·pc4 docker compose). 이름은 compose 서비스명·extra_hosts 로 어느 PC 에서나 같다.
+spring:
+  kafka:
+    bootstrap-servers: kafka:9092
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://auth-service:8501/api/v1/internal/jwks
+  datasource:
+    hikari:
+      maximum-pool-size: 5 # PC 하나의 PostgreSQL 을 서비스 십여 개가 나눠 쓴다(max_connections 200)
+management:
+  tracing:
+    export:
+      zipkin:
+        endpoint: http://zipkin:9411/api/v2/spans
