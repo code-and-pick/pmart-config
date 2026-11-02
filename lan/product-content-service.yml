@@ -1,0 +1,6 @@
+# 생성 파일(pmart-backend deploy/lan/render.sh) — 여기서 고치지 말고 render.sh·placement.conf·.secrets 를 고친다. ADR-0027
+PMART_DB_URL: 'jdbc:postgresql://postgres-pc2:15432/product_content_service'
+PMART_S3_ENDPOINT: 'http://s3:8333'
+PMART_S3_BUCKET: 'pmart-product-content'
+PMART_S3_ACCESS_KEY: '{cipher}d53c4d45c1d0661aceaa8a092d3d0f06e425cfab5c78a08261fc103c43b7ac6db00fe0cbadc5a5a5f187635a446debf1'
+PMART_S3_SECRET_KEY: '{cipher}e8f75879cdc62f50c96e9b484c6628a575768ad7de5c2272acbb150e6333da9726fb0a978f0726ff23ba1fa9b37b734d1172bf6ba58dd26b58874326277fd1dde5c654dd81bd46407c69ea08bfde7ecf'

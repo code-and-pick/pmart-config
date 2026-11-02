@@ -1,0 +1,4 @@
+# 생성 파일(pmart-backend deploy/lan/render.sh) — 여기서 고치지 말고 render.sh·placement.conf·.secrets 를 고친다. ADR-0027
+PMART_DB_URL: 'jdbc:postgresql://postgres-pc2:15432/payment_service'
+PMART_TOSS_SECRET_KEY: '{cipher}e2808ca774edfb9fa633bcef678e8f0520dc703c53a9acfba18bfdbd4b755282b293f2da3f5b6565d401818747cae3c44f71b78c33ce96337424fcb9c5f0e740'
+PMART_TOSS_CLIENT_KEY: 'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm'
