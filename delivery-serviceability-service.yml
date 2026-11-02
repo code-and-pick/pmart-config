@@ -1,0 +1,26 @@
+# delivery-serviceability-service 고유 설정(모든 프로필). 환경별 값은 delivery-serviceability-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
+# 옮긴 원본: pmart-backend services/.../application.yml (2026-11-02)
+server:
+  port: 8401
+pmart:
+  serviceability:
+    # 카카오 로컬(주소 ↔ 좌표, ADR-0023). 키는 delivery-serviceability-service-<프로필>.yml({cipher})에만 — 비면 주소 변환·판정이 CONFIG_REQUIRED
+    kakao:
+      connect-timeout: PT1S
+      read-timeout: PT3S
+  messaging:
+    domain: delivery
+  security:
+    # 계약 security: [] 작업(익명 판정). 기본 목록을 덮어쓰므로 actuator·error 도 다시 적는다. 경로마다 메서드가 하나뿐이라 경로 단위 허용이 계약과 일치.
+    permit-paths:
+      - /actuator/health/**
+      - /actuator/info
+      - /actuator/prometheus
+      - /error
+      - /api/v1/serviceability-checks
+      - /api/v1/serviceability-checks/*
+    # 비회원 토큰(typ=GUEST)도 배송 가능 조건 조회·주소 ↔ 좌표 변환은 된다(읽기 전용, 비회원 배송지 등록에 필요)
+    guest-paths:
+      - /api/v1/delivery-conditions
+      - /api/v1/address-geocodes
+      - /api/v1/address-reverse-geocodes

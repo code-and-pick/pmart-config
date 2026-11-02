@@ -1,0 +1,12 @@
+# cart-service local 프로필 — 개발자 PC(deploy/local docker compose, localhost). 로컬 전용 고정값. ADR-0029
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/cart_service
+    username: pmart
+    password: pmart-local
+pmart:
+  cart:
+    product-base-url: http://localhost:8101
+    content-base-url: http://localhost:8102
+    pricing-base-url: http://localhost:8107
+    inventory-base-url: http://mfc-inventory-service:8301 # 표시용 가용(서비스 토큰)

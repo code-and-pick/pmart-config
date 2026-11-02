@@ -1,0 +1,10 @@
+# claim-service local 프로필 — 개발자 PC(deploy/local docker compose, localhost). 로컬 전용 고정값. ADR-0029
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/claim_service
+    username: pmart
+    password: pmart-local
+pmart:
+  claim:
+    order-base-url: http://localhost:8201
+    payment-base-url: http://localhost:8205

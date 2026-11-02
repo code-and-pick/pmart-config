@@ -1,0 +1,18 @@
+# product-content-service lan 프로필 — LAN 공유 개발 환경. 비밀값은 {cipher}(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
+spring:
+  datasource:
+    url: 'jdbc:postgresql://postgres-pc2:15432/product_content_service'
+    username: 'pmart'
+    password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
+pmart:
+  content:
+    inventory-base-url: http://mfc-inventory-service:8301 # 옵션별 취급·가용 표시
+  storage:
+    s3:
+      endpoint: 'http://s3:8333' # 비우면 AWS 기본. SeaweedFS 는 http://<host>:8333
+      region: us-east-1
+      bucket: 'pmart-product-content'
+      access-key: '{cipher}d53c4d45c1d0661aceaa8a092d3d0f06e425cfab5c78a08261fc103c43b7ac6db00fe0cbadc5a5a5f187635a446debf1'
+      secret-key: '{cipher}e8f75879cdc62f50c96e9b484c6628a575768ad7de5c2272acbb150e6333da9726fb0a978f0726ff23ba1fa9b37b734d1172bf6ba58dd26b58874326277fd1dde5c654dd81bd46407c69ea08bfde7ecf'
+      path-style: true
+      create-bucket: false

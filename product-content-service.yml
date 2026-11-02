@@ -1,0 +1,22 @@
+# product-content-service 고유 설정(모든 프로필). 환경별 값은 product-content-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
+# 옮긴 원본: pmart-backend services/.../application.yml (2026-11-02)
+spring:
+  servlet:
+    multipart:
+      max-file-size: 300MB # seed-v1 묶음(이미지 포함). 이미지 1장 상한은 ContentRules.MAX_IMAGE_BYTES
+      max-request-size: 300MB
+server:
+  port: 8102
+pmart:
+  messaging:
+    domain: commerce
+  security:
+    # 계약 security: [] 작업(비회원 둘러보기, 게시본만). 기본 목록을 덮어쓰므로 actuator·error 도 다시 적는다. 세 경로 모두 GET 하나뿐이라 경로 단위 허용이 계약과 일치.
+    permit-paths:
+      - /actuator/health/**
+      - /actuator/info
+      - /actuator/prometheus
+      - /error
+      - /api/v1/product-contents
+      - /api/v1/product-contents/*
+      - /api/v1/content-images/*

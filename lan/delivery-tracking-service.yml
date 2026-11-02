@@ -1,9 +1,0 @@
-# 생성 파일(pmart-backend deploy/lan/render.sh) — 여기서 고치지 말고 render.sh·placement.conf·.secrets 를 고친다. ADR-0027
-PMART_DB_URL: 'jdbc:postgresql://postgres-pc3:15432/delivery_tracking_service'
-PMART_DB_USERNAME: 'pmart'
-PMART_DB_PASSWORD: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
-spring:
-  datasource:
-    hikari:
-      maximum-pool-size: 5 # PC 하나의 PostgreSQL 을 서비스 십여 개가 나눠 쓴다(max_connections 200)
-PMART_REDIS_URL: 'redis://redis:6379'

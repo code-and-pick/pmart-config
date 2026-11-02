@@ -1,0 +1,43 @@
+# api-gateway local 프로필 — 개발자 PC(deploy/local docker compose, localhost). 로컬 전용 고정값. ADR-0029
+spring:
+  data:
+    redis:
+      url: redis://localhost:6379
+pmart:
+  gateway:
+    cors:
+      # 로컬 프론트 개발 서버(Vite 5173, CRA 3000)
+      allowed-origins: http://localhost:5173,http://localhost:3000
+    upstream:
+      product-service: http://localhost:8101
+      product-content-service: http://localhost:8102
+      customer-service: http://localhost:8103
+      cart-service: http://localhost:8104
+      search-service: http://localhost:8105
+      storefront-service: http://localhost:8106
+      pricing-service: http://localhost:8107
+      order-service: http://localhost:8201
+      order-orchestration-service: http://localhost:8202
+      fulfillment-routing-service: http://localhost:8203
+      claim-service: http://localhost:8204
+      payment-service: http://localhost:8205
+      mfc-inventory-service: http://localhost:8301
+      mfc-fulfillment-service: http://localhost:8302
+      cdc-inventory-service: http://localhost:8601
+      mfc-capacity-service: http://localhost:8303
+      mfc-location-service: http://localhost:8304
+      mfc-quality-service: http://localhost:8305
+      mfc-inbound-service: http://localhost:8306
+      delivery-serviceability-service: http://localhost:8401
+      delivery-capacity-service: http://localhost:8402
+      rider-service: http://localhost:8403
+      delivery-dispatch-service: http://localhost:8404
+      delivery-execution-service: http://localhost:8405
+      delivery-tracking-service: http://localhost:8406
+      auth-service: http://localhost:8501
+      notification-service: http://localhost:8502
+      audit-service: http://localhost:8503
+      backoffice-bff: http://localhost:8504
+      approval-service: http://localhost:8505
+      case-service: http://localhost:8506
+      center-master-service: http://localhost:8507

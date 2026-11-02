@@ -1,0 +1,14 @@
+# order-orchestration-service lan 프로필 — LAN 공유 개발 환경. 비밀값은 {cipher}(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
+spring:
+  datasource:
+    url: 'jdbc:postgresql://postgres-pc2:15432/order_orchestration_service'
+    username: 'pmart'
+    password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
+pmart:
+  orchestration:
+    mfc-inventory-base-url: http://mfc-inventory-service:8301
+    mfc-capacity-base-url: http://mfc-capacity-service:8303
+    delivery-capacity-base-url: http://delivery-capacity-service:8402
+    payment-base-url: http://payment-service:8205
+    order-base-url: http://order-service:8201 # 주문 확정(S1 h)
+    mfc-fulfillment-base-url: http://mfc-fulfillment-service:8302 # 작업 중지(S3 a)

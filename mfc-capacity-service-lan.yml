@@ -1,0 +1,12 @@
+# mfc-capacity-service lan 프로필 — LAN 공유 개발 환경. 비밀값은 {cipher}(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
+spring:
+  datasource:
+    url: 'jdbc:postgresql://postgres-pc3:15432/mfc_capacity_service'
+    username: 'pmart'
+    password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
+pmart:
+  capacity:
+    # (MFC, 1시간 창)당 수용 단위(정책값). 주문 1건 = 1 단위(시험 정책 2026-10-30). 비우면 Hold·스냅샷은 CONFIG_REQUIRED.
+    # LAN 시험값 30 은 env PMART_CAPACITY_UNITSPERHOUR
+    units-per-hour: '30'
+    expiry-interval: PT30S # TTL 지난 HELD 정리 주기

@@ -1,0 +1,2 @@
+# backoffice-bff lan 프로필 — LAN 공유 개발 환경. 비밀값은 {cipher}(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
+# (이 서비스는 lan 전용 값이 없다 — 공통 application-lan.yml 만 쓴다)

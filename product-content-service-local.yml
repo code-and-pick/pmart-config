@@ -1,0 +1,20 @@
+# product-content-service local 프로필 — 개발자 PC(deploy/local docker compose, localhost). 로컬 전용 고정값. ADR-0029
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/product_content_service
+    username: pmart
+    password: pmart-local
+pmart:
+  storage:
+    s3:
+      # deploy/local 의 s3(SeaweedFS). 버킷은 compose 가 -bucket= 으로 만든다.
+      # deploy/local compose 의 로컬 전용 기본 자격 증명(postgres pmart-local 과 같은 취급). 바꿨으면 환경변수로 덮어쓴다.
+      endpoint: http://localhost:8333
+      bucket: pmart-product-content
+      access-key: pmart-local-s3
+      secret-key: pmart-local-s3-secret
+      region: us-east-1
+      path-style: true
+      create-bucket: false
+  content:
+    inventory-base-url: http://mfc-inventory-service:8301 # 옵션별 취급·가용 표시

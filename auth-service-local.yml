@@ -1,0 +1,20 @@
+# auth-service local 프로필 — 개발자 PC(deploy/local docker compose, localhost). 로컬 전용 고정값. ADR-0029
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/auth_service
+    username: pmart
+    password: pmart-local
+pmart:
+  auth:
+    issuer: http://localhost:8501
+    signing:
+      ephemeral: true # 로컬 전용 임시 키. 재시작하면 기존 토큰 무효
+    operator:
+      bootstrap:
+        login-id: admin
+        display-name: 로컬 관리자
+        password-hash: "{bcrypt}$2a$10$Qut13u4vwUA83/mKRLIfwOJFI5P5ZJWUVbSYxzWim244YpORIaYKG"
+    customer:
+      google:
+        # 허용할 ID 토큰 aud = Google OAuth 클라이언트 ID(고객 앱·웹 서버 클라이언트, 쉼표 구분). 비면 Google 로그인은 CONFIG_REQUIRED
+        client-ids: ${PMART_AUTH_CUSTOMER_GOOGLE_CLIENTIDS:}

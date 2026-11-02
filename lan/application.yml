@@ -1,4 +1,0 @@
-# 생성 파일(pmart-backend deploy/lan/render.sh) — 여기서 고치지 말고 render.sh·placement.conf·.secrets 를 고친다. ADR-0027
-PMART_KAFKA_BOOTSTRAP: 'kafka:9092'
-PMART_JWKS_URI: 'http://auth-service:8501/api/v1/internal/jwks'
-PMART_ZIPKIN_ENDPOINT: 'http://zipkin:9411/api/v2/spans'

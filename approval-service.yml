@@ -1,0 +1,17 @@
+# approval-service 고유 설정(모든 프로필). 환경별 값은 approval-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
+# 옮긴 원본: pmart-backend services/.../application.yml (2026-11-02)
+server:
+  port: 8505
+pmart:
+  messaging:
+    domain: platform
+  approval:
+    # 승인 종류 → 결정할 수 있는 역할(JWT roles). 입력자와 승인자는 달라야 한다(자기승인 금지).
+    # 여기 없는 종류는 CONFIG_REQUIRED. 환경별로 바꿀 때는 PMART_APPROVAL_APPROVERROLES_<종류> 로 덮어쓴다.
+    approver-roles:
+      PRODUCT: PRODUCT_APPROVER # 상품·SKU·바코드·카테고리 트리 (BO-03)
+      DISPLAY: DISPLAY_APPROVER # 고객용 상품명·설명·이미지 게시 (BO-05)
+      PRICE: PRICE_APPROVER # 기본 판매가격 (BO-04)
+      SERVICEABILITY: SERVICEABILITY_APPROVER # 고객 배송 권역·담당 MFC 매핑 (BO-07)
+      CENTER_MASTER: CENTER_MASTER_APPROVER # 센터 기준정보·영업 캘린더 (BO-06)
+      INITIAL_STOCK: INVENTORY_APPROVER # MFC 초기 보유 반입(오픈 시 초기 재고, D2 — mfc-inbound → mfc-inventory 전기)

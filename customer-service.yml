@@ -1,0 +1,24 @@
+# customer-service 고유 설정(모든 프로필). 환경별 값은 customer-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
+# 옮긴 원본: pmart-backend services/.../application.yml (2026-11-02)
+server:
+  port: 8103
+pmart:
+  messaging:
+    domain: commerce
+  customer:
+    # 주소록 최대 건수(프로젝트 설계값, 운영 입력으로 바꾼다). 비우면 주소 추가는 CONFIG_REQUIRED.
+    address-limit: 20
+    # 로그인 제공자 프로필 사진의 우리 사본(ADR-0024). 기술 설정값(업무 정책 아님). 받는 곳은 허용 호스트의 https 만
+    profile-image:
+      allowed-host-suffixes: googleusercontent.com
+      size-px: 256
+      max-bytes: 1048576
+  security:
+    # 계약 security: [] 작업(익명). 기본 목록을 덮어쓰므로 actuator·error 도 다시 적는다. 경로마다 메서드가 하나뿐이라 경로 단위 허용이 계약과 일치.
+    permit-paths:
+      - /actuator/health/**
+      - /actuator/info
+      - /actuator/prometheus
+      - /error
+      - /api/v1/guest-delivery-addresses
+      - /api/v1/guest-delivery-addresses/*

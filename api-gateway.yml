@@ -1,0 +1,283 @@
+# api-gateway 고유 설정(모든 프로필). 환경별 값은 api-gateway-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
+# 옮긴 원본: pmart-backend services/.../application.yml (2026-11-02)
+# api-gateway 설정. 라우팅 표는 contracts/openapi/*.yaml 의 servers.url + 첫 경로 세그먼트에서 도출했다(2026-10-23).
+# - /api/v1/internal/** 은 서비스 간 전용이라 라우팅·인가 모두 거부한다(서비스 토큰은 Service DNS 로 직접 호출).
+# - 같은 세그먼트를 여러 서비스가 쓰는 me / riders / deliveries 는 더 구체적인 경로를 음수 order 로 먼저 매칭한다.
+# - 업스트림 주소는 pmart.gateway.upstream.<service> (기본: Kubernetes Service DNS). 환경별 주소는 api-gateway-<프로필>.yml 에서 덮어쓴다(설정 서버 값이 환경변수보다 우선).
+# - 공개 경로(pmart.gateway.public-paths)는 계약에서 security: [] 인 작업만. 그 외 모든 /api/** 는 JWT 필수.
+# - 처리율 제한(pmart.gateway.rate-limit): JWT subject / 클라이언트 IP 단위 Redis 토큰 버킷. Redis 장애 시 허용(fail-open).
+spring:
+  webflux:
+    problemdetails:
+      enabled: true # 404(라우트 없음) 등 WebFlux 자체 오류도 RFC 9457
+  cloud:
+    gateway:
+      server:
+        webflux:
+          httpclient:
+            connect-timeout: 1000 # ms
+            response-timeout: 10s
+          default-filters:
+            - RemoveRequestHeader=Cookie
+          routes:
+            - id: search-service-me
+              uri: ${pmart.gateway.upstream.search-service}
+              predicates:
+                - Path=/api/v1/me/recent-searches/**
+              order: -100
+            - id: notification-service-me
+              uri: ${pmart.gateway.upstream.notification-service}
+              predicates:
+                - Path=/api/v1/me/notifications/**,/api/v1/me/notification-settings,/api/v1/me/notification-setting-changes/**
+              order: -99
+            - id: customer-service-me
+              uri: ${pmart.gateway.upstream.customer-service}
+              predicates:
+                - Path=/api/v1/me,/api/v1/me/**
+              order: -98
+            - id: delivery-tracking-service-rider
+              uri: ${pmart.gateway.upstream.delivery-tracking-service}
+              predicates:
+                - Path=/api/v1/riders/me/locations/**,/api/v1/deliveries/*/eta,/api/v1/deliveries/*/stream
+              order: -97
+            - id: delivery-execution-service-rider
+              uri: ${pmart.gateway.upstream.delivery-execution-service}
+              predicates:
+                - Path=/api/v1/riders/me/deliveries,/api/v1/riders/me/earnings
+              order: -96
+            - id: delivery-dispatch-service-deliveries
+              uri: ${pmart.gateway.upstream.delivery-dispatch-service}
+              predicates:
+                - Path=/api/v1/deliveries/*/dispatch,/api/v1/deliveries/*/assignment-cancellations/**
+              order: -95
+            - id: delivery-execution-service-deliveries
+              uri: ${pmart.gateway.upstream.delivery-execution-service}
+              predicates:
+                - Path=/api/v1/deliveries/**
+              order: -94
+            - id: rider-service-riders
+              uri: ${pmart.gateway.upstream.rider-service}
+              predicates:
+                - Path=/api/v1/riders/**
+              order: -93
+            - id: product-service
+              uri: ${pmart.gateway.upstream.product-service}
+              predicates:
+                - Path=/api/v1/products/**,/api/v1/skus/**,/api/v1/sku-issuances/**,/api/v1/categories/**,/api/v1/barcodes/**,/api/v1/product-drafts/**,/api/v1/product-import-batches/**,/api/v1/category-tree-versions/**
+            - id: product-content-service
+              uri: ${pmart.gateway.upstream.product-content-service}
+              predicates:
+                - Path=/api/v1/product-contents/**,/api/v1/content-drafts/**,/api/v1/content-import-batches/**,/api/v1/content-images/**
+            - id: customer-service
+              uri: ${pmart.gateway.upstream.customer-service}
+              predicates:
+                - Path=/api/v1/guest-delivery-addresses/**
+            - id: cart-service
+              uri: ${pmart.gateway.upstream.cart-service}
+              predicates:
+                - Path=/api/v1/carts/**
+            - id: search-service
+              uri: ${pmart.gateway.upstream.search-service}
+              predicates:
+                - Path=/api/v1/search/**
+            - id: storefront-service
+              uri: ${pmart.gateway.upstream.storefront-service}
+              predicates:
+                - Path=/api/v1/storefront/**
+            - id: pricing-service
+              uri: ${pmart.gateway.upstream.pricing-service}
+              predicates:
+                - Path=/api/v1/prices/**,/api/v1/price-versions/**,/api/v1/price-version-applications/**
+            - id: order-service
+              uri: ${pmart.gateway.upstream.order-service}
+              predicates:
+                - Path=/api/v1/order-drafts/**,/api/v1/orders/**,/api/v1/delivery-options
+            - id: claim-service
+              uri: ${pmart.gateway.upstream.claim-service}
+              predicates:
+                - Path=/api/v1/claims/**
+            - id: payment-service
+              uri: ${pmart.gateway.upstream.payment-service}
+              predicates:
+                - Path=/api/v1/webhooks/**,/api/v1/payments/**,/api/v1/payment-confirmations/**,/api/v1/payment-authorization-failures/**
+            - id: mfc-inventory-service-sku-handlings
+              uri: ${pmart.gateway.upstream.mfc-inventory-service}
+              predicates:
+                - Path=/api/v1/mfcs/*/sku-handlings/**,/api/v1/mfcs/*/sku-handling-batches/**
+              order: -90
+            - id: cdc-inventory-service-sku-handlings
+              uri: ${pmart.gateway.upstream.cdc-inventory-service}
+              predicates:
+                - Path=/api/v1/cdcs/*/sku-handlings/**,/api/v1/cdcs/*/sku-handling-batches/**
+              order: -89
+            - id: mfc-fulfillment-service
+              uri: ${pmart.gateway.upstream.mfc-fulfillment-service}
+              predicates:
+                - Path=/api/v1/tasks/**,/api/v1/shipments/**,/api/v1/packages/**
+            - id: mfc-capacity-service
+              uri: ${pmart.gateway.upstream.mfc-capacity-service}
+              predicates:
+                - Path=/api/v1/assignments/**,/api/v1/assignment-plans/**,/api/v1/operation-restrictions/**
+            - id: mfc-location-service
+              uri: ${pmart.gateway.upstream.mfc-location-service}
+              predicates:
+                - Path=/api/v1/locations/**,/api/v1/putaway-candidates/**
+            - id: mfc-quality-service
+              uri: ${pmart.gateway.upstream.mfc-quality-service}
+              predicates:
+                - Path=/api/v1/quality-decisions/**,/api/v1/return-inspections/**,/api/v1/disposal-approvals/**,/api/v1/quality-incidents/**
+            - id: mfc-inbound-service
+              uri: ${pmart.gateway.upstream.mfc-inbound-service}
+              predicates:
+                - Path=/api/v1/inbound-promises/**,/api/v1/supply-requests/**,/api/v1/return-receipts/**,/api/v1/initial-stock-loads
+            - id: delivery-serviceability-service
+              uri: ${pmart.gateway.upstream.delivery-serviceability-service}
+              predicates:
+                - Path=/api/v1/serviceability-checks/**,/api/v1/delivery-conditions/**,/api/v1/serviceability-versions/**,/api/v1/address-geocodes,/api/v1/address-reverse-geocodes
+            - id: delivery-capacity-service
+              uri: ${pmart.gateway.upstream.delivery-capacity-service}
+              predicates:
+                - Path=/api/v1/slots/**
+            - id: delivery-dispatch-service
+              uri: ${pmart.gateway.upstream.delivery-dispatch-service}
+              predicates:
+                - Path=/api/v1/dispatch-requests/**,/api/v1/offers/**
+            - id: auth-service
+              uri: ${pmart.gateway.upstream.auth-service}
+              predicates:
+                - Path=/api/v1/auth/**,/api/v1/operator-accounts/**
+            - id: audit-service
+              uri: ${pmart.gateway.upstream.audit-service}
+              predicates:
+                - Path=/api/v1/audit-entries/**
+            - id: backoffice-bff
+              uri: ${pmart.gateway.upstream.backoffice-bff}
+              predicates:
+                - Path=/api/v1/backoffice/views/**,/api/v1/backoffice/commands/**
+            - id: approval-service
+              uri: ${pmart.gateway.upstream.approval-service}
+              predicates:
+                - Path=/api/v1/change-requests/**,/api/v1/approvals/**,/api/v1/batch-changes/**,/api/v1/policy-references/**
+            - id: case-service
+              uri: ${pmart.gateway.upstream.case-service}
+              predicates:
+                - Path=/api/v1/cases/**,/api/v1/obligations/**,/api/v1/cs-intakes/**,/api/v1/help-requests/**,/api/v1/shift-handovers/**
+            - id: center-master-service
+              uri: ${pmart.gateway.upstream.center-master-service}
+              predicates:
+                - Path=/api/v1/centers/**
+server:
+  port: 8080
+pmart:
+  gateway:
+    upstream:
+      product-service: http://product-service:8101
+      product-content-service: http://product-content-service:8102
+      customer-service: http://customer-service:8103
+      cart-service: http://cart-service:8104
+      search-service: http://search-service:8105
+      storefront-service: http://storefront-service:8106
+      pricing-service: http://pricing-service:8107
+      order-service: http://order-service:8201
+      order-orchestration-service: http://order-orchestration-service:8202
+      fulfillment-routing-service: http://fulfillment-routing-service:8203
+      claim-service: http://claim-service:8204
+      payment-service: http://payment-service:8205
+      mfc-inventory-service: http://mfc-inventory-service:8301
+      mfc-fulfillment-service: http://mfc-fulfillment-service:8302
+      cdc-inventory-service: http://cdc-inventory-service:8601
+      mfc-capacity-service: http://mfc-capacity-service:8303
+      mfc-location-service: http://mfc-location-service:8304
+      mfc-quality-service: http://mfc-quality-service:8305
+      mfc-inbound-service: http://mfc-inbound-service:8306
+      delivery-serviceability-service: http://delivery-serviceability-service:8401
+      delivery-capacity-service: http://delivery-capacity-service:8402
+      rider-service: http://rider-service:8403
+      delivery-dispatch-service: http://delivery-dispatch-service:8404
+      delivery-execution-service: http://delivery-execution-service:8405
+      delivery-tracking-service: http://delivery-tracking-service:8406
+      auth-service: http://auth-service:8501
+      notification-service: http://notification-service:8502
+      audit-service: http://audit-service:8503
+      backoffice-bff: http://backoffice-bff:8504
+      approval-service: http://approval-service:8505
+      case-service: http://case-service:8506
+      center-master-service: http://center-master-service:8507
+    # 인증 없이 통과시키는 작업(계약 security: []). 메서드·경로 모두 일치해야 한다.
+    public-paths:
+      - method: POST
+        path: /api/v1/guest-delivery-addresses # customer-service
+      - method: GET
+        path: /api/v1/guest-delivery-addresses/* # customer-service
+      - method: GET
+        path: /api/v1/categories/tree # product-service
+      - method: GET
+        path: /api/v1/categories/*/filters # product-service
+      - method: GET
+        path: /api/v1/product-contents # product-content-service
+      - method: GET
+        path: /api/v1/product-contents/* # product-content-service
+      - method: GET
+        path: /api/v1/content-images/* # product-content-service
+      - method: GET
+        path: /api/v1/prices # pricing-service
+      - method: GET
+        path: /api/v1/prices/* # pricing-service
+      - method: POST
+        path: /api/v1/serviceability-checks # delivery-serviceability-service
+      - method: GET
+        path: /api/v1/serviceability-checks/* # delivery-serviceability-service
+      - method: GET
+        path: /api/v1/search/products # search-service
+      - method: GET
+        path: /api/v1/search/suggestions # search-service
+      - method: GET
+        path: /api/v1/search/filters # search-service
+      - method: GET
+        path: /api/v1/storefront/home # storefront-service
+      - method: GET
+        path: /api/v1/storefront/tabs/* # storefront-service
+      - method: GET
+        path: /api/v1/storefront/sections/*/items # storefront-service
+      - method: GET
+        path: /api/v1/storefront/banners # storefront-service
+      - method: POST
+        path: /api/v1/webhooks/toss # payment-service
+      - method: POST
+        path: /api/v1/auth/social-logins # auth-service
+      - method: GET
+        path: /api/v1/auth/social-logins/* # auth-service
+      - method: POST
+        path: /api/v1/auth/social-logins/*/completions # auth-service
+      - method: POST
+        path: /api/v1/auth/tokens # auth-service
+      - method: POST
+        path: /api/v1/auth/operator-logins # auth-service (ADR-0018)
+      - method: POST
+        path: /api/v1/auth/guest-sessions # auth-service (비회원 세션)
+    # 비회원 토큰(typ=GUEST)을 통과시키는 경로. 그 밖에서는 403(각 서비스도 pmart.security.guest-paths 로 같은 규칙).
+    guest-paths:
+      - /api/v1/carts/**
+      - /api/v1/slots
+      - /api/v1/delivery-conditions
+      - /api/v1/address-geocodes
+      - /api/v1/address-reverse-geocodes
+      - /api/v1/delivery-options
+      - /api/v1/auth/logouts
+      - /api/v1/auth/sessions/current
+    # 처리율 제한. 수치는 잠정값(2026-10-23) — 부하 시험·운영 지표로 조정한다. 환경별로 바꾸려면 api-gateway-<프로필>.yml
+    rate-limit:
+      enabled: true
+      trusted-proxies: 1 # Ingress 1단. X-Forwarded-For 의 오른쪽 1개만 신뢰
+      anonymous: # 공개 작업(검색·홈·로그인) — IP 단위
+        replenish-rate: 10
+        burst-capacity: 20
+      authenticated: # JWT subject 단위
+        replenish-rate: 20
+        burst-capacity: 40
+      exempt-paths:
+        - /api/v1/webhooks/** # PG(토스) 웹훅: 발신 IP 가 몰리고 재전송은 PG 가 관리
+management:
+  health:
+    redis:
+      enabled: false # 처리율 제한은 fail-open 이라 Redis 장애로 게이트웨이를 내리지 않는다

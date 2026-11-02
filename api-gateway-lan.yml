@@ -1,0 +1,9 @@
+# api-gateway lan 프로필 — LAN 공유 개발 환경. 비밀값은 {cipher}(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
+spring:
+  data:
+    redis:
+      url: 'redis://redis:6379' # 처리율 제한 토큰 버킷 상태만 둔다(원장 아님)
+pmart:
+  gateway:
+    cors:
+      allowed-origins: 'http://d603-16'

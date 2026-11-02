@@ -1,0 +1,14 @@
+# cart-service 고유 설정(모든 프로필). 환경별 값은 cart-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
+# 옮긴 원본: pmart-backend services/.../application.yml (2026-11-02)
+server:
+  port: 8104
+pmart:
+  messaging:
+    domain: commerce
+  security:
+    # 비회원 토큰(typ=GUEST, auth guest-sessions)이 쓸 수 있는 경로. 그 밖(병합 등 회원 전용 판정은 서비스에서)·다른 서비스는 403.
+    guest-paths:
+      - /api/v1/carts
+      - /api/v1/carts/**
+  cart:
+    retention: P30D # Commerce [채택 설계] 마지막 변경 후 30일 보존

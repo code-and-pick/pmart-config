@@ -1,0 +1,10 @@
+# mfc-capacity-service local 프로필 — 개발자 PC(deploy/local docker compose, localhost). 로컬 전용 고정값. ADR-0029
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/mfc_capacity_service
+    username: pmart
+    password: pmart-local
+pmart:
+  capacity:
+    units-per-hour: 30
+    expiry-interval: PT30S # TTL 지난 HELD 정리 주기

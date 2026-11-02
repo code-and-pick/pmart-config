@@ -1,0 +1,11 @@
+# order-service 고유 설정(모든 프로필). 환경별 값은 order-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
+# 옮긴 원본: pmart-backend services/.../application.yml (2026-11-02)
+server:
+  port: 8201
+pmart:
+  messaging:
+    domain: order
+  security:
+    # 비회원 토큰(typ=GUEST)도 배송 방식 안내는 된다(주문 초안은 회원만)
+    guest-paths:
+      - /api/v1/delivery-options

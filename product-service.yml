@@ -1,0 +1,30 @@
+# product-service 고유 설정(모든 프로필). 환경별 값은 product-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
+# 옮긴 원본: pmart-backend services/.../application.yml (2026-11-02)
+spring:
+  servlet:
+    multipart:
+      max-file-size: 300MB # seed-v1 묶음(이미지 포함). 이 서비스는 product.json 만 읽는다
+      max-request-size: 300MB
+server:
+  port: 8101
+pmart:
+  messaging:
+    domain: commerce
+  web:
+    # 구매 상한 검증은 상태를 바꾸지 않는 조회성 POST — 계약에 Idempotency-Key 가 없다(cart·order 가 헤더 없이 부른다)
+    excluded-paths:
+      - /api/v1/internal/purchase-limit-checks
+  security:
+    # 계약 security: [] 작업(비회원 둘러보기). 기본 목록을 덮어쓰므로 actuator·error 도 다시 적는다. 두 경로 모두 GET 하나뿐이라 경로 단위 허용이 계약과 일치.
+    permit-paths:
+      - /actuator/health/**
+      - /actuator/info
+      - /actuator/prometheus
+      - /error
+      - /api/v1/categories/tree
+      - /api/v1/categories/*/filters
+  product:
+    # 구매 상한: 같은 기초상품 Σ 수량×구성 낱개 수 (Commerce 2장 [확정] 기본 10). 비우면 CONFIG_REQUIRED
+    purchase-limit-units: 10
+    # 전사 판매 상태를 바꿀 수 있는 운영자 역할(사용자 결정 2026-10-30). 판매중지는 PRODUCT 승인도 필요
+    sale-state-change-role: MD

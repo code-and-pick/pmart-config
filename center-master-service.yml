@@ -1,0 +1,7 @@
+# center-master-service 고유 설정(모든 프로필). 환경별 값은 center-master-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
+# 옮긴 원본: pmart-backend services/.../application.yml (2026-11-02)
+server:
+  port: 8507
+pmart:
+  messaging:
+    domain: platform
