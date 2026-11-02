@@ -63,7 +63,7 @@ spring:
             - id: product-service
               uri: ${pmart.gateway.upstream.product-service}
               predicates:
-                - Path=/api/v1/products/**,/api/v1/skus/**,/api/v1/sku-issuances/**,/api/v1/categories/**,/api/v1/barcodes/**,/api/v1/product-drafts/**,/api/v1/product-import-batches/**,/api/v1/category-tree-versions/**
+                - Path=/api/v1/products/**,/api/v1/skus/**,/api/v1/sku-issuances/**,/api/v1/categories/**,/api/v1/barcodes/**,/api/v1/product-drafts/**,/api/v1/product-import-batches/**,/api/v1/category-tree-versions/**,/api/v1/category-tree-additions
             - id: product-content-service
               uri: ${pmart.gateway.upstream.product-content-service}
               predicates:
