@@ -99,7 +99,7 @@ spring:
             - id: payment-service
               uri: ${pmart.gateway.upstream.payment-service}
               predicates:
-                - Path=/api/v1/webhooks/**,/api/v1/payments/**,/api/v1/payment-confirmations/**,/api/v1/payment-authorization-failures/**
+                - Path=/api/v1/webhooks/**,/api/v1/payments/**,/api/v1/payment-confirmations/**,/api/v1/payment-authorization-failures/**,/api/v1/payment-widget-config/**
             - id: mfc-inventory-service-sku-handlings
               uri: ${pmart.gateway.upstream.mfc-inventory-service}
               predicates:
