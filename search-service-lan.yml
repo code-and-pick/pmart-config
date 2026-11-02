@@ -1,10 +1,9 @@
 # search-service lan 프로필 — LAN 공유 개발 환경. 비밀값은 {cipher}(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
 pmart:
   search:
-    # 상품 검색 색인(OpenSearch, tech-stack 선택적 스택). 색인 이름은 별칭(products) → 실제 인덱스 products-v1
-    opensearch-url: 'http://opensearch:9200'
-    # 콘텐츠 사건에 상품명·이미지가 없어 공개 카드 API 로 보강한다(product-content-service, Service DNS)
-    content-base-url: http://product-content-service:8102
+    # 상품 검색(Elasticsearch 8.18 + nori, ADR-0031). 이 서비스는 조회만 — 색인은 Logstash 가 도메인 이벤트로 한다.
+    # 별칭 products → products-v2, sku-prices → sku-prices-v1
+    elasticsearch-url: 'http://elasticsearch:9200'
     # 검색 결과의 카테고리 이름 경로(공개 트리, 5분 사본)와 mfcId 를 준 검색의 취급 여부(내부 가용 조회). 2026-11-02
     product-base-url: http://product-service:8101
     inventory-base-url: http://mfc-inventory-service:8301
