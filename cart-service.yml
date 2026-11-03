@@ -11,4 +11,4 @@ pmart:
       - /api/v1/carts
       - /api/v1/carts/**
   cart:
-    retention: P30D # Commerce [채택 설계] 마지막 변경 후 30일 보존
+    retention: 30d # Commerce [채택 설계] 마지막 변경 후 30일 보존
