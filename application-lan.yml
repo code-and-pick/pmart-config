@@ -32,3 +32,9 @@ eureka:
     instance-id: '${spring.application.name}:${PMART_HOST_IP}:${server.port}' # 나중에 같은 서비스를 더 띄워도 겹치지 않게
     lease-renewal-interval-in-seconds: 10
     lease-expiration-duration-in-seconds: 30 # 갱신이 30초 없으면 서버가 지운다(서버 쪽 eviction 10초)
+logging:
+  level:
+    # 이 두 로거는 접속 실패 때 defaultZone 주소를 사용자·비밀번호째 찍는다(2026-11-03 LAN 에서 확인) — 끈다.
+    # 실패 자체는 com.netflix.discovery.DiscoveryClient 가 주소 없이 남긴다
+    com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient: 'OFF'
+    com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient: 'OFF'
