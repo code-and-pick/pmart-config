@@ -10,3 +10,7 @@ pmart:
     content-base-url: http://product-content-service:8102
     pricing-base-url: http://pricing-service:8107
     inventory-base-url: http://mfc-inventory-service:8301 # 표시용 가용(서비스 토큰)
+# 실행 중 갱신(ADR-0033) 확인용 — 영향 없는 로거(코드에 없는 이름). 확인 뒤 지운다
+logging:
+  level:
+    com.pmart.bus-check: INFO
