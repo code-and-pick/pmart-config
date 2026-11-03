@@ -2,6 +2,11 @@
 # 옮긴 원본: pmart-backend services/.../application.yml (2026-11-02)
 server:
   port: 8107
+spring:
+  servlet:
+    multipart:
+      max-file-size: 300MB # 가격 일괄 등록 seed-v1 묶음(이미지 포함, 상품 일괄 등록과 같은 파일). 이 서비스는 product.json 만 읽는다
+      max-request-size: 300MB
 pmart:
   messaging:
     domain: commerce

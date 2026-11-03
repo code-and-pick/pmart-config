@@ -4,3 +4,6 @@ spring:
     url: jdbc:postgresql://localhost:15432/pricing_service
     username: pmart
     password: pmart-local
+pmart:
+  pricing:
+    product-base-url: http://localhost:8101 # 가격 일괄 등록: 원천 키 → SKU (/internal/source-link-lookups)

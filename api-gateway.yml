@@ -87,7 +87,7 @@ spring:
             - id: pricing-service
               uri: ${pmart.gateway.upstream.pricing-service}
               predicates:
-                - Path=/api/v1/prices/**,/api/v1/price-versions/**,/api/v1/price-version-applications/**
+                - Path=/api/v1/prices/**,/api/v1/price-versions/**,/api/v1/price-version-applications/**,/api/v1/price-import-batches/**
             - id: order-service
               uri: ${pmart.gateway.upstream.order-service}
               predicates:
