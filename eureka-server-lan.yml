@@ -1,0 +1,4 @@
+# eureka-server lan 프로필. 자기 자신을 가리키는 defaultZone(application-lan.yml)은 그대로 둔다 — 등록·조회를 끈 단일 노드라 쓰이지 않는다
+eureka:
+  instance:
+    hostname: eureka-server

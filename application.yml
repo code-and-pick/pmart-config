@@ -10,3 +10,7 @@ spring:
       ddl-auto: validate # 스키마 변경은 Flyway 만 (service-architecture.md)
   flyway:
     locations: classpath:db/migration # common-messaging 이 classpath:db/migration/common 을 추가한다
+# 서비스 등록·조회(Eureka, ADR-0032)는 기본 꺼짐. lan 프로필(application-lan.yml)만 켠다. 운영(Kubernetes)은 Service DNS
+eureka:
+  client:
+    enabled: false

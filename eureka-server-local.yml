@@ -1,0 +1,9 @@
+# eureka-server local 프로필 — 개발자 PC. 서비스의 local 프로필은 Eureka 를 쓰지 않는다(application.yml: enabled false).
+# 로컬에서 등록·조회를 시험하려면 서비스를 --eureka.client.enabled=true --eureka.client.service-url.defaultZone=http://pmart:pmart-local@localhost:8761/eureka/ 로 띄운다
+spring:
+  security:
+    user:
+      password: pmart-local
+eureka:
+  instance:
+    hostname: localhost

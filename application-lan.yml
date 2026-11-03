@@ -15,3 +15,20 @@ management:
     export:
       zipkin:
         endpoint: http://zipkin:9411/api/v2/spans
+# 서비스 등록·조회(Eureka, ADR-0032). 각 앱은 자기 PC 의 LAN IP + 공개 포트로 등록한다(컨테이너 IP 는 다른 PC 에서 닿지 않는다).
+# PMART_HOST_IP·PMART_EUREKA_PASSWORD 는 deploy/lan/render.sh 가 compose 환경변수로 넣는다. 공개 포트 = 컨테이너 포트 = server.port.
+# 서비스 간 호출(common-web)과 게이트웨이(lb://)가 주소의 호스트 이름을 서비스 이름으로 보고 등록된 인스턴스로 바꾼다.
+eureka:
+  client:
+    enabled: true
+    service-url:
+      defaultZone: 'http://pmart:${PMART_EUREKA_PASSWORD}@eureka-server:8761/eureka/'
+    registry-fetch-interval-seconds: 10 # 기본 30초. 재배포 뒤 새 주소를 빨리 받는다
+    healthcheck:
+      enabled: true # actuator health 가 DOWN 이면 Eureka 에도 DOWN 으로 올린다(호출 대상에서 빠진다)
+  instance:
+    prefer-ip-address: true
+    ip-address: ${PMART_HOST_IP}
+    instance-id: '${spring.application.name}:${PMART_HOST_IP}:${server.port}' # 나중에 같은 서비스를 더 띄워도 겹치지 않게
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30 # 갱신이 30초 없으면 서버가 지운다(서버 쪽 eviction 10초)
