@@ -11,9 +11,10 @@ pmart:
   messaging:
     domain: commerce
   web:
-    # 구매 상한 검증은 상태를 바꾸지 않는 조회성 POST — 계약에 Idempotency-Key 가 없다(cart·order 가 헤더 없이 부른다)
+    # 구매 상한 검증·원천 키 조회는 상태를 바꾸지 않는 조회성 POST — 계약에 Idempotency-Key 가 없다(cart·order·pricing 이 헤더 없이 부른다)
     excluded-paths:
       - /api/v1/internal/purchase-limit-checks
+      - /api/v1/internal/source-link-lookups
   security:
     # 계약 security: [] 작업(비회원 둘러보기). 기본 목록을 덮어쓰므로 actuator·error 도 다시 적는다. 두 경로 모두 GET 하나뿐이라 경로 단위 허용이 계약과 일치.
     permit-paths:
