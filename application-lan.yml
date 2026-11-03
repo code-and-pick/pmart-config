@@ -2,6 +2,12 @@
 spring:
   kafka:
     bootstrap-servers: kafka:9092
+  # 실행 중 설정 갱신(ADR-0033): 이 저장소에 push → GitHub 웹훅(smee.io 중계) → config-server /monitor → Bus(Kafka springCloudBus)
+  # → 바뀐 파일의 앱(<앱>*.yml → 그 앱, application*.yml → 모든 앱)이 config-server 에서 다시 받는다. 기본 꺼짐(common-observability).
+  # 다시 읽히는 것: @ConfigurationProperties(setter 형)·logging.level·gateway 라우트. DB·Kafka 주소·켜고 끄는 값·record 형 설정은 재시작.
+  cloud:
+    bus:
+      enabled: true
   security:
     oauth2:
       resourceserver:
@@ -26,6 +32,10 @@ eureka:
     registry-fetch-interval-seconds: 10 # 기본 30초. 재배포 뒤 새 주소를 빨리 받는다
     healthcheck:
       enabled: true # actuator health 가 DOWN 이면 Eureka 에도 DOWN 으로 올린다(호출 대상에서 빠진다)
+    refresh:
+      # 설정 갱신(Bus) 때 Eureka 클라이언트를 다시 만들지 않는다 — 다시 만들면 등록 해제 → 재등록 사이에 게이트웨이가 503(ADR-0033).
+      # eureka.* 를 바꾸면 재시작한다
+      enable: false
   instance:
     prefer-ip-address: true
     ip-address: ${PMART_HOST_IP}
