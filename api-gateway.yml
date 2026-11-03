@@ -7,6 +7,10 @@
 # - 공개 경로(pmart.gateway.public-paths)는 계약에서 security: [] 인 작업만. 그 외 모든 /api/** 는 JWT 필수.
 # - 처리율 제한(pmart.gateway.rate-limit): JWT subject / 클라이언트 IP 단위 Redis 토큰 버킷. Redis 장애 시 허용(fail-open).
 spring:
+  reactor:
+    # WebFlux 는 요청 하나가 여러 스레드를 오간다. 현재 span(traceId)을 Reactor Context → ThreadLocal 로 옮겨야
+    # 보안 오류 응답(ProblemResponseWriter: Tracer.currentSpan())·로그 MDC 에 traceId 가 보인다(2026-11-03 LAN 에서 빠져 있었음)
+    context-propagation: auto
   webflux:
     problemdetails:
       enabled: true # 404(라우트 없음) 등 WebFlux 자체 오류도 RFC 9457

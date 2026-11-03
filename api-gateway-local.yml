@@ -5,6 +5,10 @@ spring:
       url: redis://localhost:6379
 pmart:
   gateway:
+    rate-limit:
+      # 앞에 Ingress 가 없다(클라이언트가 게이트웨이에 바로 붙는다). 1 이면 클라이언트가 보낸 X-Forwarded-For 를 믿어
+      # IP 단위 제한을 우회할 수 있다 → 연결 주소를 쓴다. 운영은 api-gateway.yml 기본값 1(Ingress 1단)
+      trusted-proxies: 0
     cors:
       # 로컬 프론트 개발 서버(Vite 5173, CRA 3000)
       allowed-origins: http://localhost:5173,http://localhost:3000
