@@ -1,0 +1,8 @@
+# ai-assistant-service local 프로필 — 개발자 PC. pgvector 가 필요해 공용 Postgres(15432, postgres:17-alpine) 대신
+# 전용 컨테이너 deploy/local/ai-assistant/docker-compose.yml(15433, pgvector/pgvector:pg17)을 쓴다. 로컬 전용 고정값. ADR-0029·0036
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15433/ai_assistant_service
+    username: pmart
+    password: pmart-local
+# 외부 모델 키 자리(지금은 쓰지 않음): pmart.assistant.model.api-key: ${PMART_ASSISTANT_MODEL_API_KEY:}

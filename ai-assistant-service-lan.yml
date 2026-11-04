@@ -1,0 +1,7 @@
+# ai-assistant-service lan 프로필 — LAN 공유 개발 환경. 아직 LAN 배포하지 않는다(ADR-0036 결정 필요 2: pgvector 위치).
+# 배포 결정 뒤 DB 주소·{cipher} 비밀값을 채운다(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
+spring:
+  datasource:
+    url: 'jdbc:postgresql://postgres-pc4:15433/ai_assistant_service' # [결정 필요] pgvector 컨테이너 위치
+    username: 'pmart'
+    # password: '{cipher}…' # 배포 때 configCipher 로 만든 값을 넣는다 — 평문 금지

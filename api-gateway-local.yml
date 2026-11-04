@@ -45,3 +45,4 @@ pmart:
       approval-service: http://localhost:8505
       case-service: http://localhost:8506
       center-master-service: http://localhost:8507
+      ai-assistant-service: http://localhost:8508
