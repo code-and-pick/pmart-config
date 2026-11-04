@@ -7,3 +7,17 @@ pmart:
     domain: order
   claim:
     refund-retry-after: PT30S # 실행 대기·PG 결과 대기·불명 환불 재실행·원거래 조회
+spring:
+  # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ({토픽}.DLT)·커밋은 common-messaging 기본값.
+  # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
+  cloud:
+    function:
+      definition: orderEvents;fulfillmentEvents;paymentEvents
+    stream:
+      bindings:
+        orderEvents-in-0:
+          destination: order.order.v1
+        fulfillmentEvents-in-0:
+          destination: mfc.fulfillment.v1
+        paymentEvents-in-0:
+          destination: order.payment.v1

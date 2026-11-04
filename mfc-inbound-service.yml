@@ -8,3 +8,13 @@ pmart:
   inbound:
     # PENDING 반입 전기·재시도 주기
     post-interval: PT3S
+spring:
+  # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ({토픽}.DLT)·커밋은 common-messaging 기본값.
+  # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
+  cloud:
+    function:
+      definition: approvalEvents
+    stream:
+      bindings:
+        approvalEvents-in-0:
+          destination: platform.approval.v1
