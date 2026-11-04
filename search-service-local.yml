@@ -3,4 +3,3 @@ pmart:
   search:
     elasticsearch-url: http://localhost:9200
     product-base-url: http://localhost:8101
-    inventory-base-url: http://localhost:8301
