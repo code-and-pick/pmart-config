@@ -8,6 +8,18 @@ spring:
   cloud:
     bus:
       enabled: true
+    # Bus 소비 그룹: 기본은 인스턴스마다 무작위 anonymous.* 라 재시작마다 빈 그룹이 쌓인다(2026-11-04 정리 때 138개).
+    # 인스턴스마다 다른 고정 이름으로 둔다 — 같은 이름을 두 인스턴스가 쓰면 알림이 한쪽에만 간다. LAN 은 render.sh 가 PC 이름을,
+    # Kubernetes 는 HOSTNAME(파드 이름)을 쓴다. 새 그룹은 뜬 뒤의 알림만 받는다(지난 알림을 다시 처리하지 않게).
+    stream:
+      bindings:
+        springCloudBusInput:
+          group: bus-${spring.application.name}-${PMART_BUS_INSTANCE:${HOSTNAME:local}}
+      kafka:
+        bindings:
+          springCloudBusInput:
+            consumer:
+              start-offset: latest
   security:
     oauth2:
       resourceserver:
@@ -48,3 +60,7 @@ logging:
     # 실패 자체는 com.netflix.discovery.DiscoveryClient 가 주소 없이 남긴다
     com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient: 'OFF'
     com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient: 'OFF'
+    # Eureka 클라이언트가 eureka-server 자신을 등록부에서 찾을 때(등록 대상 아님) 10초마다 "No servers available" WARN —
+    # LoadBalancedInterceptor 는 등록이 없으면 원래 주소로 보낸다(정상 동작). 등록 없는 다른 서비스도 같은 경로라 놓치는 정보는
+    # 연결 실패(Downstream → DEPENDENCY_UNAVAILABLE)로 남는다(2026-11-04)
+    org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer: ERROR
