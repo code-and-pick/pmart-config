@@ -2,7 +2,7 @@
 pmart:
   search:
     # 상품 검색(Elasticsearch 8.18 + nori, ADR-0031). 이 서비스는 조회만 — 색인은 Logstash 가 도메인 이벤트로 한다.
-    # 별칭 products → products-v2, sku-prices → sku-prices-v1
+    # 별칭 products → products-v3(2026-11-04 재색인, REINDEX.md), sku-prices → sku-prices-v1
     elasticsearch-url: 'http://elasticsearch:9200'
     # 검색 결과의 카테고리 이름 경로(공개 트리, 5분 사본)와 mfcId 를 준 검색의 취급 여부(내부 가용 조회). 2026-11-02
     product-base-url: http://product-service:8101
