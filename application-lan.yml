@@ -1,7 +1,7 @@
 # lan 프로필 공통 — LAN 공유 개발 환경(pc2·pc3·pc4 docker compose). 이름은 compose 서비스명·extra_hosts 로 어느 PC 에서나 같다.
 spring:
   kafka:
-    bootstrap-servers: kafka:9092
+    bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092 # KRaft 3노드 클러스터(ADR-0037) — 하나만 적으면 그 노드가 꺼진 채 시작할 때 붙지 못한다
   # 실행 중 설정 갱신(ADR-0033): 이 저장소에 push → GitHub 웹훅(smee.io 중계) → config-server /monitor → Bus(Kafka springCloudBus)
   # → 바뀐 파일의 앱(<앱>*.yml → 그 앱, application*.yml → 모든 앱)이 config-server 에서 다시 받는다. 기본 꺼짐(common-observability).
   # 다시 읽히는 것: @ConfigurationProperties(setter 형)·logging.level·gateway 라우트. DB·Kafka 주소·켜고 끄는 값·record 형 설정은 재시작.
