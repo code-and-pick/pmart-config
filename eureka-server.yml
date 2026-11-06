@@ -18,10 +18,13 @@ eureka:
     wait-time-in-ms-when-sync-empty: 0 # 동기화할 다른 서버가 없다
 # 추적 끔(2026-11-06): 앱 30여 개의 등록 갱신·목록 조회가 span 의 약 85% 였다(30분 3.3만 개) — 업무 추적에 쓸모가 없고
 # Zipkin 저장(로그 ES, 3일·2GB)을 채운다. 로그 JSON 의 traceId 도 비게 된다.
+# zipkin.enabled 도 꺼야 한다: common-observability 기본값이 export.zipkin.enabled=true 를 넣고, 전송 대상별 값이 전체 값보다 먼저다.
 management:
   tracing:
     export:
       enabled: false
+      zipkin:
+        enabled: false
 # 업무 API 가 없다 — convention 이 넣는 springdoc 문서 엔드포인트를 끈다
 springdoc:
   api-docs:
