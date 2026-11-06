@@ -14,3 +14,4 @@ pmart:
 logging:
   level:
     com.pmart.cart: INFO
+    com.pmart.bus-check: INFO
