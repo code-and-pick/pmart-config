@@ -12,3 +12,11 @@ pmart:
     payment-base-url: http://localhost:8205
     order-base-url: http://localhost:8201
     mfc-fulfillment-base-url: http://localhost:8302
+    claim-base-url: http://localhost:8204 # 시스템 자동 전체 취소(S2 D6-4)
+    # S2 이행 요청(슬라이스 6a, order-checkout-saga.md §2.0). 센터 키는 대괄호로 감싼다(점·대문자 보존).
+    fulfillment:
+      start-orders-confirmed-after: '2026-11-07T00:00:00Z' # 이 시각 이후 확정 주문만 S2 시작(새 구독 그룹이 토픽 처음부터 읽음)
+      retry-window: # D6-5 대기 W — 처음 거절부터. 없는 센터는 CONFIG_REQUIRED 보류
+        "[MFC-SEED-01]": PT10M
+      max-new-versions: # D6-5 주문당 새 작업 버전 최대
+        "[MFC-SEED-01]": 2

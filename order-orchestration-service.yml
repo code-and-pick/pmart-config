@@ -13,10 +13,12 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: claimEvents;paymentEvents
+      definition: claimEvents;paymentEvents;orderEvents
     stream:
       bindings:
         claimEvents-in-0:
           destination: order.claim.v1
+        orderEvents-in-0: # OrderConfirmed → S2 이행 요청(슬라이스 6a, 2026-11-07)
+          destination: order.order.v1
         paymentEvents-in-0:
           destination: order.payment.v1
