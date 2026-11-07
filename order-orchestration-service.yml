@@ -8,6 +8,9 @@ pmart:
   orchestration:
     stuck-after: PT30S # RUNNING·COMPENSATING 이 이만큼 멈추면 sweep 이 같은 키로 이어서 진행
     sweep-interval: PT10S
+    # 결제 전 자원 점유(재고 예약·센터 여력·배송 슬롯) 유효시간. MFC 문서 §6 Q-04 결정(2026-11-07, 사용자) 10분, ADR-0042.
+    # 없으면 새 결제 진입 CONFIG_REQUIRED
+    hold-ttl: PT10M
 spring:
   # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ({토픽}.DLT)·커밋은 common-messaging 기본값.
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
