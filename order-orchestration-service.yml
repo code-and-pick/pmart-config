@@ -16,7 +16,7 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: claimEvents;paymentEvents;orderEvents
+      definition: claimEvents;paymentEvents;orderEvents;fulfillmentEvents
     stream:
       bindings:
         claimEvents-in-0:
@@ -25,3 +25,5 @@ spring:
           destination: order.order.v1
         paymentEvents-in-0:
           destination: order.payment.v1
+        fulfillmentEvents-in-0: # LineShortageReported → 결품 사가(IV-09 2부, ADR-0045, 2026-11-07)
+          destination: mfc.fulfillment.v1
