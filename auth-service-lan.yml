@@ -16,6 +16,12 @@ pmart:
       bootstrap:
         login-id: 'admin'
         password-hash: '{cipher}a6039970b6d11add624fb7fc201750a7b1d953db31121434af3b48a0cb46289db303e0f307fa30cdb4bf60d4c6780d9c5c5dac00e0a3ea012bc90d16d887cc20a29d3e1a0078bfb1ab8d4a7a0ec8ba4d6f07af7eb06c13b1c92fe679a5acf35d'
+      # 개발 환경 전용 계정(2026-11-07, 사용자 요청 — Claude 가 LAN 에서 혼자 시험). 운영(prod) 설정에 넣지 않는다.
+      # 비밀번호 원문은 deploy/lan/.secrets/claude-dev-password(git 제외)에만. 없애려면 이 항목을 지우고 계정을 비활성화한다
+      dev-accounts:
+        - login-id: 'claude-dev'
+          display-name: '개발 시험(Claude, LAN 전용)'
+          password-hash: '{cipher}6f9ce3820735c11046cc50448ce4f50bf27570fd12c209b4106454f1c396f6b30bdd33d7fe9f10925889b180b57f5d884fb84c3082ae0b3839248664a666791492b76ae048c1d60c8bcf3cf7921a0aff753615a8c619e8c0c4cf2b52a0da35b4'
     customer:
       google:
         # 허용할 ID 토큰 aud = Google OAuth 클라이언트 ID(고객 앱·웹 서버 클라이언트, 쉼표 구분). 비면 Google 로그인은 CONFIG_REQUIRED
