@@ -107,7 +107,7 @@ spring:
             - id: mfc-inventory-service-sku-handlings
               uri: ${pmart.gateway.upstream.mfc-inventory-service}
               predicates:
-                - Path=/api/v1/mfcs/*/sku-handlings/**,/api/v1/mfcs/*/sku-handling-batches/**
+                - Path=/api/v1/mfcs/*/sku-handlings/**,/api/v1/mfcs/*/sku-handling-batches/**,/api/v1/mfcs/*/stock,/api/v1/mfcs/*/stock-corrections
               order: -90
             - id: cdc-inventory-service-sku-handlings
               uri: ${pmart.gateway.upstream.cdc-inventory-service}
@@ -133,7 +133,7 @@ spring:
             - id: mfc-inbound-service
               uri: ${pmart.gateway.upstream.mfc-inbound-service}
               predicates:
-                - Path=/api/v1/inbound-promises/**,/api/v1/supply-requests/**,/api/v1/return-receipts/**,/api/v1/initial-stock-loads
+                - Path=/api/v1/inbound-promises/**,/api/v1/supply-requests/**,/api/v1/return-receipts/**,/api/v1/initial-stock-loads,/api/v1/initial-stock-loads/**,/api/v1/inbound-tasks,/api/v1/inbound-tasks/**
             - id: delivery-serviceability-service
               uri: ${pmart.gateway.upstream.delivery-serviceability-service}
               predicates:

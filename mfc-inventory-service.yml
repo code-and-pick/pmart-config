@@ -5,13 +5,22 @@ server:
 pmart:
   messaging:
     domain: mfc
+  inventory:
+    # 최소 잔여일(배송 약속일 기준, 일) — 보관 유형별. MFC 문서 §6 Q-05 결정(2026-11-07, 사용자), ADR-0040 결정 5.
+    # 소비기한이 있는 LOT 을 배정할 때만 쓴다. 값이 없는 보관 유형은 CONFIG_REQUIRED(0 으로 대체하지 않음)
+    min-remaining-days:
+      CHILLED: 2
+      FROZEN: 30
+      AMBIENT: 30
 spring:
   # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ({토픽}.DLT)·커밋은 common-messaging 기본값.
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: productEvents
+      definition: productEvents;locationEvents
     stream:
       bindings:
         productEvents-in-0:
           destination: commerce.product.v1
+        locationEvents-in-0:
+          destination: mfc.location.v1
