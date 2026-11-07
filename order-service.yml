@@ -9,3 +9,13 @@ pmart:
     # 비회원 토큰(typ=GUEST)도 배송 방식 안내는 된다(주문 초안은 회원만)
     guest-paths:
       - /api/v1/delivery-options
+spring:
+  # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ({토픽}.DLT)·커밋은 common-messaging 기본값.
+  # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
+  cloud:
+    function:
+      definition: fulfillmentEvents
+    stream:
+      bindings:
+        fulfillmentEvents-in-0: # MFC PreparationStarted → 주문 PREPARING(슬라이스 6b, 2026-11-07)
+          destination: mfc.fulfillment.v1

@@ -7,5 +7,6 @@ spring:
 pmart:
   fulfillment:
     mfc-inventory-base-url: http://localhost:8301 # 작업 접수 때 원래 재고 예약 확인(슬라이스 6a)
+    mfc-capacity-base-url: http://localhost:8303 # 작업 시작 때 담당 배정 동기 조회(6b)
     pick-lead-time: # D6-3 예약 주문 PICK 준비 = 슬롯 시작 − N. 없는 센터는 PICK 만 CONFIG_REQUIRED 대기
       "[MFC-SEED-01]": PT90M
