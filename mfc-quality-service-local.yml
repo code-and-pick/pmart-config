@@ -4,3 +4,6 @@ spring:
     url: jdbc:postgresql://localhost:15432/mfc_quality_service
     username: pmart
     password: pmart-local
+pmart:
+  quality:
+    mfc-inventory-base-url: http://localhost:8301 # 격리·해제·폐기 재고 반영(quality-postings, 2026-11-08)
