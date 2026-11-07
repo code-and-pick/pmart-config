@@ -10,8 +10,10 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: assignmentEvents
+      definition: assignmentEvents;deliveryEvents
     stream:
       bindings:
         assignmentEvents-in-0: # mfc-capacity AssignmentPublished → 작업 담당 투영(슬라이스 6b, 2026-11-07)
           destination: mfc.capacity.v1
+        deliveryEvents-in-0: # delivery-dispatch 배송 사건 → 배송 배정 투영(라이더 인계 허가 검사, 슬라이스 6c, 2026-11-08 ADR-0047)
+          destination: delivery.delivery.v1
