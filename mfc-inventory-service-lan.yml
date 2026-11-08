@@ -8,3 +8,5 @@ pmart:
   inventory:
     # 재고 이동 용량을 더미 상품 크기(소·중·대, SKU 로 고정)로 계산 — 실제 크기 정보가 생기기 전 시스템 구현용(2026-11-08). 운영(prod)에는 넣지 않는다.
     dummy-sku-size: true
+    # InventorySnapshotPublished 주기(2026-11-08). 비우면 발행 안 함 — 구독자(replenishment·demand-planning)는 아직 없고 LAN 확인용으로만 켬
+    snapshot-interval: PT1H
