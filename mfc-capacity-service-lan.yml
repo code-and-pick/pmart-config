@@ -17,3 +17,7 @@ pmart:
         PACK: 4
       time-limit: PT5S # CP-SAT 시간 제한(게이트웨이 10초보다 짧게)
       packing-stations: 4 # 동시 PACK 상한(규모 설계 기본 4대)
+      weights: # 목적 가중치 — 임시 구현값(Q-08 전, 운영 정책 아님). 필수 조건은 가중치가 아니라 제약
+        UNASSIGNED: 1000000
+        LATE: 1000
+        MAX_LOAD: 10
