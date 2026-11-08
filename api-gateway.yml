@@ -95,7 +95,7 @@ spring:
             - id: order-service
               uri: ${pmart.gateway.upstream.order-service}
               predicates:
-                - Path=/api/v1/order-drafts/**,/api/v1/orders/**,/api/v1/delivery-options
+                - Path=/api/v1/order-drafts/**,/api/v1/orders/**,/api/v1/delivery-options,/api/v1/fulfillment-issues,/api/v1/fulfillment-issues/**
             - id: claim-service
               uri: ${pmart.gateway.upstream.claim-service}
               predicates:

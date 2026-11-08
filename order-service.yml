@@ -14,8 +14,10 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: fulfillmentEvents
+      definition: fulfillmentEvents;inventoryEvents
     stream:
       bindings:
         fulfillmentEvents-in-0: # MFC PreparationStarted → 주문 PREPARING(슬라이스 6b, 2026-11-07)
           destination: mfc.fulfillment.v1
+        inventoryEvents-in-0: # MFC ReservationBlocked → 이행 확인 필요(자동 처리 없음, 2026-11-08)
+          destination: mfc.inventory.v1
