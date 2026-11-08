@@ -64,3 +64,6 @@ logging:
     # LoadBalancedInterceptor 는 등록이 없으면 원래 주소로 보낸다(정상 동작). 등록 없는 다른 서비스도 같은 경로라 놓치는 정보는
     # 연결 실패(Downstream → DEPENDENCY_UNAVAILABLE)로 남는다(2026-11-04)
     org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer: ERROR
+# 승인 번호(approvalRef)를 확인 없이 기록만 — 승인 서비스 연동 전 개발 환경 전용(2026-11-08 외부 검토 #8). prod 에는 넣지 않는다:
+# 없으면 재고 해제·폐기·실사 조정·재고 정정·운영 제한 해제가 CONFIG_REQUIRED.
+pmart.approval-ref.mode: RECORD_ONLY
