@@ -8,3 +8,10 @@ pmart:
   capacity:
     units-per-hour: 30
     expiry-interval: PT30S # TTL 지난 HELD 정리 주기
+    plan: # 배정 추천(WK-09, 2026-11-08). 미설정이면 계산 거절(CONFIG_REQUIRED)
+      mfc-fulfillment-base-url: http://localhost:8302 # READY·ASSIGNED·IN_PROGRESS 작업 목록 동기 조회
+      task-minutes: # 작업 유형 → 예상 분. 규모 설계 가정(피킹 7·패킹 4) — 승인 전 시험값
+        PICK: 7
+        PACK: 4
+      time-limit: PT5S # CP-SAT 시간 제한(게이트웨이 10초보다 짧게)
+      packing-stations: 4 # 동시 PACK 상한(규모 설계 기본 4대)
