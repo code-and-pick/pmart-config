@@ -6,5 +6,7 @@ spring:
     password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
 pmart:
   inbound:
+    replenishment-enabled: true # 자동 선반 보충 점검(IV-04, 2026-11-08) — 기준(replenishment-policies)이 있는 칸만
+    replenishment-interval: PT1M
     # 초기 보유 반입 전기 대상(INITIAL_STOCK 승인 → ConfirmReceipt)
     mfc-inventory-base-url: http://mfc-inventory-service:8301

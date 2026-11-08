@@ -107,7 +107,7 @@ spring:
             - id: mfc-inventory-service-sku-handlings
               uri: ${pmart.gateway.upstream.mfc-inventory-service}
               predicates:
-                - Path=/api/v1/mfcs/*/sku-handlings/**,/api/v1/mfcs/*/sku-handling-batches/**,/api/v1/mfcs/*/stock,/api/v1/mfcs/*/stock-corrections,/api/v1/mfcs/*/count-sessions/**,/api/v1/mfcs/*/unshippable-lots # 순환 실사(IV-11)·출하 부적격 LOT 회수 목록(2026-11-08)
+                - Path=/api/v1/mfcs/*/sku-handlings/**,/api/v1/mfcs/*/sku-handling-batches/**,/api/v1/mfcs/*/stock,/api/v1/mfcs/*/stock-corrections,/api/v1/mfcs/*/count-sessions/**,/api/v1/mfcs/*/unshippable-lots,/api/v1/mfcs/*/replenishment-policies # 보충 기준(IV-04) · 순환 실사(IV-11)·출하 부적격 LOT 회수 목록(2026-11-08)
               order: -90
             - id: cdc-inventory-service-sku-handlings
               uri: ${pmart.gateway.upstream.cdc-inventory-service}
