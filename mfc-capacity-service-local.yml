@@ -8,12 +8,12 @@ pmart:
   capacity:
     units-per-hour: 30
     expiry-interval: PT30S # TTL 지난 HELD 정리 주기
-    receiving: # 오전 입고 수령창·하차면(2026-11-08). 규모 설계 가정 — 승인 전 시험값(입고량 134/293 vs 154/337 미정). 비우면 CONFIG_REQUIRED
-      window-start: '07:00' # Asia/Seoul
+    receiving: # 오전 입고 수령창·하차면 — 사용자 확정 시작값(2026-11-08). 비우면 CONFIG_REQUIRED
+      window-start: '07:00' # Asia/Seoul, 원문 오전 검수 3시간
       window-end: '10:00'
-      max-load-units-per-arrival: 150 # 1회 입고 상한(박스 환산) — 가정값
-      total-load-units: 300 # 하루 창 전체 — 가정값
-      bay-count: 2 # 하차면 수 — 가정값
+      max-load-units-per-arrival: 360 # 1회 상한 = 원문 물리 상한 9팔레트(검수장 22평)
+      total-load-units: 360 # 하루 상한 = 아침 차량 1대 × 1회 상한. 넘는 날이 생기면 2회차 수령창 추가
+      bay-count: 1 # 아침 차량 1대(원문 확정 조건)
     plan: # 배정 추천(WK-09, 2026-11-08). 미설정이면 계산 거절(CONFIG_REQUIRED)
       mfc-fulfillment-base-url: http://localhost:8302 # READY·ASSIGNED·IN_PROGRESS 작업 목록 동기 조회
       task-minutes: # 작업 유형 → 예상 분. 규모 설계 가정(피킹 7·패킹 4) — 승인 전 시험값
