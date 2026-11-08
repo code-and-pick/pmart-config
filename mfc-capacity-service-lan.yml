@@ -18,6 +18,7 @@ pmart:
       bay-count: 1 # 검수장 하나 — 차는 순서대로 받음(동시 하차 1대)
     plan: # 배정 추천(WK-09, 2026-11-08). 미설정이면 계산 거절(CONFIG_REQUIRED)
       mfc-fulfillment-base-url: http://mfc-fulfillment-service:8302 # READY·ASSIGNED·IN_PROGRESS 작업 목록 동기 조회
+      mfc-inbound-base-url: http://mfc-inbound-service:8306 # 다음 작업 받기 — 이동·보충 지시 조회(작업자 쪽 4단계, 2026-11-08)
       task-minutes: # 작업 유형 → 예상 분. 원문 7장 피킹 7·패킹 4 — 사용자 확정 시작값(2026-11-08), 실측 뒤 조정
         PICK: 7
         PACK: 4
