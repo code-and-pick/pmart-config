@@ -6,6 +6,10 @@ pmart:
   messaging:
     domain: mfc
   fulfillment:
+    task-minutes: # 작업 유형별 예상 시간 — 주의 표시 late = 시작 뒤 2배(사용자 결정 Q-09·규모 확정값 2026-11-08). 없으면 late 표시 안 함
+      PICK: PT7M
+      PACK: PT4M
+      RETURN: PT5M
     handover-fence-ttl: # 라이더 인계 허가(fence) 유효시간 — 사용자 결정 D-2(2026-11-08): 모든 센터 기본 3분, 센터별 값이 있으면 그것. 비우면 CONFIG_REQUIRED
       default: PT3M
 spring:
