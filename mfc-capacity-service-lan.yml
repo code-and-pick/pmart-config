@@ -7,15 +7,15 @@ spring:
 pmart:
   capacity:
     # (MFC, 1시간 창)당 수용 단위(정책값). 주문 1건 = 1 단위(시험 정책 2026-10-30). 비우면 Hold·스냅샷은 CONFIG_REQUIRED.
-    # LAN 시험값 30 은 env PMART_CAPACITY_UNITSPERHOUR
-    units-per-hour: '30'
+    # 사용자 결정(2026-11-08): 45 = 기본 가동 포장대 4대 × 11.25건/시간(원문 7-1, 기준안 피크 40.1건). 포장대·인원이 늘면 올린다
+    units-per-hour: '45'
     expiry-interval: PT30S # TTL 지난 HELD 정리 주기
     receiving: # 오전 입고 수령창·하차면 — 사용자 확정 시작값(2026-11-08). 비우면 CONFIG_REQUIRED
       window-start: '07:00' # Asia/Seoul, 원문 오전 검수 3시간
       window-end: '10:00'
       max-load-units-per-arrival: 360 # 1회 상한 = 원문 물리 상한 9팔레트(검수장 22평)
-      total-load-units: 360 # 하루 상한 = 아침 차량 1대 × 1회 상한. 넘는 날이 생기면 2회차 수령창 추가
-      bay-count: 1 # 아침 차량 1대(원문 확정 조건)
+      total-load-units: 720 # 하루 상한 = 오전 차량 2대(원문 543행 확정 조건 "2대 이상") × 1회 상한 — 2026-11-08 정정
+      bay-count: 1 # 검수장 하나 — 차는 순서대로 받음(동시 하차 1대)
     plan: # 배정 추천(WK-09, 2026-11-08). 미설정이면 계산 거절(CONFIG_REQUIRED)
       mfc-fulfillment-base-url: http://mfc-fulfillment-service:8302 # READY·ASSIGNED·IN_PROGRESS 작업 목록 동기 조회
       task-minutes: # 작업 유형 → 예상 분. 규모 설계 가정(피킹 7·패킹 4) — 승인 전 시험값
