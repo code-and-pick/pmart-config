@@ -16,11 +16,11 @@ pmart:
       bay-count: 1 # 검수장 하나 — 차는 순서대로 받음(동시 하차 1대)
     plan: # 배정 추천(WK-09, 2026-11-08). 미설정이면 계산 거절(CONFIG_REQUIRED)
       mfc-fulfillment-base-url: http://localhost:8302 # READY·ASSIGNED·IN_PROGRESS 작업 목록 동기 조회
-      task-minutes: # 작업 유형 → 예상 분. 규모 설계 가정(피킹 7·패킹 4) — 승인 전 시험값
+      task-minutes: # 작업 유형 → 예상 분. 원문 7장 피킹 7·패킹 4 — 사용자 확정 시작값(2026-11-08), 실측 뒤 조정
         PICK: 7
         PACK: 4
       time-limit: PT5S # CP-SAT 시간 제한(게이트웨이 10초보다 짧게)
-      packing-stations: 4 # 동시 PACK 상한(규모 설계 기본 4대)
+      packing-stations: 4 # 동시 PACK 상한 — 원문 기준안 기본 가동 4대, 사용자 확정 시작값(2026-11-08)
       weights: # 목적 가중치 — 임시 구현값(Q-08 전, 운영 정책 아님). 필수 조건은 가중치가 아니라 제약
         UNASSIGNED: 1000000
         LATE: 1000
