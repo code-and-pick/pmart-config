@@ -10,5 +10,3 @@ pmart:
     mfc-capacity-base-url: http://mfc-capacity-service:8303 # 작업 시작 때 담당 배정 동기 조회(6b)
     pick-lead-time: # D6-3 예약 주문 PICK 준비 = 슬롯 시작 − N. 없는 센터는 PICK 만 CONFIG_REQUIRED 대기
       "[MFC-SEED-01]": PT90M
-    handover-fence-ttl: # 라이더 인계 허가(fence) 유효시간(ADR-0047). 기본값 없음 — 없는 센터는 인계 허가 422 CONFIG_REQUIRED. LAN 시험값
-      "[MFC-SEED-01]": PT2M

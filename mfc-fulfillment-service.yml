@@ -5,6 +5,9 @@ server:
 pmart:
   messaging:
     domain: mfc
+  fulfillment:
+    handover-fence-ttl: # 라이더 인계 허가(fence) 유효시간 — 사용자 결정 D-2(2026-11-08): 모든 센터 기본 3분, 센터별 값이 있으면 그것. 비우면 CONFIG_REQUIRED
+      default: PT3M
 spring:
   # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ({토픽}.DLT)·커밋은 common-messaging 기본값.
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
