@@ -4,3 +4,7 @@ spring:
     url: jdbc:postgresql://localhost:15432/mfc_inventory_service
     username: pmart
     password: pmart-local
+pmart:
+  inventory:
+    # 재고 이동 용량을 더미 상품 크기(소·중·대, SKU 로 고정)로 계산 — 실제 크기 정보가 생기기 전 시스템 구현용(2026-11-08). 운영(prod)에는 넣지 않는다.
+    dummy-sku-size: true
