@@ -8,5 +8,6 @@ pmart:
   inbound:
     replenishment-enabled: true # 자동 선반 보충 점검(IV-04, 2026-11-08) — 기준(replenishment-policies)이 있는 칸만
     replenishment-interval: PT1M
+    replenishment-trigger-delay: PT5S # 재고 변동(피킹·적치·해제·조정) 뒤 모아서 점검하는 간격
     # 초기 보유 반입 전기 대상(INITIAL_STOCK 승인 → ConfirmReceipt)
     mfc-inventory-base-url: http://mfc-inventory-service:8301

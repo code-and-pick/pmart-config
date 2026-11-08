@@ -13,8 +13,10 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: approvalEvents
+      definition: approvalEvents;inventoryEvents
     stream:
       bindings:
         approvalEvents-in-0:
           destination: platform.approval.v1
+        inventoryEvents-in-0: # 재고 변동 → 자동 보충 즉시 점검(2026-11-08)
+          destination: mfc.inventory.v1
