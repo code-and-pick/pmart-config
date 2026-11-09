@@ -14,6 +14,8 @@ pmart:
         base-url: http://ollama:11434
         embedding-model: qwen3-embedding:0.6b # 2026-11-09 비교 평가로 결정(D3) — docs/rag/verification/2026-11-09/embedding-compare
         embedding-version: ac6da0dfba84 # ollama list 의 ID. 모델 파일을 바꾸면 바꾸고 재색인(lan.sh rag-ingest)
+        embedding-num-gpu: 0 # 임베딩은 CPU — GPU(6GB)는 대화 모델(8192 문맥 3.9GB)에. 함께 올리면 서로 밀어냄(2026-11-09)
+        embedding-num-ctx: 2048
         query-instruction: "Instruct: Given a question about company policy or operating procedures, retrieve the document passages that answer it\nQuery: "
         chat-model: qwen3:4b # 시작값(ADR-0051) — 답변 충실도 평가 뒤 정한다
         chat-temperature: 0.2
