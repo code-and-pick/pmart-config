@@ -17,7 +17,7 @@ pmart:
         embedding-num-gpu: 0 # 임베딩은 CPU — GPU(6GB)는 대화 모델(8192 문맥 3.9GB)에. 함께 올리면 서로 밀어냄(2026-11-09)
         embedding-num-ctx: 2048
         query-instruction: "Instruct: Given a question about company policy or operating procedures, retrieve the document passages that answer it\nQuery: "
-        chat-model: qwen3:4b # 2026-11-09 8B 와 비교: 정확도 비슷(사람 판정 25 vs 26/30), 8B 는 8~22초(4B 1.4~8초)·일부 CPU — 4B 유지(사용자 결정 대기)
+        chat-model: qwen3:4b # 사용자 결정 2026-11-09(ADR-0051) — 8B 와 비교: 25 vs 26/30, 8B 는 8~22초·일부 CPU
         chat-temperature: 0.2
         chat-num-ctx: 8192
         disable-thinking: true
@@ -28,3 +28,13 @@ pmart:
       # 2026-11-09 맞추기: 답 있는 질문 최저 1위 0.426, 답 없는 질문 최고 0.407 → 0.40(답 있는 19 모두 통과, 답 없는 9 중 7 걸러짐).
       # docs/rag/verification/2026-11-09/answer-eval/threshold-calibration.md
       threshold: 0.40
+      # 생성이 인용 검사에 떨어졌을 때 발췌로 바꾸는 1위 근거 하한 — 낮으면 근거 없음(답변 평가 N01: 0.403 질문에 관계없는 원문을 보임).
+      # 2026-11-09 발췌로 간 답 있는 질문은 모두 0.47 이상
+      fallback-min-similarity: 0.45
+      # 지위·우선순위 가중 ×0.5(기본 0.06/0.04/0.02/0.01, 우선순위 0.01) — 의미 임베딩에서는 확정 가중이 관계없는 확정 문서를 관련 설계 문서
+      # 위로 올렸다. 2026-11-09 가중 조정: 답변 질문 답 절 적중@5 15 → 18/19, 검색 평가 절 recall 19/25 그대로(answer-eval/retrieval-sweep.md)
+      confirmed-weight: 0.03
+      adopted-weight: 0.02
+      proposal-weight: 0.01
+      assumption-weight: 0.005
+      precedence-weight: 0.005
