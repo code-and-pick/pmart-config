@@ -4,3 +4,6 @@ spring:
     url: jdbc:postgresql://localhost:15432/case_service
     username: pmart
     password: pmart-local
+pmart:
+  cases:
+    order-service-base-url: http://localhost:8201 # 고객센터 문의의 본인 주문 확인(order GET /orders/{id}, 고객 토큰 전달) — 0.2.0
