@@ -1,7 +1,23 @@
-# ai-assistant-service lan 프로필 — LAN 공유 개발 환경. 아직 LAN 배포하지 않는다(ADR-0036 결정 필요 2: pgvector 위치).
-# 배포 결정 뒤 DB 주소·{cipher} 비밀값을 채운다(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
+# ai-assistant-service lan 프로필 — LAN 공유 개발 환경(ADR-0051: 운영자용 RAG, pc2). 비밀값은 {cipher}(./gradlew :platform-services:config-server:configCipher). ADR-0029
 spring:
   datasource:
-    url: 'jdbc:postgresql://postgres-pc4:15433/ai_assistant_service' # [결정 필요] pgvector 컨테이너 위치
-    username: 'pmart'
-    # password: '{cipher}…' # 배포 때 configCipher 로 만든 값을 넣는다 — 평문 금지
+    # RAG 전용 pgvector(같은 PC, LAN 미공개) — 서비스 계정 ai_assistant_service 는 이 DB 에만 접속(고객용 DB 는 권한 없음)
+    url: 'jdbc:postgresql://rag-pgvector:15433/ai_assistant_service'
+    username: 'ai_assistant_service'
+    password: '{cipher}188a8b48510349d7322f88f2145b1dc8fe338bfc46b2d82635c318646f902e2d6c15834745e8618f5b78f879655944d3b357c908f94456e4660ea7b8d6d77632e0b0f0968607306a5eb7ed18055f00b3'
+pmart:
+  assistant:
+    model:
+      provider: ollama # LAN Ollama(같은 PC, GPU) — 외부 유료 API 없음(ADR-0051 결정 6)
+      embedding-dim: 1024
+      ollama:
+        base-url: http://ollama:11434
+        embedding-model: qwen3-embedding:0.6b # 2026-11-09 비교 평가로 결정(D3) — docs/rag/verification/2026-11-09/embedding-compare
+        embedding-version: ac6da0dfba84 # ollama list 의 ID. 모델 파일을 바꾸면 바꾸고 재색인(lan.sh rag-ingest)
+        query-instruction: "Instruct: Given a question about company policy or operating procedures, retrieve the document passages that answer it\nQuery: "
+        chat-model: qwen3:4b # 시작값(ADR-0051) — 답변 충실도 평가 뒤 정한다
+        chat-temperature: 0.2
+        chat-num-ctx: 8192
+        disable-thinking: true
+        keep-alive: 24h
+        request-timeout: 25s # 처리 하드 타임아웃(60s) 안 — 재생성 1회 포함

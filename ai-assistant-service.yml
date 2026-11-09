@@ -7,7 +7,7 @@ pmart:
     domain: platform
   assistant:
     model:
-      provider: local # local | fake(시험 전용). 외부 제공자는 결정 전(ADR-0036 결정 필요 1) — 키 자리는 -lan {cipher}/-local ${PMART_ASSISTANT_*:}
+      provider: local # local(기준선) | ollama(LAN, ADR-0051 — -lan 에서 켠다) | fake(시험 전용)
       embedding-dim: 384
     processing:
       timeout: 60s # 하드 타임아웃 — 반드시 lease 보다 짧다(기동 검사)
