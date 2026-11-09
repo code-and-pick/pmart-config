@@ -17,7 +17,7 @@ pmart:
         embedding-num-gpu: 0 # 임베딩은 CPU — GPU(6GB)는 대화 모델(8192 문맥 3.9GB)에. 함께 올리면 서로 밀어냄(2026-11-09)
         embedding-num-ctx: 2048
         query-instruction: "Instruct: Given a question about company policy or operating procedures, retrieve the document passages that answer it\nQuery: "
-        chat-model: qwen3:8b # 시험(2026-11-09) — 4B 와 같은 30문항으로 비교 중. 4B 로 되돌릴 수 있음
+        chat-model: qwen3:4b # 2026-11-09 8B 와 비교: 정확도 비슷(사람 판정 25 vs 26/30), 8B 는 8~22초(4B 1.4~8초)·일부 CPU — 4B 유지(사용자 결정 대기)
         chat-temperature: 0.2
         chat-num-ctx: 8192
         disable-thinking: true
