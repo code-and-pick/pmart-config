@@ -23,3 +23,8 @@ pmart:
         disable-thinking: true
         keep-alive: 24h
         request-timeout: 25s # 처리 하드 타임아웃(60s) 안 — 재생성 1회 포함
+    retrieval:
+      # 근거 없음 임계값(혼합 유사도) — 의미 임베딩용. 0.18 은 해시 기준선 값이라 거의 모든 질문이 넘었다(답변 평가 A20 지어낸 답).
+      # 2026-11-09 맞추기: 답 있는 질문 최저 1위 0.426, 답 없는 질문 최고 0.407 → 0.40(답 있는 19 모두 통과, 답 없는 9 중 7 걸러짐).
+      # docs/rag/verification/2026-11-09/answer-eval/threshold-calibration.md
+      threshold: 0.40
