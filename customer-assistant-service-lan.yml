@@ -18,7 +18,7 @@ pmart:
         embedding-num-ctx: 2048
         query-instruction: "Instruct: Given a customer's question to an online grocery store's customer center, retrieve the guide passages that answer it\nQuery: "
         chat-model: qwen3:4b
-        chat-temperature: 0.2
+        chat-temperature: 0.0 # 2026-11-09 고객 평가: 0.2 에서 "9,0 00원이 드요" 같은 글자 깨짐 → 0
         chat-num-ctx: 8192
         disable-thinking: true
         keep-alive: 24h
