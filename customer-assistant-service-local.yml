@@ -1,0 +1,11 @@
+# customer-assistant-service local 프로필 — 개발자 PC. pgvector 전용 컨테이너 deploy/local/ai-assistant/docker-compose.yml(15433)의
+# customer_assistant_service DB. 로컬 전용 고정값. ADR-0029·0051
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15433/customer_assistant_service
+    username: pmart
+    password: pmart-local
+pmart:
+  assistant:
+    customer:
+      order-service-base-url: http://localhost:8201

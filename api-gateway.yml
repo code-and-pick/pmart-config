@@ -177,6 +177,12 @@ spring:
               metadata:
                 # 모델 생성(재생성 1회 포함)이 10초를 넘을 수 있다 — 서비스 처리 하드 타임아웃 60s 보다 길게(2026-11-09 답변 평가 N08 504). ms
                 response-timeout: 65000
+            - id: customer-assistant-service # 고객앱 RAG(ADR-0051). 회원 고객만 — 서비스가 typ=CUSTOMER 검사(비회원 403, C2)
+              uri: ${pmart.gateway.upstream.customer-assistant-service}
+              predicates:
+                - Path=/api/v1/customer-assistant/**
+              metadata:
+                response-timeout: 65000 # 모델 생성 — 서비스 하드 타임아웃 60s 보다 길게(운영자용과 같음). ms
 server:
   port: 8080
 pmart:
@@ -215,6 +221,7 @@ pmart:
       case-service: http://case-service:8506
       center-master-service: http://center-master-service:8507
       ai-assistant-service: http://ai-assistant-service:8508
+      customer-assistant-service: http://customer-assistant-service:8509
     # 인증 없이 통과시키는 작업(계약 security: []). 메서드·경로 모두 일치해야 한다.
     public-paths:
       - method: POST

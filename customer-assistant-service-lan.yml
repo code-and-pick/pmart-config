@@ -1,0 +1,31 @@
+# customer-assistant-service lan 프로필 — LAN 공유 개발 환경(ADR-0051: 고객용 RAG, pc2). 비밀값은 {cipher}. ADR-0029
+spring:
+  datasource:
+    # RAG 전용 pgvector(같은 PC, LAN 미공개) — 계정 customer_assistant_service 는 이 DB 에만(운영자용 DB 권한 없음)
+    url: 'jdbc:postgresql://rag-pgvector:15433/customer_assistant_service'
+    username: 'customer_assistant_service'
+    password: '{cipher}f2550b6193f9605952eef5e2470035ca59e4f0420d726b231935aa3556ed422381e9774b64c850700a47d1dca2d93a45ea54e4d72aace5f8df513df1eebb728532bb1d6651423fd688879a1691d16df5'
+pmart:
+  assistant:
+    model:
+      provider: ollama # 운영자용과 같은 Ollama·모델(C8 기본값 — 같은 모델로 시작)
+      embedding-dim: 1024
+      ollama:
+        base-url: http://ollama:11434
+        embedding-model: qwen3-embedding:0.6b
+        embedding-version: ac6da0dfba84
+        embedding-num-gpu: 0
+        embedding-num-ctx: 2048
+        query-instruction: "Instruct: Given a customer's question to an online grocery store's customer center, retrieve the guide passages that answer it\nQuery: "
+        chat-model: qwen3:4b
+        chat-temperature: 0.2
+        chat-num-ctx: 8192
+        disable-thinking: true
+        keep-alive: 24h
+        request-timeout: 25s
+    retrieval:
+      # 시작값은 운영자용 맞춤값(0.40·0.45). 고객 질문 평가셋으로 다시 맞춘다(docs/rag/verification)
+      threshold: 0.40
+      fallback-min-similarity: 0.45
+    customer:
+      order-service-base-url: http://order-service:8201 # Eureka 이름(common-web) — 고객 토큰 전달

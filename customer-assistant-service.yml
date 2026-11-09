@@ -1,0 +1,37 @@
+# customer-assistant-service 고유 설정(모든 프로필). 환경별 값은 customer-assistant-service-<프로필>.yml, 공통은 application.yml. ADR-0029·0051
+# 고객앱 RAG: 승인된 고객 안내 문서(docs/business/customer-faq)만. 회원 고객만(C2), 요청 제한(C3), 질문 원문 저장 안 함(C5).
+server:
+  port: 8509
+pmart:
+  messaging:
+    domain: platform
+  assistant:
+    model:
+      provider: local # local(기준선) | ollama(LAN — -lan 에서 켠다) | fake(시험 전용)
+      embedding-dim: 384
+    processing:
+      timeout: 60s # 하드 타임아웃 — 반드시 lease 보다 짧다(기동 검사)
+      lease: 120s
+      retry-after-seconds: 2
+    retrieval:
+      candidates: 40
+      top-k: 4
+      threshold: 0.18 # 해시 기준선 값. 의미 임베딩(lan)은 -lan 에서
+      cosine-weight: 0.6
+      keyword-weight: 0.4
+      # 승인된 고객 안내는 모두 같은 지위 — 지위·우선순위 가중 없음(절의 [설계안] 표시가 순위를 바꾸지 않게)
+      precedence-weight: 0
+      confirmed-weight: 0
+      adopted-weight: 0
+      proposal-weight: 0
+      assumption-weight: 0
+      max-answer-chars: 1500 # 발췌 답변 길이(채팅 화면) — 온전한 절 개수를 줄여 맞춘다
+      max-chunk-chars: 1500
+      min-sentence-overlap: 0.5
+    # 질문 원문은 저장하지 않는다(C5 — 코드에서 고정). 답변 보존 기간 [결정 필요] — answers.retention 이 없으면 지우지 않는다
+    ingest:
+      prune-grace: 1h
+    customer:
+      rate-per-minute: 5 # 사용자 결정 2026-11-09 C3
+      rate-per-day: 50 # 하루 = Asia/Seoul 자정부터
+      recent-orders: 5 # "어떤 주문인가요?" 응답에 붙일 최근 주문 수(C6)

@@ -48,3 +48,4 @@ pmart:
       case-service: lb://case-service
       center-master-service: lb://center-master-service
       ai-assistant-service: lb://ai-assistant-service
+      customer-assistant-service: lb://customer-assistant-service
