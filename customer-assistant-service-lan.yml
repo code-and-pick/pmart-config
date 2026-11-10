@@ -1,4 +1,4 @@
-# customer-assistant-service lan 프로필 — LAN 공유 개발 환경(ADR-0051: 고객용 RAG, pc2). 비밀값은 {cipher}. ADR-0029
+# customer-assistant-service lan 프로필 — LAN 공유 개발 환경(ADR-0051: 고객용 RAG, pc5 — 2026-11-10 pc2 에서 옮김). 비밀값은 {cipher}. ADR-0029
 spring:
   datasource:
     # RAG 전용 pgvector(같은 PC, LAN 미공개) — 계정 customer_assistant_service 는 이 DB 에만(운영자용 DB 권한 없음)
