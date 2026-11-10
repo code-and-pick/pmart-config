@@ -284,6 +284,11 @@ pmart:
       - /api/v1/delivery-options
       - /api/v1/auth/logouts
       - /api/v1/auth/sessions/current
+    # 경로별 사용자 종류 허용 목록(ADR-0054 §6.1). 목록은 계약의 x-pmart-user-types 로 만든 생성 파일(access/user-type-allowlist.txt).
+    # RECORD: 막지 않고 어긋난 요청을 경고 로그·지표(pmart_gateway_user_type_allowlist_total)로만 — 빠진 경로를 찾는 단계.
+    # ENFORCE: 어긋나면 403 USER_TYPE_NOT_ALLOWED(목록에 없는 경로도 거부). OFF: 보지 않음.
+    user-type-allowlist:
+      mode: RECORD
     # 처리율 제한. 수치는 잠정값(2026-10-23) — 부하 시험·운영 지표로 조정한다. 환경별로 바꾸려면 api-gateway-<프로필>.yml
     rate-limit:
       enabled: true
