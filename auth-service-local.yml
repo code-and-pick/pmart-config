@@ -16,5 +16,5 @@ pmart:
         password-hash: "{bcrypt}$2a$10$Qut13u4vwUA83/mKRLIfwOJFI5P5ZJWUVbSYxzWim244YpORIaYKG"
     customer:
       google:
-        # 허용할 ID 토큰 aud = Google OAuth 클라이언트 ID(고객 앱·웹 서버 클라이언트, 쉼표 구분). 비면 Google 로그인은 CONFIG_REQUIRED
+        # 허용할 ID 토큰 aud = 고객용 Google 웹 클라이언트 ID(고객 앱 serverClientId, ADR-0055). Android 클라이언트 ID 는 넣지 않는다. 비면 CONFIG_REQUIRED
         client-ids: ${PMART_AUTH_CUSTOMER_GOOGLE_CLIENTIDS:}

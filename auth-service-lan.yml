@@ -24,5 +24,7 @@ pmart:
           password-hash: '{cipher}6f9ce3820735c11046cc50448ce4f50bf27570fd12c209b4106454f1c396f6b30bdd33d7fe9f10925889b180b57f5d884fb84c3082ae0b3839248664a666791492b76ae048c1d60c8bcf3cf7921a0aff753615a8c619e8c0c4cf2b52a0da35b4'
     customer:
       google:
-        # 허용할 ID 토큰 aud = Google OAuth 클라이언트 ID(고객 앱·웹 서버 클라이언트, 쉼표 구분). 비면 Google 로그인은 CONFIG_REQUIRED
-        client-ids: '293585219605-p6akml03k4lpi01agvgah41g2imo1aes.apps.googleusercontent.com,293585219605-29edshi9builp9ic7rkcukgitu211fpu.apps.googleusercontent.com'
+        # 허용할 ID 토큰 aud = 고객용 Google "웹 애플리케이션" 클라이언트 ID 하나(고객 앱 serverClientId, ADR-0055). 비면 Google 로그인은 CONFIG_REQUIRED.
+        # Android 클라이언트 ID 는 넣지 않는다 — Google 이 패키지·SHA-1 로 앱을 알아보는 데만 쓰고 ID 토큰 aud 는 늘 serverClientId 다
+        # (2026-11-10 293585219605-29edshi9… 를 뺌: 고객 앱 serverClientId 가 웹 ID 라 이 값을 aud 로 가진 토큰은 없음)
+        client-ids: '293585219605-p6akml03k4lpi01agvgah41g2imo1aes.apps.googleusercontent.com'
