@@ -77,3 +77,13 @@ pmart.security.issuers:
   - id: auth-service # 고객·비회원·서비스(+ 이전 기간 운영자·시험 라이더)
     issuer-uri: 'http://auth-service:8501'
     user-types: [CUSTOMER, GUEST, SERVICE, OPERATOR, RIDER]
+  # 직원 — Keycloak Realm pmart-staff(PC5, ADR-0054 3단계). iss = KC_HOSTNAME(render.sh). Keycloak 은 typ 에 "Bearer" 를 넣으므로
+  # type-claim 을 비워 발급자 종류(OPERATOR)로만 정한다(2026-11-10 실제 토큰 확인). 주체 = 사용자 속성 pmart_operator_id(기존 운영자 ID)
+  - id: staff
+    issuer-uri: 'http://192.168.0.101:8180/realms/pmart-staff'
+    jwk-set-uri: 'http://192.168.0.101:8180/realms/pmart-staff/protocol/openid-connect/certs'
+    audiences: [pmart-api]
+    user-types: [OPERATOR]
+    type-claim: ''
+    subject-claim: pmart_operator_id
+    roles-claim: realm_access.roles
