@@ -15,6 +15,35 @@ spring:
     problemdetails:
       enabled: true # 404(라우트 없음) 등 WebFlux 자체 오류도 RFC 9457
   cloud:
+    # 주체 차단 사건(ADR-0054 ⑤) — SubjectBlocked(auth 등) → 게이트웨이 Redis 차단 목록. 함수 subjectBlocks(SubjectBlockEvents).
+    # 게이트웨이는 DB 가 없어 common-messaging 기본값(inbox·dead_letter)이 없다 → 그룹·재시도·DLT 를 여기 적는다. 쓰기는 멱등(늦은 차단 시각만 남김).
+    # Bus(lan)는 busConsumer 를 이 뒤에 붙인다. 바꾸면 재시작한다. 단위 시험은 definition 을 비우고 enabled=false.
+    function:
+      definition: subjectBlocks
+    stream:
+      bindings:
+        subjectBlocks-in-0:
+          destination: platform.subject-block.v1
+          group: api-gateway # 게이트웨이가 여러 대여도 Redis 를 같이 쓰므로 한 대만 받으면 된다
+          consumer:
+            max-attempts: 4
+            back-off-initial-interval: 1000
+            back-off-multiplier: 2.0
+            back-off-max-interval: 10000
+            retryable-exceptions:
+              java.lang.IllegalArgumentException: false # 계약에 어긋난 사건 — 바로 DLT
+      kafka:
+        bindings:
+          subjectBlocks-in-0:
+            consumer:
+              enable-dlq: true
+              dlq-name: platform.subject-block.v1.DLT
+              ack-mode: RECORD
+              configuration:
+                auto.offset.reset: earliest # 처음 붙을 때 남아 있는 차단도 받는다(지난 차단은 남길 기간 0 이라 쓰지 않음)
+                isolation.level: read_committed
+                key.deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+                value.deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
     gateway:
       server:
         webflux:
@@ -191,6 +220,11 @@ server:
   port: 8080
 pmart:
   gateway:
+    # 주체 차단 목록(ADR-0054 ⑤, SubjectBlockFilter): 차단된 주체가 차단 전에 받은 토큰 → 401 SUBJECT_BLOCKED. Redis 장애는 통과(결정 H).
+    subject-blocklist:
+      enabled: true
+      max-token-lifetime: PT2H # 모든 발급자의 access token 중 가장 긴 수명보다 길게(고객 30분·직원 15분·비회원 1시간). 수명을 늘리면 같이
+      lookup-timeout: PT0.2S
     upstream:
       product-service: http://product-service:8101
       product-content-service: http://product-content-service:8102
