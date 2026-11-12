@@ -1,8 +1,20 @@
 # employee-auth-service 고유 설정(모든 프로필). 환경별 값은 employee-auth-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
-# 직원 로그인(Keycloak 기밀 클라이언트 — 인가 코드 + PKCE)·PMart 직원 토큰 발급자·직원 역할·권한 센터 정본(ADR-0056). 아직 Kafka 를 쓰지 않는다.
+# 직원 로그인(Keycloak 기밀 클라이언트 — 인가 코드 + PKCE)·PMart 직원 토큰 발급자·직원 역할·권한 센터 정본(ADR-0056).
+# 구독 platform.employee.v1(hr-service 직원 사건), 발행 SubjectBlocked(platform.subject-block.v1 — 직원 정지·퇴사 즉시 차단).
 server:
   port: 8511
+spring:
+  # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ·커밋은 common-messaging 기본값. 바꾸면 재시작
+  cloud:
+    function:
+      definition: employeeEvents
+    stream:
+      bindings:
+        employeeEvents-in-0:
+          destination: platform.employee.v1
 pmart:
+  messaging:
+    domain: platform # 발행 토픽 platform.subject-block.v1
   security:
     # 자기 토큰(로그아웃·현재 세션)과 관리 경로는 발급자 표로 검증한다. 공개키·시험 교환은 /internal(게이트웨이 비노출).
     permit-paths:
