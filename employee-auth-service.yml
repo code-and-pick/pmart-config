@@ -41,9 +41,12 @@ pmart:
       mfc:
         return-uris: ['pmart-mfc://login']
         session-idle: PT30M
-      # 백오피스(웹) — 복귀 주소는 환경별 파일
+      # 백오피스(웹) — 복귀 주소는 환경별 파일. SSO(2026-11-12 사용자 결정): Keycloak 세션을 남겨 새 탭은 비밀번호 없이(Keycloak 세션
+      # 무활동 12시간 = Realm 값 그대로), 로그아웃 응답의 idpLogoutUri 로 Keycloak 세션도 끝낸다 → <출처>/login 으로 돌아옴
       backoffice:
         session-idle: PT12H
+        sso: true
+        post-logout-path: /login
     keycloak:
       client-id: employee-auth-service
       timeout: PT5S
