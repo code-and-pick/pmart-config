@@ -70,7 +70,9 @@ pmart.approval-ref.mode: RECORD_ONLY
 
 # 믿는 발급자 표(ADR-0054) — 게이트웨이·모든 서비스(common-security)가 토큰 iss 로 발급자를 고르고, 사용자 종류는 그 발급자가 낼 수 있는 것만 인정한다.
 # 표에 없는 iss 는 401. jwk-set-uri 를 비운 발급자는 위 spring.security.oauth2.resourceserver.jwt.jwk-set-uri(auth-service 자신은 자기 키)로 서명을 확인한다.
-# Keycloak(직원, pmart-staff)·rider-auth-service(라이더) 줄이 있다. 배치·확인이 끝나면 auth-service 의 OPERATOR 를 뺀다:
+# 직원은 employee-auth-service(staff-ea), 라이더는 rider-auth-service 줄. Keycloak(pmart-staff) 토큰 줄은 2026-11-13 뺐다 —
+# Keycloak 은 신원만 확인하고 Keycloak 역할을 PMart 권한으로 믿지 않는다(ADR-0056 U-11: hr-service 의 manage-users 로 역할을 붙여 권한을 올리는 길 차단).
+# 배치·확인이 끝나면 auth-service 의 OPERATOR 를 뺀다:
 #  - OPERATOR: 운영자 로그인을 Keycloak 으로 옮기는 동안 함께 둔다(ADR-0054 D)
 #  - RIDER 는 2026-11-11 뺐다(rider-auth-service LAN 배치·확인 뒤). 시험 라이더 토큰은 rider-auth-service 서명키로 만든다
 pmart.security.issuers:
@@ -78,18 +80,7 @@ pmart.security.issuers:
     issuer-uri: 'http://auth-service:8501'
     audiences: [pmart-api] # ADR-0055 결정 6 — auth-service 가 aud=pmart-api 로 발급(시험 토큰도 aud 필요)
     user-types: [CUSTOMER, GUEST, SERVICE, OPERATOR]
-  # 직원 — Keycloak Realm pmart-staff(PC5, ADR-0054 3단계). iss = KC_HOSTNAME(render.sh). Keycloak 은 typ 에 "Bearer" 를 넣으므로
-  # type-claim 을 비워 발급자 종류(OPERATOR)로만 정한다(2026-11-10 실제 토큰 확인). 주체 = 사용자 속성 pmart_operator_id(기존 운영자 ID)
-  - id: staff
-    issuer-uri: 'https://192.168.0.40:8443/iam/realms/pmart-staff' # ADR-0056 4단계(2026-11-12): KC_HOSTNAME = 게이트웨이 HTTPS /iam. JWKS 는 아래 직접 주소 그대로
-    jwk-set-uri: 'http://192.168.0.101:8180/realms/pmart-staff/protocol/openid-connect/certs'
-    audiences: [pmart-api]
-    user-types: [OPERATOR]
-    type-claim: ''
-    subject-claim: pmart_operator_id
-    roles-claim: realm_access.roles
   # 직원 — employee-auth-service(PC5, ADR-0056 3단계). Keycloak 은 신원만, 직원 토큰은 이 서비스가 발급(예전 운영자 토큰 모양).
-  # 옮기는 동안 위 Keycloak 줄(staff)과 함께 둔다 — Keycloak 줄은 ADR-0056 7단계(또는 hr-service 배포 전, U-11)에 뺀다
   - id: staff-ea
     issuer-uri: 'http://employee-auth-service:8511'
     jwk-set-uri: 'http://employee-auth-service:8511/api/v1/internal/jwks'
