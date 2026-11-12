@@ -7,16 +7,10 @@ spring:
 pmart:
   auth:
     issuer: 'http://auth-service:8501'
-    # Keycloak 직원 차단 중계(ADR-0054 ⑤ 결정 M): 관리 기록(사용자 비활성화·세션 로그아웃·비밀번호 재설정) → SubjectBlocked.
-    # 중계 클라이언트 pmart-auth-relay(서비스 계정 view-events·view-users 만). issuer 는 발급자 표 staff 줄과 같아야 한다
+    # Keycloak 직원 차단 중계(ADR-0054 ⑤ 결정 M)는 2026-11-13 껐다(ADR-0056 7단계): 발급자 표에 Keycloak 줄이 없어 막을 Keycloak 토큰이 없고,
+    # 직원 차단은 employee-auth-service 가 SubjectBlocked 를 낸다. Keycloak 중계 클라이언트 pmart-auth-relay 도 지웠다(코드는 auth-service 에 남음 — 꺼진 상태)
     staff-relay:
-      enabled: true
-      base-url: 'http://192.168.0.101:8180'
-      realm: 'pmart-staff'
-      client-id: 'pmart-auth-relay'
-      client-secret: '{cipher}f280c9a8e6f5167d479869ed9e35fd9845770cb59c4bac582570b86320d1dc158b1d605331a637678d82dfda4fe5a92701e8a272e3e8e554119c38c58b0100ea' # 평문 deploy/lan/.secrets/keycloak-relay-client-secret
-      issuer: 'http://192.168.0.101:8180/realms/pmart-staff'
-      poll-interval: PT10S
+      enabled: false
     # 서명키(PKCS#8 PEM 본문, 첫 키가 활성)·첫 관리자(bcrypt 해시만, ADR-0018) — 비밀값은 {cipher}
     signing:
       keys:
