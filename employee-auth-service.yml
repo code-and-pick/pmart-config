@@ -63,6 +63,12 @@ pmart:
         session-idle: PT12H
         sso: true
         post-logout-path: /login
+      # 인사팀 백오피스(별도 웹 앱, 2026-11-13 사용자 결정 "SSO 켬") — 백오피스와 같은 값. 같은 브라우저면 한 번 로그인으로 둘 다,
+      # 어느 쪽에서 로그아웃해도 Keycloak 세션이 끝난다(다른 앱의 PMart 세션 토큰은 그 앱이 지운다)
+      hr-backoffice:
+        session-idle: PT12H
+        sso: true
+        post-logout-path: /login
     keycloak:
       client-id: employee-auth-service
       timeout: PT5S

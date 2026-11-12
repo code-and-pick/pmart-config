@@ -18,6 +18,12 @@ pmart:
           - 'http://192.168.0.40/auth/callback'
           - 'http://d603-16/auth/callback'
           - 'http://localhost:5173/auth/callback'
+      # 인사팀 백오피스(별도 앱, 2026-11-13 사용자 결정 — PC 4 :8081, 개발 :5174)
+      hr-backoffice:
+        return-uris:
+          - 'http://192.168.0.40:8081/auth/callback'
+          - 'http://d603-16:8081/auth/callback'
+          - 'http://localhost:5174/auth/callback'
     keycloak:
       # ID 토큰 iss = Keycloak KC_HOSTNAME(render.sh) = 게이트웨이 HTTPS /iam(ADR-0056 4단계, 2026-11-12). 브라우저 로그인·로그아웃 주소도 이것에서
       issuer: 'https://192.168.0.40:8443/iam/realms/pmart-staff'

@@ -13,3 +13,5 @@ pmart:
     apps:
       backoffice:
         return-uris: ['http://localhost:5173/auth/callback']
+      hr-backoffice:
+        return-uris: ['http://localhost:5174/auth/callback']
