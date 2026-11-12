@@ -1,0 +1,7 @@
+# hr-service local 프로필 — 개발자 PC(deploy/local docker compose, localhost). 로컬 전용 고정값. ADR-0029
+# 로컬에는 Keycloak·메일 서버가 없다 — 등록·조회는 되고 계정 발급은 CONFIG_REQUIRED 로 남는다(재시도).
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:15432/hr_service
+    username: pmart
+    password: pmart-local

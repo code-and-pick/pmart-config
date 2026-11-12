@@ -41,6 +41,7 @@ pmart:
       auth-service: http://localhost:8501
       rider-auth-service: http://localhost:8510
       employee-auth-service: http://localhost:8511
+      hr-service: http://localhost:8512
       keycloak: http://localhost:8180
       notification-service: http://localhost:8502
       audit-service: http://localhost:8503

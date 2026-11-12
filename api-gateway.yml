@@ -197,6 +197,10 @@ spring:
               uri: ${pmart.gateway.upstream.employee-auth-service}
               predicates:
                 - Path=/api/v1/employee-auth/**
+            - id: hr-service # 직원 등록·인사 정보·계정 발급(ADR-0056)
+              uri: ${pmart.gateway.upstream.hr-service}
+              predicates:
+                - Path=/api/v1/hr/**
             - id: audit-service
               uri: ${pmart.gateway.upstream.audit-service}
               predicates:
@@ -268,6 +272,7 @@ pmart:
       auth-service: http://auth-service:8501
       rider-auth-service: http://rider-auth-service:8510
       employee-auth-service: http://employee-auth-service:8511
+      hr-service: http://hr-service:8512
       keycloak: http://keycloak:8080 # 직원 로그인 화면 /iam(ADR-0056)
       notification-service: http://notification-service:8502
       audit-service: http://audit-service:8503

@@ -55,6 +55,7 @@ pmart:
       auth-service: lb://auth-service
       rider-auth-service: lb://rider-auth-service
       employee-auth-service: lb://employee-auth-service
+      hr-service: lb://hr-service
       keycloak: 'http://192.168.0.101:8180' # Eureka 에 없는 외부 구성요소(PC 5)
       notification-service: lb://notification-service
       audit-service: lb://audit-service

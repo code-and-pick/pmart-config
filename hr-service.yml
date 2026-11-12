@@ -1,0 +1,20 @@
+# hr-service 고유 설정(모든 프로필). 환경별 값은 hr-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
+# 직원 등록·인사 정보·계정 발급(사서함 → Keycloak 계정 → 비밀번호 설정 메일), 직원 사건 발행(ADR-0056). 사건 구독은 아직 없다(approval 연동 뒤).
+server:
+  port: 8512
+pmart:
+  messaging:
+    domain: platform # 토픽 platform.employee.v1
+  hr:
+    mail-domain: pmart.com
+    zone: Asia/Seoul # 사번 연도·계약 종료일 판정
+    keycloak:
+      realm: pmart-staff
+      client-id: hr-provisioner # 서비스 계정 클라이언트(manage/view/query-users 만, ADR-0056 결정 16)
+      timeout: PT5S
+      invite-lifespan: P3D # 비밀번호 설정 링크 유효 기간
+    provisioning:
+      max-attempts: 8 # 실패 8번이면 FAILED + 보상(사서함·Keycloak 사용자 비활성)
+      first-backoff: PT5S
+      max-backoff: PT10M
+      poll-interval: PT5S

@@ -1,0 +1,15 @@
+# hr-service lan 프로필 — LAN 공유 개발 환경(PC 5, ADR-0056). 비밀값은 {cipher}(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
+spring:
+  datasource:
+    url: 'jdbc:postgresql://postgres-pc5:15432/hr_service'
+    username: 'pmart'
+    password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
+pmart:
+  hr:
+    keycloak:
+      # 같은 PC 5 Docker 네트워크 안 — 게이트웨이 /iam 은 관리 경로를 막는다
+      admin-base-url: 'http://keycloak:8080'
+      # 원본 deploy/lan/.secrets/keycloak-hr-provisioner-client-secret(Keycloak 클라이언트 hr-provisioner 와 같은 값)
+      client-secret: '{cipher}fb0eac83f95358ce8e125dee5748fd001fc2d63e3cdc71826a19c6ea441d11b4e134e16db1ce7ea29eb6e6c140602f5a385726796c6e4fae94416eb460fba85428da98f84cccfb9272425ed66713972c5077fecebe0cb3bf0405ff6fe8da67b5'
+    mail-provisioner:
+      base-url: 'http://mail-provisioner:8513' # 같은 PC 5, LAN 포트 없음
