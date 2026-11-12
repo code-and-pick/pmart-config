@@ -7,12 +7,15 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: receiptEvents
+      definition: receiptEvents;employeeEvents
     stream:
       bindings:
         # 정본 서비스의 반영 회신 ApplicationReceiptRecorded(ADR-0039)
         receiptEvents-in-0:
           destination: platform.approval-receipt.v1
+        # hr-service 직원 권한 요청 GrantRequested(ADR-0056 5-4). 같은 토픽의 다른 직원 사건은 버린다
+        employeeEvents-in-0:
+          destination: platform.employee.v1
 pmart:
   messaging:
     domain: platform
@@ -26,3 +29,11 @@ pmart:
       SERVICEABILITY: SERVICEABILITY_APPROVER # 고객 배송 권역·담당 MFC 매핑 (BO-07)
       CENTER_MASTER: CENTER_MASTER_APPROVER # 센터 기준정보·영업 캘린더 (BO-06)
       INITIAL_STOCK: INVENTORY_APPROVER # MFC 초기 보유 반입(오픈 시 초기 재고, D2 — mfc-inbound → mfc-inventory 전기)
+      GRANT: OPERATOR_ADMIN # 직원 권한 요청(BO-01, ADR-0056 5-4). 요청자(등록한 인사팀 직원)와 달라야 한다
+    # 자동 승인 규칙 표(ADR-0056 결정 6, 사용자 2026-11-12 "소속 센터 현장 역할만"). 바꾸면 version 을 올린다 —
+    # 자동 승인 기록의 승인자 = RULE:<id>@v<version>. 이 표에 맞지 않는 행은 모두 승인자 심사
+    auto-approval-rules:
+      - id: GRANT-MFC-WORKER-OWN-CENTER
+        version: 1
+        roles: [MFC_WORKER]
+        same-center-as-affiliation: true # 소속이 센터이고 권한 센터가 정확히 그 센터 하나일 때만

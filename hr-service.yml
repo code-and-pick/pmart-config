@@ -1,7 +1,18 @@
 # hr-service 고유 설정(모든 프로필). 환경별 값은 hr-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
-# 직원 등록·인사 정보·계정 발급(사서함 → Keycloak 계정 → 비밀번호 설정 메일), 직원 사건 발행(ADR-0056). 사건 구독은 아직 없다(approval 연동 뒤).
+# 직원 등록·인사 정보·계정 발급(사서함 → Keycloak 계정 → 비밀번호 설정 메일), 직원 사건·요청 권한(GrantRequested) 발행(ADR-0056).
+# 구독 platform.approval.v1(권한 승인 결과 — 등록 화면의 요청 권한 상태).
 server:
   port: 8512
+spring:
+  # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ·커밋은 common-messaging 기본값. 바꾸면 재시작
+  cloud:
+    function:
+      definition: approvalEvents
+    stream:
+      bindings:
+        # 직원 권한 승인 결과 ApprovalDecided(type GRANT, ADR-0056 5-4) — 다른 승인 종류는 버린다
+        approvalEvents-in-0:
+          destination: platform.approval.v1
 pmart:
   messaging:
     domain: platform # 토픽 platform.employee.v1
