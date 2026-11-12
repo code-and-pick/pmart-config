@@ -50,9 +50,19 @@ spring:
           httpclient:
             connect-timeout: 1000 # ms
             response-timeout: 10s
-          default-filters:
-            - RemoveRequestHeader=Cookie
+          # 업스트림으로 가는 Cookie 헤더는 CookieStripGlobalFilter 가 지운다(예전 default-filters RemoveRequestHeader=Cookie).
+          # 라우트 metadata pmart-keep-cookies: true 인 라우트(Keycloak 로그인 화면 /iam)만 예외 — Keycloak 로그인은 쿠키로 이어진다
           routes:
+            # 직원 로그인 화면(ADR-0056 결정 11) — Keycloak 의 pmart-staff 로그인에 필요한 경로만 중계한다.
+            # 관리 콘솔·Admin API(/iam/admin/**)·master Realm(/iam/realms/master/**)·계정 화면 등 그 밖의 /iam 은 라우트가 없어 404
+            - id: keycloak-iam
+              uri: ${pmart.gateway.upstream.keycloak}
+              predicates:
+                - Path=/iam/realms/pmart-staff/protocol/openid-connect/**,/iam/realms/pmart-staff/login-actions/**,/iam/realms/pmart-staff/.well-known/**,/iam/resources/**
+              filters:
+                - StripPrefix=1
+              metadata:
+                pmart-keep-cookies: true
             - id: search-service-me
               uri: ${pmart.gateway.upstream.search-service}
               predicates:
@@ -258,6 +268,7 @@ pmart:
       auth-service: http://auth-service:8501
       rider-auth-service: http://rider-auth-service:8510
       employee-auth-service: http://employee-auth-service:8511
+      keycloak: http://keycloak:8080 # 직원 로그인 화면 /iam(ADR-0056)
       notification-service: http://notification-service:8502
       audit-service: http://audit-service:8503
       backoffice-bff: http://backoffice-bff:8504
@@ -333,6 +344,19 @@ pmart:
         path: /api/v1/employee-auth/tokens
       - method: POST
         path: /api/v1/employee-auth/tokens/refresh
+      # Keycloak 로그인 화면 중계(/iam, ADR-0056 결정 11) — PMart 계약이 아니라 Keycloak 의 OIDC·로그인 경로. 라우트(keycloak-iam)와 같은 범위만
+      - method: GET
+        path: /iam/realms/pmart-staff/protocol/openid-connect/**
+      - method: POST
+        path: /iam/realms/pmart-staff/protocol/openid-connect/**
+      - method: GET
+        path: /iam/realms/pmart-staff/login-actions/**
+      - method: POST
+        path: /iam/realms/pmart-staff/login-actions/**
+      - method: GET
+        path: /iam/realms/pmart-staff/.well-known/**
+      - method: GET
+        path: /iam/resources/**
     # 비회원 토큰(typ=GUEST)을 통과시키는 경로. 그 밖에서는 403(각 서비스도 pmart.security.guest-paths 로 같은 규칙).
     guest-paths:
       - /api/v1/carts/**
