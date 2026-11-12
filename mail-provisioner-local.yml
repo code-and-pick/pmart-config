@@ -1,0 +1,5 @@
+# mail-provisioner local 프로필 — 개발자 PC. 로컬에는 메일 서버가 없다 — 계정 파일은 임시 폴더, receiving 은 늘 false. ADR-0029
+pmart:
+  mail-provisioner:
+    accounts-file: ${java.io.tmpdir}/pmart-mail/postfix-accounts.cf
+    smtp-host: localhost

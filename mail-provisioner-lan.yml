@@ -1,0 +1,4 @@
+# mail-provisioner lan 프로필 — PC 5. LAN 포트가 없어 다른 PC 에서 부를 수 없으므로 Eureka 에 등록하지 않는다(hr-service 는 같은 PC 에서 이름으로). ADR-0029
+eureka:
+  client:
+    enabled: false

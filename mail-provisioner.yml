@@ -1,0 +1,12 @@
+# mail-provisioner 고유 설정(모든 프로필). 사서함 프로비저닝 사이드카(ADR-0056 결정 10). DB·Kafka 없음. ADR-0029
+# LAN 포트 없이 PC 5 Docker 네트워크 안에서만(hr-service → http://mail-provisioner:8513). 계정 파일 = 메일 서버 설정 볼륨(render.sh 가 붙임)
+server:
+  port: 8513
+pmart:
+  mail-provisioner:
+    accounts-file: /tmp/docker-mailserver/postfix-accounts.cf
+    domain: pmart.com
+    smtp-host: mailserver
+    smtp-port: 25
+    helo-name: mail-provisioner.pmart.com
+    smtp-timeout: PT5S
