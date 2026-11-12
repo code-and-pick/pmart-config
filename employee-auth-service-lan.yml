@@ -19,8 +19,8 @@ pmart:
           - 'http://d603-16/auth/callback'
           - 'http://localhost:5173/auth/callback'
     keycloak:
-      # ID 토큰 iss = Keycloak KC_HOSTNAME(render.sh) 기준. 브라우저 로그인 화면도 이 주소(ADR-0056 4단계에서 게이트웨이 /iam 로 바뀐다)
-      issuer: 'http://192.168.0.101:8180/realms/pmart-staff'
+      # ID 토큰 iss = Keycloak KC_HOSTNAME(render.sh) = 게이트웨이 HTTPS /iam(ADR-0056 4단계, 2026-11-12). 브라우저 로그인·로그아웃 주소도 이것에서
+      issuer: 'https://192.168.0.40:8443/iam/realms/pmart-staff'
       # 서버끼리 호출은 같은 PC 5 Docker 네트워크 안에서(게이트웨이를 다시 거치지 않는다)
       token-uri: 'http://keycloak:8080/realms/pmart-staff/protocol/openid-connect/token'
       jwk-set-uri: 'http://keycloak:8080/realms/pmart-staff/protocol/openid-connect/certs'
@@ -28,7 +28,7 @@ pmart:
       # 원본 deploy/lan/.secrets/keycloak-employee-auth-client-secret(Keycloak 클라이언트 employee-auth-service 와 같은 값)
       client-secret: '{cipher}b3cb1efd1d0e41e288753806af907b0dfe3557592ff376891b44fd7162255fa2891d5c7a5633ef8fbbedb75a466b35feddb10a98c12139556cf87f1d9d364c20e14b0e299b9862ab0e0a2db522ff4a04606d581c985ef85458c84b52b614d153'
       # Keycloak 에 등록한 콜백 — 게이트웨이(PC 4) 경유 공개 주소
-      redirect-uri: 'http://192.168.0.40:8080/api/v1/employee-auth/logins/callback'
+      redirect-uri: 'https://192.168.0.40:8443/api/v1/employee-auth/logins/callback' # HTTPS(티켓이 주소에 실린다)
     # LAN 시험 스크립트 전용(ADR-0056 D5): pmart-dev-cli 직접 로그인 토큰 → 직원 토큰. prod 에는 두지 않는다
     dev-token-exchange:
       enabled: true

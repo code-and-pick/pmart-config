@@ -81,7 +81,7 @@ pmart.security.issuers:
   # 직원 — Keycloak Realm pmart-staff(PC5, ADR-0054 3단계). iss = KC_HOSTNAME(render.sh). Keycloak 은 typ 에 "Bearer" 를 넣으므로
   # type-claim 을 비워 발급자 종류(OPERATOR)로만 정한다(2026-11-10 실제 토큰 확인). 주체 = 사용자 속성 pmart_operator_id(기존 운영자 ID)
   - id: staff
-    issuer-uri: 'http://192.168.0.101:8180/realms/pmart-staff'
+    issuer-uri: 'https://192.168.0.40:8443/iam/realms/pmart-staff' # ADR-0056 4단계(2026-11-12): KC_HOSTNAME = 게이트웨이 HTTPS /iam. JWKS 는 아래 직접 주소 그대로
     jwk-set-uri: 'http://192.168.0.101:8180/realms/pmart-staff/protocol/openid-connect/certs'
     audiences: [pmart-api]
     user-types: [OPERATOR]
