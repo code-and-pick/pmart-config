@@ -88,6 +88,13 @@ pmart.security.issuers:
     type-claim: ''
     subject-claim: pmart_operator_id
     roles-claim: realm_access.roles
+  # 직원 — employee-auth-service(PC5, ADR-0056 3단계). Keycloak 은 신원만, 직원 토큰은 이 서비스가 발급(예전 운영자 토큰 모양).
+  # 옮기는 동안 위 Keycloak 줄(staff)과 함께 둔다 — Keycloak 줄은 ADR-0056 7단계(또는 hr-service 배포 전, U-11)에 뺀다
+  - id: staff-ea
+    issuer-uri: 'http://employee-auth-service:8511'
+    jwk-set-uri: 'http://employee-auth-service:8511/api/v1/internal/jwks'
+    audiences: [pmart-api]
+    user-types: [OPERATOR]
   # 라이더 — rider-auth-service(PC5, ADR-0054 E·ADR-0055, Google 로그인). 이 발급자의 토큰은 RIDER 로만 인정한다.
   - id: rider
     issuer-uri: 'http://rider-auth-service:8510'

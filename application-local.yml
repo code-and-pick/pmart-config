@@ -29,6 +29,12 @@ pmart.security.issuers:
     issuer-uri: 'http://localhost:8501'
     audiences: [pmart-api] # ADR-0055 결정 6 — auth-service 가 aud=pmart-api 로 발급(시험 토큰도 aud 필요)
     user-types: [CUSTOMER, GUEST, SERVICE, OPERATOR]
+  # 직원 — employee-auth-service(ADR-0056)
+  - id: staff-ea
+    issuer-uri: 'http://localhost:8511'
+    jwk-set-uri: 'http://localhost:8511/api/v1/internal/jwks'
+    audiences: [pmart-api]
+    user-types: [OPERATOR]
   # 라이더 — rider-auth-service(ADR-0054 E·ADR-0055, Google 로그인). RIDER 로만 인정
   - id: rider
     issuer-uri: 'http://localhost:8510'

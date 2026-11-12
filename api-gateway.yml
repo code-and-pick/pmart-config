@@ -183,6 +183,10 @@ spring:
               uri: ${pmart.gateway.upstream.rider-auth-service}
               predicates:
                 - Path=/api/v1/rider-auth/**
+            - id: employee-auth-service # 직원 로그인(Keycloak 기밀 클라이언트)·직원 토큰(ADR-0056)
+              uri: ${pmart.gateway.upstream.employee-auth-service}
+              predicates:
+                - Path=/api/v1/employee-auth/**
             - id: audit-service
               uri: ${pmart.gateway.upstream.audit-service}
               predicates:
@@ -253,6 +257,7 @@ pmart:
       delivery-tracking-service: http://delivery-tracking-service:8406
       auth-service: http://auth-service:8501
       rider-auth-service: http://rider-auth-service:8510
+      employee-auth-service: http://employee-auth-service:8511
       notification-service: http://notification-service:8502
       audit-service: http://audit-service:8503
       backoffice-bff: http://backoffice-bff:8504
@@ -319,6 +324,15 @@ pmart:
         path: /api/v1/rider-auth/social-logins/* # rider-auth-service
       - method: POST
         path: /api/v1/rider-auth/tokens # rider-auth-service
+      # employee-auth-service(ADR-0056): 브라우저가 여는 로그인 시작·Keycloak 콜백(302), 티켓 교환·갱신
+      - method: GET
+        path: /api/v1/employee-auth/logins
+      - method: GET
+        path: /api/v1/employee-auth/logins/callback
+      - method: POST
+        path: /api/v1/employee-auth/tokens
+      - method: POST
+        path: /api/v1/employee-auth/tokens/refresh
     # 비회원 토큰(typ=GUEST)을 통과시키는 경로. 그 밖에서는 403(각 서비스도 pmart.security.guest-paths 로 같은 규칙).
     guest-paths:
       - /api/v1/carts/**

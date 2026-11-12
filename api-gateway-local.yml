@@ -40,6 +40,7 @@ pmart:
       delivery-tracking-service: http://localhost:8406
       auth-service: http://localhost:8501
       rider-auth-service: http://localhost:8510
+      employee-auth-service: http://localhost:8511
       notification-service: http://localhost:8502
       audit-service: http://localhost:8503
       backoffice-bff: http://localhost:8504

@@ -42,6 +42,7 @@ pmart:
       delivery-tracking-service: lb://delivery-tracking-service
       auth-service: lb://auth-service
       rider-auth-service: lb://rider-auth-service
+      employee-auth-service: lb://employee-auth-service
       notification-service: lb://notification-service
       audit-service: lb://audit-service
       backoffice-bff: lb://backoffice-bff
