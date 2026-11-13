@@ -193,7 +193,7 @@ spring:
             - id: delivery-dispatch-service
               uri: ${pmart.gateway.upstream.delivery-dispatch-service}
               predicates:
-                - Path=/api/v1/dispatch-requests/**,/api/v1/offers/**
+                - Path=/api/v1/dispatch-requests/**,/api/v1/offers/**,/api/v1/delivery-list/**
             - id: auth-service
               uri: ${pmart.gateway.upstream.auth-service}
               predicates:

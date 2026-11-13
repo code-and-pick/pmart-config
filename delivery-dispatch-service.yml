@@ -5,3 +5,50 @@ server:
 pmart:
   messaging:
     domain: delivery
+  # 배차(DD-1, 2026-11-13). 기본값 = 업무 원문(반경 1·2·3km 직선, 응답 1분, 재요청 2회·10분, 최대 3건, 연속 거절 5회) + 사용자 결정(배차 08~24시)
+  dispatch:
+    radii-km: [1.0, 2.0, 3.0]
+    offer-timeout: PT1M
+    retry-interval: PT10M
+    max-retries: 2
+    max-active-deliveries: 3
+    rejection-notice: 5
+    operating-start: '08:00'
+    operating-end: '24:00'
+    location-max-age: PT2M # 설계값 — 이보다 오래된 라이더 위치는 후보에서 뺀다
+    tick-interval: PT5S
+    late-weight: 2
+    solver-time-limit: PT2S
+    poll-after-sec: 5
+    # Python AI 최적화 서버(ADR-0058 결정 9~13). base-url 을 비우면 OR-Tools 만 — 사용자 2026-11-13: 추가 학습으로 OR-Tools 를 넘을 때까지 끈다
+    ai:
+      base-url: ''
+      timeout: PT3S
+    # 배송 약속(사용자 2026-11-13): 한집·알뜰 = 주문 확정 + 50분 안 전달(예약 = 도착 시간대 끝 — 사용자 확인). 알뜰배달 묶음은 모든 고객이 약속 안에 받을 때만
+    delivery-promise: PT50M
+    delay-alert-after: PT20M # 예상 전달이 약속보다 20분 넘게 늦으면 DispatchDelayed 한 번(사용자 "안내기준보다 20분 더 늦춰지면")
+    bundle-max-extra: PT50M # 묶음 보조 상한 — 주 조건은 약속 시각
+    # 카카오 호출 줄이기(사용자 2026-11-13 M3) — 설계값
+    search-interval: PT30S # 제안할 사람이 없을 때 다시 볼 간격
+    quota-backoff: PT5M # 카카오 사용량 초과(429) 때 미루기
+    route-cache-ttl: PT5M # 라이더 → MFC 도로 시간 다시 쓰기(약 100m 칸)
+    bundle-neighbors: 4 # 알뜰배달 묶음 후보를 고객마다 가까운 4명으로 — 큰 MFC 에서 CP-SAT 가 시간 안에 풀게(2026-11-13 측정, 0 = 모든 조합)
+    # 반복 배차취소 → 배차 알림 감소(제재 아님, 사용자 2026-11-13) — 값도 사용자 확인("배차취소 패널티는 그대로")
+    cancellation-window: P7D
+    cancellation-penalty: PT3M # AI 추천 제안 비용에 1건마다
+    list-delay-per-cancellation: PT1M # 일반 모드 배달리스트에 새 배송이 1건마다 늦게 보임
+spring:
+  # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ({토픽}.DLT)·커밋은 common-messaging 기본값.
+  # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
+  # 처음 켜기 전에 소비 그룹 시작 위치를 2026-11-10T00:30Z 로 맞춘다(kickoff §6)
+  cloud:
+    function:
+      definition: fulfillmentEvents;executionEvents;orderEvents
+    stream:
+      bindings:
+        fulfillmentEvents-in-0: # mfc-fulfillment DispatchRequested·ShipmentReady·PackingFinished·WorkStopResult·PackageHandedOver → 배송(DD-1)
+          destination: mfc.fulfillment.v1
+        executionEvents-in-0: # delivery-execution DeliveryCompleted → 배송 CLOSED(진행 중 수에서 빠짐, H2)
+          destination: delivery.delivery.v1
+        orderEvents-in-0: # order OrderCancelled(scope FULL) → 픽업 전 배송 취소·이후 배차 요청 차단(PC 1 재검토 ①)
+          destination: order.order.v1

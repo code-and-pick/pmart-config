@@ -5,3 +5,26 @@ server:
 pmart:
   messaging:
     domain: delivery
+  # 수행료·정산(원문 §7.2, 사용자 결정 2026-11-13). 지급 예정일은 주말·법정공휴일을 뺀다
+  execution:
+    confirm-after: PT5H
+    payout-business-days: 3
+    public-holidays: [] # 비우면 법정공휴일(코드 KoreanPublicHolidays 2026~2027, 사용자 결정 2026-11-13) — 임시공휴일이 생기면 목록 전체를 넣는다
+    confirm-interval: PT1M
+spring:
+  servlet:
+    multipart:
+      max-file-size: 11MB # 증빙 사진 1장 상한은 ExecutionRules.MAX_PHOTO_BYTES(10MB) — 넘으면 422 PHOTO_INVALID 로 답하려고 조금 크게
+      max-request-size: 11MB
+  # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ({토픽}.DLT)·커밋은 common-messaging 기본값.
+  # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
+  # 처음 켜기 전에 두 소비 그룹 시작 위치를 2026-11-10T00:30Z 로 맞춘다(dispatch 와 같은 기준 — kickoff §6)
+  cloud:
+    function:
+      definition: deliveryEvents;fulfillmentEvents
+    stream:
+      bindings:
+        deliveryEvents-in-0: # delivery-dispatch DeliveryCreated·DeliveryAssigned·DeliveryAssignmentChanged·DeliveryCancelledBeforePickup → 수행 상태
+          destination: delivery.delivery.v1
+        fulfillmentEvents-in-0: # mfc-fulfillment ShipmentReady·PackingFinished(포장 목록)·PackageHandedOver(인계 — 픽업 완료 근거, DE-1)
+          destination: mfc.fulfillment.v1
