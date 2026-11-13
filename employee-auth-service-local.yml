@@ -1,5 +1,7 @@
 # employee-auth-service local 프로필 — 개발자 PC(deploy/local docker compose, localhost). 로컬 전용 고정값. ADR-0029
 # 로컬에는 Keycloak 이 없다 — 로그인 시작은 CONFIG_REQUIRED. 브라우저 로그인 시험은 통합 시험(Keycloak 컨테이너)으로 한다.
+# 로컬에서 직원 API 를 직접 불러 볼 토큰은 dev-token-mint(POST /api/v1/internal/dev-tokens — 운영자 ID·역할·센터를 주면 바로 발급,
+# 2026-11-13). 로컬 전용 — lan·prod 설정에는 넣지 않는다. 도우미: deploy/lan/checks/staff_auth.py local_staff_token()
 spring:
   datasource:
     url: jdbc:postgresql://localhost:15432/employee_auth_service
@@ -15,3 +17,5 @@ pmart:
         return-uris: ['http://localhost:5173/auth/callback']
       hr-backoffice:
         return-uris: ['http://localhost:5174/auth/callback']
+    dev-token-mint:
+      enabled: true
