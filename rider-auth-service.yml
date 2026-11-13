@@ -1,8 +1,10 @@
 # rider-auth-service 고유 설정(모든 프로필). 환경별 값은 rider-auth-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
-# 라이더 Google 로그인·라이더 토큰 발급자(ADR-0054 E·F, ADR-0055). Kafka 를 쓰지 않는다.
+# 라이더 Google 로그인·라이더 토큰 발급자(ADR-0054 E·F, ADR-0055). 발행 SubjectBlocked(platform.subject-block.v1 — 로그아웃·refresh 재사용 즉시 차단, 2026-11-13). 구독 없음.
 server:
   port: 8510
 pmart:
+  messaging:
+    domain: platform # 발행 토픽 platform.subject-block.v1
   security:
     # 자기 토큰(로그아웃·현재 세션)은 발급자 표의 rider 줄(이 서비스 JWKS)로 검증한다.
     # 공개키는 토큰 없이 접근. /internal 이라 게이트웨이로는 노출되지 않는다.
