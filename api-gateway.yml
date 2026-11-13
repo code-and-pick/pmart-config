@@ -63,6 +63,15 @@ spring:
                 - StripPrefix=1
               metadata:
                 pmart-keep-cookies: true
+            # 웹 백오피스 refresh 쿠키 갱신(ADR-0059) — employee-auth-service 쿠키(__Secure-pmart_ea_*)만 넘기고 나머지 쿠키는 지운다.
+            # 일반 employee-auth-service 라우트보다 먼저(order)
+            - id: employee-auth-refresh-cookie
+              uri: ${pmart.gateway.upstream.employee-auth-service}
+              predicates:
+                - Path=/api/v1/employee-auth/tokens/refresh/*
+              order: -100
+              metadata:
+                pmart-keep-cookie-prefixes: __Secure-pmart_ea_
             - id: search-service-me
               uri: ${pmart.gateway.upstream.search-service}
               predicates:
@@ -282,6 +291,12 @@ pmart:
       center-master-service: http://center-master-service:8507
       ai-assistant-service: http://ai-assistant-service:8508
       customer-assistant-service: http://customer-assistant-service:8509
+    cors:
+      # 자격 증명(쿠키) CORS 를 거는 경로(ADR-0059 — 웹 백오피스 refresh 쿠키가 심기고·실리고·지워지는 곳만). 출처는 프로필 파일 credentialed-origins
+      credentialed-paths:
+        - /api/v1/employee-auth/tokens
+        - /api/v1/employee-auth/tokens/refresh/*
+        - /api/v1/employee-auth/logouts
     # 인증 없이 통과시키는 작업(계약 security: []). 메서드·경로 모두 일치해야 한다.
     public-paths:
       - method: POST
@@ -347,6 +362,8 @@ pmart:
         path: /api/v1/employee-auth/tokens
       - method: POST
         path: /api/v1/employee-auth/tokens/refresh
+      - method: POST
+        path: /api/v1/employee-auth/tokens/refresh/* # 쿠키 갱신(ADR-0059) — 토큰 없음, CSRF·소유권은 서비스가 본다
       # Keycloak 로그인 화면 중계(/iam, ADR-0056 결정 11) — PMart 계약이 아니라 Keycloak 의 OIDC·로그인 경로. 라우트(keycloak-iam)와 같은 범위만
       - method: GET
         path: /iam/realms/pmart-staff/protocol/openid-connect/**

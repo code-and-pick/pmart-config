@@ -12,6 +12,8 @@ pmart:
     cors:
       # 로컬 프론트 개발 서버(Vite 5173, CRA 3000)
       allowed-origins: http://localhost:5173,http://localhost:3000
+      # 쿠키 CORS(ADR-0059) — 로컬 백오피스(5173)·인사팀(5174) 개발 서버
+      credentialed-origins: http://localhost:5173,http://localhost:5174
     upstream:
       product-service: http://localhost:8101
       product-content-service: http://localhost:8102

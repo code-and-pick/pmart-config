@@ -32,6 +32,7 @@ pmart:
       - /api/v1/employee-auth/logins/callback
       - /api/v1/employee-auth/tokens
       - /api/v1/employee-auth/tokens/refresh
+      - /api/v1/employee-auth/tokens/refresh/* # 쿠키 갱신(ADR-0059) — 토큰 없음, CSRF·소유권은 서비스가 본다
   employee-auth:
     # 수치는 보안 설정값(ADR-0056 결정 2·14): access 15분, 세션 최대 = 근무 12시간, 티켓 60초, 로그인 시도 10분
     access-token-ttl: PT15M
@@ -63,12 +64,18 @@ pmart:
         session-idle: PT12H
         sso: true
         post-logout-path: /login
+        # refresh token 을 세션별 HttpOnly 쿠키로 + Signed Double-Submit CSRF(ADR-0059). 클라이언트 web/core 가 쿠키 방식으로 바뀐 뒤 켠다
+        # (켜면 pmart.employee-auth.refresh-cookie.csrf-key 가 필요 — LAN {cipher})
+        refresh-cookie: false
       # 인사팀 백오피스(별도 웹 앱, 2026-11-13 사용자 결정 "SSO 켬") — 백오피스와 같은 값. 같은 브라우저면 한 번 로그인으로 둘 다,
       # 어느 쪽에서 로그아웃해도 Keycloak 세션이 끝난다(다른 앱의 PMart 세션 토큰은 그 앱이 지운다)
       hr-backoffice:
         session-idle: PT12H
         sso: true
         post-logout-path: /login
+        # refresh token 을 세션별 HttpOnly 쿠키로 + Signed Double-Submit CSRF(ADR-0059). 클라이언트 web/core 가 쿠키 방식으로 바뀐 뒤 켠다
+        # (켜면 pmart.employee-auth.refresh-cookie.csrf-key 가 필요 — LAN {cipher})
+        refresh-cookie: false
     keycloak:
       client-id: employee-auth-service
       timeout: PT5S
