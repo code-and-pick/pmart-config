@@ -1,17 +1,19 @@
 # mfc-capacity-service 고유 설정(모든 프로필). 환경별 값은 mfc-capacity-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
 # 옮긴 원본: pmart-backend services/.../application.yml (2026-11-02)
-# 구독 platform.employee.v1(hr-service 직원 사건 — 작업자 명단 ↔ 인사 연결, 2026-11-13).
+# 구독 platform.employee.v1(hr-service 직원 사건)·platform.auth.v1(employee-auth GrantApplied 중 MFC_WORKER) — 작업자 명단 ↔ 인사·권한(2026-11-13).
 server:
   port: 8303
 spring:
   # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ·커밋은 common-messaging 기본값. 바꾸면 재시작
   cloud:
     function:
-      definition: employeeEvents
+      definition: employeeEvents;authEvents
     stream:
       bindings:
         employeeEvents-in-0:
           destination: platform.employee.v1
+        authEvents-in-0:
+          destination: platform.auth.v1
 pmart:
   messaging:
     domain: mfc
