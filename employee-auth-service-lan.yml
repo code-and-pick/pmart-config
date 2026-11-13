@@ -15,16 +15,12 @@ pmart:
     apps:
       backoffice:
         return-uris:
-          - 'http://192.168.0.40/auth/callback'
-          - 'http://d603-16/auth/callback'
           - 'http://localhost:5173/auth/callback'
-          - 'https://192.168.0.40/auth/callback' # HTTPS(ADR-0057, 2026-11-13) — HTTP 는 옮길 때까지 함께
+          - 'https://192.168.0.40/auth/callback' # HTTPS 만(ADR-0057, 2026-11-13 HTTP 닫음)
           - 'https://d603-16/auth/callback'
       # 인사팀 백오피스(별도 앱, 2026-11-13 사용자 결정 — PC 4 :8081, 개발 :5174)
       hr-backoffice:
         return-uris:
-          - 'http://192.168.0.40:8081/auth/callback'
-          - 'http://d603-16:8081/auth/callback'
           - 'http://localhost:5174/auth/callback'
           - 'https://192.168.0.40:8444/auth/callback'
           - 'https://d603-16:8444/auth/callback'
