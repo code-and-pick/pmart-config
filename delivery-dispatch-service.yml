@@ -43,7 +43,7 @@ spring:
   # 처음 켜기 전에 소비 그룹 시작 위치를 2026-11-10T00:30Z 로 맞춘다(kickoff §6)
   cloud:
     function:
-      definition: fulfillmentEvents;executionEvents;orderEvents
+      definition: fulfillmentEvents;executionEvents;orderEvents;riderEvents
     stream:
       bindings:
         fulfillmentEvents-in-0: # mfc-fulfillment DispatchRequested·ShipmentReady·PackingFinished·WorkStopResult·PackageHandedOver → 배송(DD-1)
@@ -52,3 +52,5 @@ spring:
           destination: delivery.delivery.v1
         orderEvents-in-0: # order OrderCancelled(scope FULL) → 픽업 전 배송 취소·이후 배차 요청 차단(PC 1 재검토 ①)
           destination: order.order.v1
+        riderEvents-in-0: # rider RiderRestricted → 픽업 전 배정 풀고 재배차·남은 제안 닫기, 픽업한 배송은 전달까지(RS-1, 2026-11-14)
+          destination: delivery.rider.v1

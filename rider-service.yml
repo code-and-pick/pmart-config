@@ -5,3 +5,17 @@ server:
 pmart:
   messaging:
     domain: delivery
+  rider:
+    # 컴플레인 누적 → 제한 검토 대상(RS-3, 사용자 2026-11-14 "비슷한 종류의 컴플레인이 일주일 이내에 3건 이상", 신고·오배송·파손 전부)
+    complaint-review:
+      window: P7D
+      threshold: 3
+spring:
+  # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다
+  cloud:
+    function:
+      definition: caseEvents
+    stream:
+      bindings:
+        caseEvents-in-0: # case RiderComplaintRecorded → 컴플레인 누적·제한 검토 대상(RS-3, 2026-11-14 — case 발행은 구현 전)
+          destination: platform.case.v1
