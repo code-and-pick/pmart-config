@@ -3,6 +3,10 @@
 server:
   port: 8513
 pmart:
+  web:
+    # 직원 본인 비밀번호 바꾸기는 Roundcube password 플러그인(httpapi)이 부른다 — Idempotency-Key·X-Source-System 을 보내지 않는다(계약 0.2.0)
+    excluded-paths:
+      - /api/v1/internal/mailbox-password-changes
   mail-provisioner:
     accounts-file: /tmp/docker-mailserver/postfix-accounts.cf
     domain: pmart.com
