@@ -19,6 +19,11 @@ spring:
 pmart:
   messaging:
     domain: platform # 발행 토픽 platform.subject-block.v1
+  web:
+    # Keycloak 백채널 로그아웃(ADR-0061)은 Keycloak 이 OIDC 규약대로 보내는 요청이라 Idempotency-Key·X-Source-System 이 없다(계약에도 없음).
+    # 중복은 멱등(이미 끝난 세션은 그대로)
+    excluded-paths:
+      - /api/v1/internal/keycloak-logouts
   security:
     # 자기 토큰(로그아웃·현재 세션)과 관리 경로는 발급자 표로 검증한다. 공개키·시험 교환은 /internal(게이트웨이 비노출).
     permit-paths:
