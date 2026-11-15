@@ -7,3 +7,4 @@ spring:
 pmart:
   cases:
     order-service-base-url: http://localhost:8201 # 고객센터 문의의 본인 주문 확인(order GET /orders/{id}, 고객 토큰 전달) — 0.2.0
+    delivery-dispatch-base-url: http://localhost:8404 # 라이더 컴플레인 배정 라이더 조회 — 0.3.0
