@@ -57,6 +57,7 @@ pmart:
       - MFC_WORKER
       - PRICE_APPROVER
       - PRODUCT_APPROVER
+      - RIDER_OPS # 라이더 운영(계정 제한·제한 검토·배차 조회·취소·전달 실패 확정 — 사용자 2026-11-15)
       - SERVICEABILITY_APPROVER
     apps:
       # PDA 앱(mfc_app) — 딥링크로 복귀, 무활동 30분이면 다시 로그인(ADR-0056 결정 14 ③)
