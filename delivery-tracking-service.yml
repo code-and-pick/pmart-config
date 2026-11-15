@@ -5,3 +5,20 @@ server:
 pmart:
   messaging:
     domain: delivery
+  tracking:
+    # 위치 끊김·보존(사용자 결정 2026-11-14 — "배달 중 3분", "보존기간은 30일")
+    stale-after: PT3M
+    stale-check-interval: PT30S
+    retention: P30D
+    purge-interval: PT1H
+    watch-max-age: PT5H # 배정 뒤 5시간 지나면 위치 감시 끝(사용자 결정 2026-11-14)
+spring:
+  # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다
+  # 처음 켜기 전 소비 그룹 시작 위치 2026-11-10T00:30Z(dispatch·execution 과 같은 기준 — kickoff §6)
+  cloud:
+    function:
+      definition: deliveryEvents
+    stream:
+      bindings:
+        deliveryEvents-in-0: # dispatch 배정·배정 변경·픽업 전 취소, execution 완료·실패 → 진행 중 배송(위치 끊김 감지 RiderWatch)
+          destination: delivery.delivery.v1

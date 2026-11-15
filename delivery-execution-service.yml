@@ -11,6 +11,9 @@ pmart:
     payout-business-days: 3
     public-holidays: [] # 비우면 법정공휴일(코드 KoreanPublicHolidays 2026~2027, 사용자 결정 2026-11-13) — 임시공휴일이 생기면 목록 전체를 넣는다
     confirm-interval: PT1M
+    # 올리다 실패해 참조가 없는 증빙 사진 객체 — 5시간 지나면 지움(사용자 결정 2026-11-14)
+    orphan-photo-after: PT5H
+    photo-sweep-interval: PT10M
 spring:
   servlet:
     multipart:
