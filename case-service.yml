@@ -5,3 +5,21 @@ server:
 pmart:
   messaging:
     domain: platform
+  # 사건함 처리 기한(2026-11-16 사건함 공통 결정 — 표시만, 알림 없음). 값은 사용자 확인 전 잠정. 없으면 CaseRules.DEFAULT_SLA
+  cases:
+    sla:
+      "[RIDER_HELP]": PT10M # 맵 키의 _ 를 지키려고 [ ] (Spring 맵 바인딩)
+      "[DELIVERY_INCIDENT]": PT30M
+      "[RIDER_LOCATION_STALE]": PT10M
+      "[MISDELIVERY]": PT30M
+spring:
+  # 사건함 구독(Spring Cloud Stream, ADR-0035 — 2026-11-16). 처음 켜기 전 소비 그룹 시작 위치 = latest
+  cloud:
+    function:
+      definition: deliveryEvents;trackingEvents
+    stream:
+      bindings:
+        deliveryEvents-in-0: # delivery-execution DeliveryIncidentRaised → 라이더 도움요청·전달 실패 사건(R-4)
+          destination: delivery.delivery.v1
+        trackingEvents-in-0: # delivery-tracking RiderLocationStale → 위치 끊김 사건(R-6)
+          destination: delivery.tracking.v1
