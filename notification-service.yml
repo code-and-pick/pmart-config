@@ -5,3 +5,20 @@ server:
 pmart:
   messaging:
     domain: platform
+# 고객 알림함 구독(Spring Cloud Stream, ADR-0035 — 2026-11-16, 계약 0.2.0). 처음 켜기 전 소비 그룹 시작 위치 = latest(지난 주문에 알림을 몰아 쌓지 않게)
+spring:
+  cloud:
+    function:
+      definition: orderEvents;deliveryEvents;claimEvents;paymentEvents;caseEvents
+    stream:
+      bindings:
+        orderEvents-in-0: # 주문 확정·상품 준비 시작·취소·결품 부분 취소
+          destination: order.order.v1
+        deliveryEvents-in-0: # 배송 출발(PickupCompleted)·완료(DeliveryCompleted)
+          destination: delivery.delivery.v1
+        claimEvents-in-0: # RefundIntentCreated — 환불 결과를 주문과 잇는다
+          destination: order.claim.v1
+        paymentEvents-in-0: # RefundResult — 환불 성공·실패
+          destination: order.payment.v1
+        caseEvents-in-0: # InquiryAnswered — 고객센터 답변
+          destination: platform.case.v1
