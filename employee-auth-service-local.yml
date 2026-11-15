@@ -17,5 +17,7 @@ pmart:
         return-uris: ['http://localhost:5173/auth/callback']
       hr-backoffice:
         return-uris: ['http://localhost:5174/auth/callback']
+      mfc-backoffice:
+        return-uris: ['http://localhost:5175/auth/callback']
     dev-token-mint:
       enabled: true
