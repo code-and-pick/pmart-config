@@ -1,0 +1,31 @@
+# review-service 고유 설정(모든 프로필). 환경별 값은 review-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
+# 리뷰 1차 구현(2026-11-16, ADR-0063)
+server:
+  port: 8108
+pmart:
+  messaging:
+    domain: commerce # 발행 토픽 commerce.review.v1(ReviewPublished·ReviewDeleted)
+  security:
+    # 계약 security: [] 작업 — 상품 리뷰 목록·리뷰 단건·사진 본문. 기본 목록을 덮어쓰므로 actuator·error 도 다시 적는다.
+    # /reviews/* 는 PATCH·DELETE 도 같은 경로라 토큰 없이 들어오지만, 서비스가 고객 토큰을 다시 확인한다(없으면 403). 게이트웨이는 메서드까지 본다.
+    permit-paths:
+      - /actuator/health/**
+      - /actuator/info
+      - /actuator/prometheus
+      - /error
+      - /api/v1/products/*/reviews
+      - /api/v1/reviews/*
+      - /api/v1/review-photos/*
+spring:
+  servlet:
+    multipart:
+      max-file-size: 11MB # 사진 1장 상한은 ReviewRules.MAX_PHOTO_BYTES(10MB) — 넘으면 422 PHOTO_INVALID 로 답하려고 조금 크게
+      max-request-size: 12MB
+  # 구독(Spring Cloud Stream, ADR-0035). 처음 켤 때 소비 그룹은 earliest(보관 7일 안의 배송 완료로 자격을 채운다)
+  cloud:
+    function:
+      definition: deliveryEvents
+    stream:
+      bindings:
+        deliveryEvents-in-0: # delivery-execution DeliveryCompleted → 품목별 리뷰 자격
+          destination: delivery.delivery.v1

@@ -17,6 +17,7 @@ pmart:
     upstream:
       product-service: http://localhost:8101
       product-content-service: http://localhost:8102
+      review-service: http://localhost:8108
       customer-service: http://localhost:8103
       cart-service: http://localhost:8104
       search-service: http://localhost:8105
