@@ -1,5 +1,6 @@
 # rider-auth-service 고유 설정(모든 프로필). 환경별 값은 rider-auth-service-<프로필>.yml, 모든 서비스 공통은 application.yml. ADR-0029
-# 라이더 Google 로그인·라이더 토큰 발급자(ADR-0054 E·F, ADR-0055). 발행 SubjectBlocked(platform.subject-block.v1 — 로그아웃·refresh 재사용 즉시 차단, 2026-11-13). 구독 없음.
+# 라이더 Google 로그인·라이더 토큰 발급자(ADR-0054 E·F, ADR-0055). 발행 SubjectBlocked(platform.subject-block.v1 — 로그아웃·refresh 재사용 즉시 차단, 2026-11-13).
+# 구독 RiderRestricted(delivery.rider.v1 — 정지·계약 종료 라이더는 진행 중 배송이 끝난 뒤 로그인 끊기, 2026-11-15).
 server:
   port: 8510
 pmart:
@@ -19,6 +20,7 @@ pmart:
       - /api/v1/rider-auth/social-logins/*
       - /api/v1/rider-auth/tokens
   rider-auth:
+    session-cut-interval: PT1M # 정지 라이더 로그인 끊기 점검(dispatch 에 맡은 배송이 없으면 끊음 — 2026-11-15)
     # 수치는 보안 설정값(2026-11-10 기본값 — 고객 로그인과 같은 제한 15분 5회 → 10분, 세션은 마지막 사용 기준 30일)
     access-token-ttl: PT30M
     refresh-token-ttl: P30D
@@ -30,3 +32,12 @@ pmart:
       # 허용할 ID 토큰 aud = 라이더용 Google "웹 애플리케이션" 클라이언트 ID(라이더 앱 serverClientId, ADR-0055).
       # Android 클라이언트 ID 는 넣지 않는다(패키지·SHA-1 로 앱을 알아볼 뿐 토큰 aud 가 아님). 공개 식별자라 비밀값이 아니다
       client-ids: '293585219605-la3cj13q19oo51p7e4d0rf4ickh3flgu.apps.googleusercontent.com'
+spring:
+  # 이벤트 소비(Spring Cloud Stream, ADR-0035). 처음 켜기 전 소비 그룹 시작 위치 = 배포 시각(latest — 지난 제한은 rider-service 상태가 이미 막는다)
+  cloud:
+    function:
+      definition: riderEvents
+    stream:
+      bindings:
+        riderEvents-in-0: # rider RiderRestricted → 정지·계약 종료 라이더 로그인 끊기(RiderSessionCuts)
+          destination: delivery.rider.v1
