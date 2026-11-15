@@ -6,6 +6,7 @@ spring:
     password: pmart-local
 pmart:
   order:
+    audit-base-url: http://localhost:8503 # 직원 배송지 원문 열람 기록(BO-25)
     customer-base-url: http://localhost:8103
     product-base-url: http://localhost:8101
     pricing-base-url: http://localhost:8107

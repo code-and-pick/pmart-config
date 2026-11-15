@@ -59,6 +59,23 @@ pmart:
       - PRODUCT_APPROVER
       - RIDER_OPS # 라이더 운영(계정 제한·제한 검토·배차 조회·취소·전달 실패 확정 — 사용자 2026-11-15)
       - SERVICEABILITY_APPROVER
+    # 역할 목록 API(GET /api/v1/employee-auth/roles, BR-57 — 인사팀 백오피스 "요청 권한 역할")의 표시 이름·센터 지정. 순서는 위 roles 순서.
+    # 맵이 아니라 목록인 것은 Spring 맵 키가 대괄호 없이는 '_' 를 지우기 때문. 없는 역할은 이름 = 코드, center-scoped = false
+    # center-scoped: 권한 센터를 함께 골라야 하는 역할(화면 안내용 — 판정은 approval-service)
+    role-info:
+      - { code: OPERATOR_ADMIN, name: 운영 관리자 }
+      - { code: HR_ADMIN, name: 인사 관리자 }
+      - { code: CENTER_MASTER_APPROVER, name: 센터 기준정보 승인자 }
+      - { code: CS_AGENT, name: 고객센터 상담원 }
+      - { code: DISPLAY_APPROVER, name: 전시 승인자 }
+      - { code: INVENTORY_APPROVER, name: 재고 승인자 }
+      - { code: MD, name: MD(상품 담당) }
+      - { code: MFC_SUPERVISOR, name: 센터 관리자, center-scoped: true }
+      - { code: MFC_WORKER, name: 센터 작업자, center-scoped: true }
+      - { code: PRICE_APPROVER, name: 가격 승인자 }
+      - { code: PRODUCT_APPROVER, name: 상품 승인자 }
+      - { code: RIDER_OPS, name: 라이더 운영 }
+      - { code: SERVICEABILITY_APPROVER, name: 배송 권역 승인자 }
     apps:
       # PDA 앱(mfc_app) — 딥링크로 복귀, 무활동 30분이면 다시 로그인(ADR-0056 결정 14 ③)
       mfc:
