@@ -213,7 +213,7 @@ spring:
             - id: audit-service
               uri: ${pmart.gateway.upstream.audit-service}
               predicates:
-                - Path=/api/v1/audit-entries/**
+                - Path=/api/v1/audit-entries/**,/api/v1/pii-access-logs/** # 개인정보 열람 기록 조회(OPERATOR_ADMIN, audit 0.3.0 2026-11-16)
             - id: backoffice-bff
               uri: ${pmart.gateway.upstream.backoffice-bff}
               predicates:
