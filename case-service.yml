@@ -5,7 +5,7 @@ server:
 pmart:
   messaging:
     domain: platform
-  # 사건함 처리 기한(2026-11-16 사건함 공통 결정 — 표시만, 알림 없음). 값은 사용자 확인 전 잠정. 없으면 CaseRules.DEFAULT_SLA
+  # 사건함 처리 기한(2026-11-16 사건함 공통 결정 — 표시만, 알림 없음). 값 확정(사용자 2026-11-16 "그대로 할게"). 없으면 CaseRules.DEFAULT_SLA
   cases:
     sla:
       "[RIDER_HELP]": PT10M # 맵 키의 _ 를 지키려고 [ ] (Spring 맵 바인딩)
