@@ -1,5 +1,14 @@
 # order-orchestration-service lan 프로필 — LAN 공유 개발 환경. 비밀값은 {cipher}(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
 spring:
+  # 오배송 재발송(2026-11-16): 사건 토픽을 처음 읽을 때 최신부터(그룹 오프셋이 생긴 뒤엔 안 쓰임). 시험 사본에는 넣지 않는다
+  cloud:
+    stream:
+      kafka:
+        bindings:
+          caseEvents-in-0:
+            consumer:
+              configuration:
+                auto.offset.reset: latest
   datasource:
     url: 'jdbc:postgresql://postgres-pc2:15432/order_orchestration_service'
     username: 'pmart'
@@ -13,6 +22,10 @@ pmart:
     order-base-url: http://order-service:8201 # 주문 확정(S1 h)
     mfc-fulfillment-base-url: http://mfc-fulfillment-service:8302 # 작업 중지(S3 a)·작업 접수(S2)
     claim-base-url: http://claim-service:8204 # 시스템 자동 전체 취소(S2 D6-4)
+    delivery-dispatch-base-url: http://delivery-dispatch-service:8404 # 오배송 재발송 — 배송으로 주문 찾기(2026-11-16)
+    # 오배송 재발송 사가(2026-11-16, ADR-0052 결정 4): 이 시각 이후 확인된 오배송만 시작 — 예전 시험 오배송 확인으로 재발송하지 않게
+    reshipment:
+      start-cases-confirmed-after: '2026-11-16T08:16:00Z'
     # S2 이행 요청(슬라이스 6a, order-checkout-saga.md §2.0). 센터 키는 대괄호로 감싼다(점·대문자 보존).
     fulfillment:
       start-orders-confirmed-after: '2026-11-07T00:00:00Z' # 이 시각 이후 확정 주문만 S2 시작(새 구독 그룹이 토픽 처음부터 읽음)
