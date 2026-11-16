@@ -24,10 +24,12 @@ spring:
   # 처음 켜기 전에 두 소비 그룹 시작 위치를 2026-11-10T00:30Z 로 맞춘다(dispatch 와 같은 기준 — kickoff §6)
   cloud:
     function:
-      definition: deliveryEvents;fulfillmentEvents
+      definition: deliveryEvents;fulfillmentEvents;caseEvents
     stream:
       bindings:
         deliveryEvents-in-0: # delivery-dispatch DeliveryCreated·DeliveryAssigned·DeliveryAssignmentChanged·DeliveryCancelledBeforePickup → 수행 상태
           destination: delivery.delivery.v1
         fulfillmentEvents-in-0: # mfc-fulfillment ShipmentReady·PackingFinished(포장 목록)·PackageHandedOver(인계 — 픽업 완료 근거, DE-1)
           destination: mfc.fulfillment.v1
+        caseEvents-in-0: # case MisdeliveryConfirmed — 라이더 귀책이면 원래 수행료 미지급(ADR-0065, 2026-11-16). 처음 켜기 전 시작 위치 latest
+          destination: platform.case.v1

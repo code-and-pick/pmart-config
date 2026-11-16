@@ -1,5 +1,14 @@
 # delivery-execution-service lan 프로필 — LAN 공유 개발 환경. 비밀값은 {cipher}(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
 spring:
+  # 오배송 귀책(ADR-0065, 2026-11-16): 사건 토픽을 처음 읽을 때 최신부터 — 예전 오배송 확인으로 배달료를 바꾸지 않게. 시험 사본에는 넣지 않는다
+  cloud:
+    stream:
+      kafka:
+        bindings:
+          caseEvents-in-0:
+            consumer:
+              configuration:
+                auto.offset.reset: latest
   datasource:
     url: 'jdbc:postgresql://postgres-pc5:15432/delivery_execution_service'
     username: 'pmart'
