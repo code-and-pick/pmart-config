@@ -38,3 +38,4 @@ pmart:
     purchase-limit-units: 10
     # 전사 판매 상태를 바꿀 수 있는 운영자 역할(사용자 결정 2026-10-30). 판매중지는 PRODUCT 승인도 필요
     sale-state-change-role: MD
+    edit-role: MD # 상품 정보 수정 시작(POST /products/{id}/edit-drafts) 역할 — 사용자 결정 2026-11-17 "md"
