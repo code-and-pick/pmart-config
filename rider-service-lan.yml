@@ -4,3 +4,6 @@ spring:
     url: 'jdbc:postgresql://postgres-pc5:15432/rider_service'
     username: 'pmart'
     password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
+pmart:
+  rider:
+    license-hash-key: '{cipher}b1cda8e85efe90722b870d47c859d448b63994d8a831ee897b3cd17243554cccf73c412847cf6703afb68379ed96ae1d953b3bc37f3e607fc0a7397e2d648651653bd2050188e1ff9c28d74f3265e8a4bf88507e29ccb3ad90aa47464f681c6d'  # 운전면허 중복 확인 HMAC 키(PR #66, 2026-11-16) — 평문 .secrets/rider-license-hash-key
