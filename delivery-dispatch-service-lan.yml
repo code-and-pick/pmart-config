@@ -1,5 +1,15 @@
 # delivery-dispatch-service lan 프로필 — LAN 공유 개발 환경. 비밀값은 {cipher}(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
 spring:
+  # 오배송 회수(DD-2, 2026-11-16): 사건함 토픽을 처음 읽을 때 최신부터 — 예전(시험) 오배송 확인으로 회수 배송이 생기지 않게.
+  # 그룹 오프셋이 생긴 뒤에는 쓰이지 않는다. 시험 사본에는 넣지 않는다(시험은 기본 earliest).
+  cloud:
+    stream:
+      kafka:
+        bindings:
+          caseEvents-in-0:
+            consumer:
+              configuration:
+                auto.offset.reset: latest
   datasource:
     url: 'jdbc:postgresql://postgres-pc5:15432/delivery_dispatch_service'
     username: 'pmart'
