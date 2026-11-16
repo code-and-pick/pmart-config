@@ -7,6 +7,9 @@ spring:
 pmart:
   employee-auth:
     issuer: 'http://employee-auth-service:8511'
+    # 관리 경로(PUT /employees/{id})로 역할·센터 바로 바꾸기 — LAN 만 켬(시험 도구 staff_auth.py·Seed.java 가 시험 계정 역할을 맞춤).
+    # 기본(prod) 꺼짐 = 역할은 인사 요청 → 승인. OPERATOR_ADMIN·HR_ADMIN 은 켜져 있어도 승인으로만(권한 빈틈 정리 2026-11-17, 사용자 "(가)")
+    direct-role-edit: true
     # 직원 토큰 서명키(PKCS#8 PEM, 첫 키가 활성) — 다른 발급자와 다른 키. 원본 deploy/lan/.secrets/employee-auth-signing-key.pem(git 제외)
     signing:
       keys:
