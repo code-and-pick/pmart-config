@@ -9,6 +9,10 @@ spring:
             consumer:
               configuration:
                 auto.offset.reset: latest
+          deliveryEvents-in-0: # 다시 배송 결제 대기(#51, 2026-11-16) — 처음 읽을 때 최신부터
+            consumer:
+              configuration:
+                auto.offset.reset: latest
   datasource:
     url: 'jdbc:postgresql://postgres-pc2:15432/order_orchestration_service'
     username: 'pmart'

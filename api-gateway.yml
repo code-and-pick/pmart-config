@@ -227,6 +227,10 @@ spring:
               uri: ${pmart.gateway.upstream.approval-service}
               predicates:
                 - Path=/api/v1/change-requests/**,/api/v1/approvals/**,/api/v1/batch-changes/**,/api/v1/policy-references/**
+            - id: order-orchestration-service-redelivery-payments # 오배송 다시 배송비 결제 대기 — 고객 본인(2026-11-16 #51, ADR-0065)
+              uri: ${pmart.gateway.upstream.order-orchestration-service}
+              predicates:
+                - Path=/api/v1/redelivery-payments/**,/api/v1/redelivery-payments
             - id: case-service
               uri: ${pmart.gateway.upstream.case-service}
               predicates:
