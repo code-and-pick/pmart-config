@@ -5,6 +5,9 @@ server:
 pmart:
   messaging:
     domain: platform
+  notification:
+    push-token:
+      max-devices: 5 # 단말 푸시 토큰(0.3.0, BR-09 — 2026-11-17): 고객·라이더 한 명이 둘 수 있는 단말 수. 넘으면 가장 오래 갱신되지 않은 단말을 지운다
 # 고객 알림함 구독(Spring Cloud Stream, ADR-0035 — 2026-11-16, 계약 0.2.0). 처음 켜기 전 소비 그룹 시작 위치 = latest(지난 주문에 알림을 몰아 쌓지 않게)
 spring:
   cloud:
