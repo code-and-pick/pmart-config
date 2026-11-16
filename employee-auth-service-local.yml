@@ -11,6 +11,7 @@ pmart:
   employee-auth:
     issuer: http://localhost:8511
     center-master-base-url: http://localhost:8507 # 세션 응답 센터 이름(0.9.0, 2026-11-16) — LAN 은 기본값 http://center-master-service:8507
+    hr-base-url: http://localhost:8512 # 권한 상세 승인자·회수자 이름(0.10.0, 2026-11-17) — LAN 은 기본값 http://hr-service:8512
     signing:
       ephemeral: true # 로컬 전용 임시 키. 재시작하면 기존 토큰 무효
     apps:
