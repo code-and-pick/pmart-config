@@ -25,8 +25,9 @@ pmart:
       # 이름(d603-16)은 다른 PC 에서 IPv6 링크 로컬로 먼저 풀려 시간 초과가 난다(2026-11-06) → IP 출처도 허용.
       # 백오피스 build:lan 의 API 주소도 IP(http://192.168.0.40:8080/api/v1)로 바꾼다(handoff 2026-11-06)
       # 쿠키 CORS(ADR-0059) — 웹 백오피스 두 앱(HTTPS)만. 경로는 api-gateway.yml credentialed-paths
-      credentialed-origins: 'https://192.168.0.40,https://d603-16,https://192.168.0.40:8444,https://d603-16:8444,https://192.168.0.40:8445,https://d603-16:8445'
-      allowed-origins: 'http://192.168.0.40:8090,https://192.168.0.40,https://d603-16,https://192.168.0.40:8444,https://d603-16:8444,https://192.168.0.40:8445,https://d603-16:8445' # 8090 = Swagger UI(api-docs, HTTP), 백오피스 https 443·인사팀 https 8444·MFC 백오피스 https 8445(2026-11-15)(2026-11-13 HTTP 화면 닫음, ADR-0057)
+      # + 웹 개발 서버 출처(npm run dev:lan, 5173 backoffice·5174 hr·5175 mfc — 2026-11-16 사용자 승인, LAN 한정). refresh 쿠키(SameSite=Strict)는 localhost 에서 실리지 않는다
+      credentialed-origins: 'https://192.168.0.40,https://d603-16,https://192.168.0.40:8444,https://d603-16:8444,https://192.168.0.40:8445,https://d603-16:8445,http://localhost:5173,http://localhost:5174,http://localhost:5175'
+      allowed-origins: 'http://192.168.0.40:8090,https://192.168.0.40,https://d603-16,https://192.168.0.40:8444,https://d603-16:8444,https://192.168.0.40:8445,https://d603-16:8445,http://localhost:5173,http://localhost:5174,http://localhost:5175' # 8090 = Swagger UI(api-docs, HTTP), 백오피스 https 443·인사팀 https 8444·MFC 백오피스 https 8445(2026-11-15)(2026-11-13 HTTP 화면 닫음, ADR-0057)
     # 업스트림은 Eureka 에서 찾는다(ADR-0032, lb://<서비스 이름>). 등록이 없으면 503
     upstream:
       product-service: lb://product-service
