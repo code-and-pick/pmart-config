@@ -12,14 +12,21 @@ pmart:
       "[DELIVERY_INCIDENT]": PT30M
       "[RIDER_LOCATION_STALE]": PT10M
       "[MISDELIVERY]": PT30M
+      "[DISPATCH_FAILED]": PT10M # 배차 실패(사용자 2026-11-16 "1번으로")
+      "[RECONCILIATION]": PT1H # 사가·결제 이상(R-3, 사용자 2026-11-16 "한시간으로")
+      "[PAYMENT_UNKNOWN]": PT1H
 spring:
   # 사건함 구독(Spring Cloud Stream, ADR-0035 — 2026-11-16). 처음 켜기 전 소비 그룹 시작 위치 = latest
   cloud:
     function:
-      definition: deliveryEvents;trackingEvents
+      definition: deliveryEvents;trackingEvents;sagaEvents;paymentEvents
     stream:
       bindings:
-        deliveryEvents-in-0: # delivery-execution DeliveryIncidentRaised → 라이더 도움요청·전달 실패 사건(R-4)
+        deliveryEvents-in-0: # delivery-execution DeliveryIncidentRaised → 라이더 도움요청·전달 실패 사건(R-4), delivery-dispatch DispatchFailed → 배차 실패 사건
           destination: delivery.delivery.v1
         trackingEvents-in-0: # delivery-tracking RiderLocationStale → 위치 끊김 사건(R-6)
           destination: delivery.tracking.v1
+        sagaEvents-in-0: # order-orchestration ReconciliationRequired·CompensationExecuted(실패·불명만) → 사가·결제 이상(R-3)
+          destination: order.saga.v1
+        paymentEvents-in-0: # payment PaymentMismatch·PaymentResultUnknown(상신만) → 사가·결제 이상(R-3)
+          destination: order.payment.v1
