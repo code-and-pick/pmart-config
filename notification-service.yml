@@ -9,7 +9,7 @@ pmart:
 spring:
   cloud:
     function:
-      definition: orderEvents;deliveryEvents;claimEvents;paymentEvents;caseEvents
+      definition: orderEvents;deliveryEvents;claimEvents;paymentEvents;caseEvents;slotEvents
     stream:
       bindings:
         orderEvents-in-0: # 주문 확정·상품 준비 시작·취소·결품 부분 취소
@@ -22,3 +22,5 @@ spring:
           destination: order.payment.v1
         caseEvents-in-0: # InquiryAnswered — 고객센터 답변
           destination: platform.case.v1
+        slotEvents-in-0: # SlotCapacityReduced — 배송 지연 가능 안내(CP-1, 2026-11-16)
+          destination: delivery.slot.v1

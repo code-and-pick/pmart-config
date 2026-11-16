@@ -1,5 +1,14 @@
 # delivery-capacity-service lan 프로필 — LAN 공유 개발 환경. 비밀값은 {cipher}(암호화: ./gradlew :platform-services:config-server:configCipher). ADR-0029
 spring:
+  # CP-1(2026-11-16) 처음 읽을 때 최신부터 — 예전 여력 감소로 지연 안내가 쏟아지지 않게 — 시험 사본에는 넣지 않는다
+  cloud:
+    stream:
+      kafka:
+        bindings:
+          capacityEvents-in-0: # CP-1(2026-11-16) 처음 읽을 때 최신부터 — 예전 여력 감소로 지연 안내가 쏟아지지 않게
+            consumer:
+              configuration:
+                auto.offset.reset: latest
   datasource:
     url: 'jdbc:postgresql://postgres-pc5:15432/delivery_capacity_service'
     username: 'pmart'

@@ -9,3 +9,12 @@ pmart:
     # 비회원 토큰(typ=GUEST)도 슬롯 조회는 된다(읽기 전용, 비회원 장바구니·배송 안내)
     guest-paths:
       - /api/v1/slots
+# CP-1(2026-11-16): mfc-capacity 작업 여력 축소 → 영향 주문 도착 시간대별 SlotCapacityReduced. 처음 켤 때 소비 그룹 시작 위치 latest
+spring:
+  cloud:
+    function:
+      definition: capacityEvents
+    stream:
+      bindings:
+        capacityEvents-in-0:
+          destination: mfc.capacity.v1
