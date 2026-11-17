@@ -17,7 +17,7 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: assignmentEvents;deliveryEvents;inventoryEvents
+      definition: assignmentEvents;deliveryEvents;inventoryEvents;orderEvents
     stream:
       bindings:
         assignmentEvents-in-0: # mfc-capacity AssignmentPublished → 작업 담당 투영(슬라이스 6b, 2026-11-07)
@@ -26,3 +26,5 @@ spring:
           destination: delivery.delivery.v1
         inventoryEvents-in-0: # mfc-inventory ReservationBlocked → 진행 중 피킹 보류 점검(2026-11-08 #5)
           destination: mfc.inventory.v1
+        orderEvents-in-0: # order OrderConfirmed → 화면용 주문번호 사본(F-5, 2026-11-17)
+          destination: order.order.v1
