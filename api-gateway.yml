@@ -95,7 +95,7 @@ spring:
             - id: delivery-execution-service-rider
               uri: ${pmart.gateway.upstream.delivery-execution-service}
               predicates:
-                - Path=/api/v1/riders/me/deliveries,/api/v1/riders/me/earnings,/api/v1/riders/me/operating-time
+                - Path=/api/v1/riders/me/deliveries,/api/v1/riders/me/earnings,/api/v1/riders/me/operating-time,/api/v1/rider-earnings/**
               order: -96
             - id: delivery-dispatch-service-deliveries
               uri: ${pmart.gateway.upstream.delivery-dispatch-service}
