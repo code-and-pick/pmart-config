@@ -9,6 +9,11 @@ spring:
       url: 'redis://redis:6379'
 pmart:
   tracking:
+    # 라이더 ETA 계산 켬(TR-1, 사용자 2026-11-17 "ETA 계산을 켜줘" — 백오피스 확인용). 진행 중 배송마다 interval 마다 다시 계산(라이더당 카카오 길찾기 1번),
+    # 처음과 min-change 넘게 바뀔 때만 DeliveryEtaUpdated. LAN 시험값 — 운영 값은 카카오 사용량 보고 다시 정한다
+    eta:
+      interval: PT1M
+      min-change: PT1M
     kakao-mobility:
       # 카카오모빌리티 길찾기 REST API 키(ADR-0058 — 도로 거리·예상 소요시간 행렬, 직선거리 대체 없음). 주소 판정(delivery-serviceability)과 다른 카카오 앱 키.
       # 원본 .secrets/kakao-mobility-rest-api-key(2026-11-13 사용자 제공, PC 5 길찾기 호출 확인). 아직 읽는 코드 없음 — delivery 영역이 구현할 때 이 이름으로.
