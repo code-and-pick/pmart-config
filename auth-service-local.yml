@@ -10,6 +10,7 @@ pmart:
     signing:
       ephemeral: true # 로컬 전용 임시 키. 재시작하면 기존 토큰 무효
     customer:
+      customer-service-base-url: http://localhost:8103 # 필수 동의 판단·반영(CU-1)
       google:
         # 허용할 ID 토큰 aud = 고객용 Google 웹 클라이언트 ID(고객 앱 serverClientId, ADR-0055). Android 클라이언트 ID 는 넣지 않는다. 비면 CONFIG_REQUIRED
         client-ids: ${PMART_AUTH_CUSTOMER_GOOGLE_CLIENTIDS:}
