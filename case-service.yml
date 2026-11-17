@@ -16,6 +16,10 @@ pmart:
       "[RECONCILIATION]": PT1H # 사가·결제 이상(R-3, 사용자 2026-11-16 "한시간으로")
       "[PAYMENT_UNKNOWN]": PT1H
 spring:
+  servlet:
+    multipart: # 문의 사진(0.14.0) — 1장 상한은 InquiryRules.MAX_PHOTO_BYTES(10MB), 넘으면 422 PHOTO_INVALID 로 답하려고 조금 크게
+      max-file-size: 11MB
+      max-request-size: 12MB
   # 사건함 구독(Spring Cloud Stream, ADR-0035 — 2026-11-16). 처음 켜기 전 소비 그룹 시작 위치 = latest
   cloud:
     function:

@@ -234,7 +234,7 @@ spring:
             - id: case-service
               uri: ${pmart.gateway.upstream.case-service}
               predicates:
-                - Path=/api/v1/cases/**,/api/v1/obligations/**,/api/v1/cs-intakes/**,/api/v1/help-requests/**,/api/v1/shift-handovers/**,/api/v1/inquiries/**,/api/v1/rider-complaints/**
+                - Path=/api/v1/cases/**,/api/v1/obligations/**,/api/v1/cs-intakes/**,/api/v1/help-requests/**,/api/v1/shift-handovers/**,/api/v1/inquiries/**,/api/v1/inquiry-photos/**,/api/v1/rider-complaints/**
             - id: center-master-service
               uri: ${pmart.gateway.upstream.center-master-service}
               predicates:
