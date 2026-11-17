@@ -8,6 +8,16 @@ pmart:
   notification:
     push-token:
       max-devices: 5 # 단말 푸시 토큰(0.3.0, BR-09 — 2026-11-17): 고객·라이더 한 명이 둘 수 있는 단말 수. 넘으면 가장 오래 갱신되지 않은 단말을 지운다
+    fcm:
+      # 고객 휴대폰 푸시로도 보낼 알림 종류(ADR-0067, 2026-11-17 사용자 "응 해줘") — 나머지는 알림함만. 라이더는 전부(고르지 않음).
+      # 서버 키는 환경별(notification-service-<프로필>.yml {cipher}) — 키가 없으면 이 목록이 있어도 보내지 않는다
+      customer-templates:
+        - DELIVERY_STARTED # 배송 출발
+        - DELIVERY_COMPLETED # 배송 완료
+        - SHORTAGE_CANCELLED # 결품 부분 취소
+        - ORDER_CANCELLED # 주문 취소
+        - REFUND_SUCCEEDED # 환불 완료
+        - REFUND_DELAYED # 환불 늦어짐
 # 고객 알림함 구독(Spring Cloud Stream, ADR-0035 — 2026-11-16, 계약 0.2.0). 처음 켜기 전 소비 그룹 시작 위치 = latest(지난 주문에 알림을 몰아 쌓지 않게)
 spring:
   cloud:
