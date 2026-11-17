@@ -90,12 +90,12 @@ spring:
             - id: delivery-tracking-service-rider
               uri: ${pmart.gateway.upstream.delivery-tracking-service}
               predicates:
-                - Path=/api/v1/riders/me/locations/**,/api/v1/deliveries/*/eta,/api/v1/deliveries/*/stream
+                - Path=/api/v1/riders/me/locations/**,/api/v1/deliveries/*/eta,/api/v1/deliveries/*/stream,/api/v1/rider-locations # 라이더 관제(tracking 0.8.0, #149 2026-11-17)
               order: -97
             - id: delivery-execution-service-rider
               uri: ${pmart.gateway.upstream.delivery-execution-service}
               predicates:
-                - Path=/api/v1/riders/me/deliveries,/api/v1/riders/me/earnings,/api/v1/riders/me/operating-time,/api/v1/rider-earnings/**
+                - Path=/api/v1/riders/me/deliveries,/api/v1/riders/me/earnings,/api/v1/riders/me/operating-time,/api/v1/rider-earnings,/api/v1/rider-earnings/**,/api/v1/rider-operating-time # 직원용 수행료·운행시간(execution 0.16.0, #149 2026-11-17)
               order: -96
             - id: delivery-dispatch-service-deliveries
               uri: ${pmart.gateway.upstream.delivery-dispatch-service}
