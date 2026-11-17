@@ -5,5 +5,12 @@ spring:
     username: 'pmart'
     password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
 pmart:
+  # 승인 번호 실제 확인(AP-1, #116 — 2026-11-17). 판정 기준 Q-11(사용자 "추천대로"): 한 건 손실 ≥ 10만 원 또는 한 SKU ≥ 20개 → 본사 승인.
+  # 모드(pmart.approval-ref.mode)는 application-lan.yml — RECORD_ONLY 인 동안은 예전처럼 기록만(VERIFY 전환은 사용자 확인 뒤)
+  approval-ref:
+    hq-loss-krw: 100000
+    hq-sku-qty: 20
+    approval-base-url: http://approval-service:8505 # POST /internal/approval-ref-uses
+    pricing-base-url: http://pricing-service:8107 # 판매 기준가(손실 계산)
   quality:
     mfc-inventory-base-url: http://mfc-inventory-service:8301 # 격리·해제·폐기 재고 반영(quality-postings, 2026-11-08)

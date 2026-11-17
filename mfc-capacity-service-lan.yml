@@ -5,7 +5,13 @@ spring:
     username: 'pmart'
     password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
 pmart:
+  # 승인 번호 실제 확인(AP-1, #116) — 운영 제한 해제는 늘 본사 승인. 모드는 application-lan.yml
+  approval-ref:
+    approval-base-url: http://approval-service:8505
   capacity:
+    activities: # 작업자 오늘 업무 내역(F-7, #120) — 네 정본의 내부 조회. fulfillment·inbound 는 plan.* 주소를 그대로 쓴다
+      mfc-inventory-base-url: http://mfc-inventory-service:8301
+      mfc-quality-base-url: http://mfc-quality-service:8305
     # (MFC, 1시간 창)당 수용 단위(정책값). 주문 1건 = 1 단위(시험 정책 2026-10-30). 비우면 Hold·스냅샷은 CONFIG_REQUIRED.
     # 사용자 결정(2026-11-08): 45 = 기본 가동 포장대 4대 × 11.25건/시간(원문 7-1, 기준안 피크 40.1건). 포장대·인원이 늘면 올린다
     units-per-hour: '45'
