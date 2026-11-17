@@ -12,7 +12,7 @@ pmart:
 spring:
   cloud:
     function:
-      definition: orderEvents;deliveryEvents;claimEvents;paymentEvents;caseEvents;slotEvents
+      definition: orderEvents;deliveryEvents;claimEvents;paymentEvents;caseEvents;slotEvents;riderEvents
     stream:
       bindings:
         orderEvents-in-0: # 주문 확정·상품 준비 시작·취소·결품 부분 취소
@@ -23,7 +23,9 @@ spring:
           destination: order.claim.v1
         paymentEvents-in-0: # RefundResult — 환불 성공·실패
           destination: order.payment.v1
-        caseEvents-in-0: # InquiryAnswered — 고객센터 답변
+        caseEvents-in-0: # InquiryAnswered — 고객센터 답변, RiderInquiryAnswered·CaseClosed(RIDER_HELP) — 라이더 알림함(0.4.0)
           destination: platform.case.v1
         slotEvents-in-0: # SlotCapacityReduced — 배송 지연 가능 안내(CP-1, 2026-11-16)
           destination: delivery.slot.v1
+        riderEvents-in-0: # RiderRestricted — 라이더 계정 제한·해제 알림(0.4.0, 2026-11-17 §11-5). 시작 위치 latest(application-lan.yml)
+          destination: delivery.rider.v1
