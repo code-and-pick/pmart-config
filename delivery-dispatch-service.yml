@@ -43,7 +43,7 @@ spring:
   # 처음 켜기 전에 소비 그룹 시작 위치를 2026-11-10T00:30Z 로 맞춘다(kickoff §6)
   cloud:
     function:
-      definition: fulfillmentEvents;executionEvents;orderEvents;riderEvents;caseEvents
+      definition: fulfillmentEvents;executionEvents;orderEvents;riderEvents;caseEvents;claimEvents
     stream:
       bindings:
         fulfillmentEvents-in-0: # mfc-fulfillment DispatchRequested·ShipmentReady·PackingFinished·WorkStopResult·PackageHandedOver → 배송(DD-1)
@@ -56,3 +56,5 @@ spring:
           destination: delivery.rider.v1
         caseEvents-in-0: # case MisdeliveryConfirmed → 오배송 회수 배송·배차(DD-2, 2026-11-16). 처음 켜기 전 시작 위치 latest
           destination: platform.case.v1
+        claimEvents-in-0: # claim ReturnPickupRequested → 고객 반품 회수 배송·배차(CL-1, 2026-11-17). 처음 켜기 전 시작 위치 latest
+          destination: order.claim.v1
