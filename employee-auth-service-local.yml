@@ -21,5 +21,7 @@ pmart:
         return-uris: ['http://localhost:5174/auth/callback']
       mfc-backoffice:
         return-uris: ['http://localhost:5175/auth/callback']
+      rider-backoffice:
+        return-uris: ['http://localhost:5176/auth/callback']
     dev-token-mint:
       enabled: true

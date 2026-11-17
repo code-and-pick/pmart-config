@@ -106,6 +106,12 @@ pmart:
         sso: true
         post-logout-path: /login
         refresh-cookie: false
+      # 라이더 백오피스(별도 웹 앱, 2026-11-17 사용자 "라이더 백오피스 새로 만들어야 할 것 같아서" — 관제 포함 예정) — 다른 백오피스와 같은 값(SSO 켬). 쓰는 사람 RIDER_OPS
+      rider-backoffice:
+        session-idle: PT12H
+        sso: true
+        post-logout-path: /login
+        refresh-cookie: false
     keycloak:
       client-id: employee-auth-service
       timeout: PT5S
