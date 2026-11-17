@@ -238,7 +238,7 @@ spring:
             - id: center-master-service
               uri: ${pmart.gateway.upstream.center-master-service}
               predicates:
-                - Path=/api/v1/centers/**
+                - Path=/api/v1/centers/**,/api/v1/mfc-pickup-points
             - id: ai-assistant-service # 1차 RAG 앞당김(ADR-0036). 운영자만 — 서비스가 typ=OPERATOR 검사
               uri: ${pmart.gateway.upstream.ai-assistant-service}
               predicates:
