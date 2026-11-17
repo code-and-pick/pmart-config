@@ -6,6 +6,9 @@ pmart:
   messaging:
     domain: platform
   notification:
+    review-request: # 리뷰 요청 알림(2026-11-18 사용자 결정 "A해줘") — 둘 중 하나라도 없으면 보내지 않는다(CONFIG_REQUIRED). review-base-url 은 환경별
+      delay: PT1H # 배송 완료 뒤 이만큼 지나면 리뷰를 썼는지 묻고, 안 썼으면 고객 알림함에 한 번(앱 알림함만 — customer-templates 에 넣지 않는다)
+      max-age: P3D # 배송 완료 뒤 이만큼 지나도록 못 물었으면(review-service 장애) 포기
     push-token:
       max-devices: 5 # 단말 푸시 토큰(0.3.0, BR-09 — 2026-11-17): 고객·라이더 한 명이 둘 수 있는 단말 수. 넘으면 가장 오래 갱신되지 않은 단말을 지운다
     fcm:

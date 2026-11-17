@@ -16,6 +16,7 @@ spring:
 pmart:
   notification:
     order-base-url: http://order-service:8201 # 받는 고객·상품명(GET /internal/orders/{id}, 내부 호출)
+    review-base-url: http://review-service:8108 # 리뷰 요청 알림(2026-11-18) — 주문 리뷰 작성 여부(GET /internal/orders/{id}/review-status)
     # 라이더 휴대폰 푸시(FCM HTTP v1, 2026-11-17 사용자 "응 해줘") — Firebase 프로젝트 pmart-123 서비스 계정 키 JSON 전체.
     # 원본 deploy/lan/.secrets/pmart-123-firebase-adminsdk-fbsvc-*.json(git 제외). 비우면 푸시 꺼짐(알림함만)
     fcm:

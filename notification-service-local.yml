@@ -7,3 +7,4 @@ spring:
 pmart:
   notification:
     order-base-url: http://localhost:8201
+    review-base-url: http://localhost:8108 # 리뷰 요청 알림(2026-11-18)
