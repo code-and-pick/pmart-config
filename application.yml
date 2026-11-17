@@ -14,3 +14,7 @@ spring:
 eureka:
   client:
     enabled: false
+# 업무 정책값 중 여러 서비스가 같이 읽는 것(2026-11-18)
+pmart:
+  commerce:
+    min-order-amount: 15000 # 최소 주문 상품액(원, BR-14 확정) — order-service 주문 초안이 막고 cart-service 가 "N원 더 담기" 안내. 둘이 이 한 값을 읽는다. 없으면 주문 초안 CONFIG_REQUIRED·장바구니 안내 비움
