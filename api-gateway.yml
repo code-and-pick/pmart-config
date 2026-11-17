@@ -80,7 +80,7 @@ spring:
             - id: notification-service-me
               uri: ${pmart.gateway.upstream.notification-service}
               predicates:
-                - Path=/api/v1/me/notifications/**,/api/v1/me/notification-settings,/api/v1/me/notification-setting-changes/**
+                - Path=/api/v1/me/notifications/**,/api/v1/me/notification-settings,/api/v1/me/notification-setting-changes/**,/api/v1/me/push-tokens,/api/v1/me/push-tokens/** # 푸시 토큰(BR-09, notification 0.3.0 — 2026-11-17)
               order: -99
             - id: customer-service-me
               uri: ${pmart.gateway.upstream.customer-service}
