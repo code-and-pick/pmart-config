@@ -22,7 +22,7 @@ pmart:
 spring:
   cloud:
     function:
-      definition: orderEvents;deliveryEvents;claimEvents;paymentEvents;caseEvents;slotEvents;riderEvents
+      definition: orderEvents;deliveryEvents;claimEvents;paymentEvents;caseEvents;slotEvents;riderEvents;trackingEvents
     stream:
       bindings:
         orderEvents-in-0: # 주문 확정·상품 준비 시작·취소·결품 부분 취소
@@ -39,3 +39,5 @@ spring:
           destination: delivery.slot.v1
         riderEvents-in-0: # RiderRestricted — 라이더 계정 제한·해제 알림(0.4.0, 2026-11-17 §11-5). 시작 위치 latest(application-lan.yml)
           destination: delivery.rider.v1
+        trackingEvents-in-0: # DeliveryReceiptCheckRequested — 고객에게 받았는지 묻기(2026-11-17, #153). 시작 위치 latest
+          destination: delivery.tracking.v1
