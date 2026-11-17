@@ -14,9 +14,11 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: fulfillmentEvents;inventoryEvents;deliveryEvents
+      definition: fulfillmentEvents;inventoryEvents;deliveryEvents;claimEvents
     stream:
       bindings:
+        claimEvents-in-0: # claim 반품 종결 ClaimClosed(RETURN_REFUNDED·RETURN_SHORT_CLOSED) → 행 반품 수량 returnedQty(O-7, 2026-11-17)
+          destination: order.claim.v1
         fulfillmentEvents-in-0: # MFC PreparationStarted → 주문 PREPARING(슬라이스 6b, 2026-11-07), PackageHandedOver → 인계 수량·상태(O-1, 2026-11-16)
           destination: mfc.fulfillment.v1
         deliveryEvents-in-0: # 배송 DeliveryCompleted → 전달 수량·주문 완료(O-1, 2026-11-16)

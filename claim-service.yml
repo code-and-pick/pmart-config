@@ -8,8 +8,11 @@ pmart:
   claim:
     refund-retry-after: PT30S # 실행 대기·PG 결과 대기·불명 환불 재실행·원거래 조회, 반품 회수비 결제 상태 재조회
     # 반품(인계 뒤 회수, CL-1 2026-11-17) 회수비 9,000원 결제 기한 = 접수 + 이 시간. 지나면 반품 취소. 없으면 회수비 있는 반품 접수만 422 CONFIG_REQUIRED
-    # (2026-11-17 제안값 — 사용자 확인 전. 오배송 다시 배송비는 30분이지만 반품은 고객이 상담 뒤 앱에서 결제하므로 하루)
+    # (사용자 확정 2026-11-17 "추천대로" — 24시간. 오배송 다시 배송비는 30분이지만 반품은 고객이 상담 뒤 앱에서 결제하므로 하루)
     return-fee-payment-wait: PT24H
+    # 반품 전체 기한 = 접수 + 이 시간(CL-1 추가 결정 5, 사용자 2026-11-17 "추천대로" — 7일). 그 안에 회수가 안 되면 자동 취소(진행 중인 회수는 결과를 기다림).
+    # 없으면 반품 접수 422 CONFIG_REQUIRED. 기한 점검 간격은 return-deadline-sweep-interval(기본 PT5M)
+    return-deadline: P7D
 spring:
   # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ({토픽}.DLT)·커밋은 common-messaging 기본값.
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
