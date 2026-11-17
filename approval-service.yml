@@ -30,6 +30,9 @@ pmart:
       CENTER_MASTER: CENTER_MASTER_APPROVER # 센터 기준정보·영업 캘린더 (BO-06)
       INITIAL_STOCK: INVENTORY_APPROVER # MFC 초기 보유 반입(오픈 시 초기 재고, D2 — mfc-inbound → mfc-inventory 전기)
       GRANT: OPERATOR_ADMIN # 직원 권한 요청(BO-01, ADR-0056 5-4). 요청자(등록한 인사팀 직원)와 달라야 한다
+      # MFC 승인 번호(AP-1, 2026-11-17). 정본(MFC)이 /internal/approval-ref-uses 로 한 번만 쓴다
+      MFC_STOCK_ADJUSTMENT: INVENTORY_APPROVER # 실사 조정·폐기·정정·격리 해제 본사 승인(Q-11: 한 건 손실 10만 원 이상 또는 한 SKU 20개 이상, 그 아래는 센터 관리자)
+      MFC_OPERATION_RESTRICTION: OPERATOR_ADMIN # 운영 제한 해제(재개, BO-08 "본사 승인") — 본사 운영 역할이 따로 생기면 바꾼다
     # 자동 승인 규칙 표(ADR-0056 결정 6, 사용자 2026-11-12 "소속 센터 현장 역할만"). 바꾸면 version 을 올린다 —
     # 자동 승인 기록의 승인자 = RULE:<id>@v<version>. 이 표에 맞지 않는 행은 모두 승인자 심사
     auto-approval-rules:
