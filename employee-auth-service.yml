@@ -61,7 +61,8 @@ pmart:
       - SERVICEABILITY_APPROVER
     # 역할 목록 API(GET /api/v1/employee-auth/roles, BR-57 — 인사팀 백오피스 "요청 권한 역할")의 표시 이름·센터 지정. 순서는 위 roles 순서.
     # 맵이 아니라 목록인 것은 Spring 맵 키가 대괄호 없이는 '_' 를 지우기 때문. 없는 역할은 이름 = 코드, center-scoped = false
-    # center-scoped: 권한 센터를 함께 골라야 하는 역할(화면 안내용 — 판정은 approval-service)
+    # center-scoped: 권한 센터를 함께 골라야 하는 역할. hr-service 가 권한 요청 때 이 값으로 센터 규칙을 검사한다(2026-11-17 HR-2 —
+    # 센터 지정 역할은 센터 1개 이상, 아닌 역할은 센터 없음, 내부 조회 GET /api/v1/internal/roles). 승인 반영의 중복 권한 판정도 이 값을 쓴다
     role-info:
       - { code: OPERATOR_ADMIN, name: 운영 관리자 }
       - { code: HR_ADMIN, name: 인사 관리자 }
