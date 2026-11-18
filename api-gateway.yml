@@ -80,7 +80,7 @@ spring:
             - id: notification-service-me
               uri: ${pmart.gateway.upstream.notification-service}
               predicates:
-                - Path=/api/v1/me/notifications/**,/api/v1/me/notification-settings,/api/v1/me/notification-setting-changes/**,/api/v1/me/push-tokens,/api/v1/me/push-tokens/** # 푸시 토큰(BR-09, notification 0.3.0 — 2026-11-17)
+                - Path=/api/v1/me/notifications/**,/api/v1/me/notification-settings,/api/v1/me/notification-setting-changes/**,/api/v1/me/push-tokens,/api/v1/me/push-tokens/**,/api/v1/rider-notices,/api/v1/rider-notices/** # 푸시 토큰(BR-09, notification 0.3.0 — 2026-11-17)
               order: -99
             - id: customer-service-me
               uri: ${pmart.gateway.upstream.customer-service}
@@ -105,12 +105,12 @@ spring:
             - id: delivery-execution-service-deliveries
               uri: ${pmart.gateway.upstream.delivery-execution-service}
               predicates:
-                - Path=/api/v1/deliveries/**,/api/v1/delivery-help-requests # 직원 배송 찾기(/deliveries)·도움요청 대기 목록(execution 0.4.0, 2026-11-15)
+                - Path=/api/v1/deliveries/**,/api/v1/delivery-help-requests,/api/v1/delivery-staff-actions,/api/v1/return-handovers,/api/v1/return-handovers/** # 직원 배송 찾기(/deliveries)·도움요청 대기 목록(execution 0.4.0, 2026-11-15)
               order: -94
             - id: rider-service-riders
               uri: ${pmart.gateway.upstream.rider-service}
               predicates:
-                - Path=/api/v1/riders/**
+                - Path=/api/v1/riders/**,/api/v1/rider-staff-actions
               order: -93
             - id: review-service # 2026-11-16 리뷰(ADR-0063)
               uri: ${pmart.gateway.upstream.review-service}
@@ -198,7 +198,7 @@ spring:
             - id: delivery-dispatch-service
               uri: ${pmart.gateway.upstream.delivery-dispatch-service}
               predicates:
-                - Path=/api/v1/dispatch-requests/**,/api/v1/offers/**,/api/v1/delivery-list/**,/api/v1/rider-assignments # 라이더 배정 이력(dispatch 0.8.0, #157 2026-11-18)
+                - Path=/api/v1/dispatch-requests/**,/api/v1/offers/**,/api/v1/delivery-list/**,/api/v1/rider-assignments,/api/v1/dispatch-staff-actions # 라이더 배정 이력(dispatch 0.8.0, #157 2026-11-18)
             - id: auth-service
               uri: ${pmart.gateway.upstream.auth-service}
               predicates:
