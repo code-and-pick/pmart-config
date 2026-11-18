@@ -38,7 +38,7 @@ pmart:
       # 필수 약관 동의 단계(AUTH_CONSENT, 서버는 2026-11-17 CU-1 로 준비됨). 켜면 신규 가입과 필수 약관 현행 버전에 동의하지 않은 기존 회원은
       # 동의 화면을 거친다(판단은 customer-service — customer-service-base-url). 고객앱 동의 흐름 반영 뒤 true — CU-1 2026-11-17.
       # 켤 때는 customer-service.yml consents.purchase-gate 와 함께 true
-      require-consent: false
+      require-consent: true # 2026-11-19 사용자 "켜줘"(CU-1) — purchase-gate 와 함께
       failure-window: PT15M
       max-failures: 5
       restriction: PT10M
