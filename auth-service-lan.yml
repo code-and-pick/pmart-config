@@ -6,6 +6,13 @@ spring:
     password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
 pmart:
   auth:
+    # [LAN 시험 전용] 개발용 고객 토큰(2026-11-19 MFC 시뮬레이터 R-21 — 사용자 "제안대로해줘"). 운영(prod) 설정에는 두지 않는다 → 경로 404.
+    # POST http://<auth PC>:8501/api/v1/internal/dev-customer-tokens {accountId} — 게이트웨이에 없음. 허용 목록 밖 403, 토큰 15분(세션 행이 발급 기록)
+    dev-customer-token:
+      enabled: true
+      ttl: PT15M
+      allowed-accounts:
+        - CU-fdccbd6b-9817-4e95-b55a-2c4e71539116 # PC 1 지정 고객(11-18 LAN 시험 주문에 쓴 계정, 배송지 1)
     issuer: 'http://auth-service:8501'
     # 서명키(PKCS#8 PEM 본문, 첫 키가 활성) — 비밀값은 {cipher}. 운영자 로그인·첫 관리자·개발 계정은 2026-11-13 없앴다(ADR-0056 7단계 — 직원은 employee-auth-service)
     signing:

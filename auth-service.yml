@@ -14,6 +14,7 @@ pmart:
       - /actuator/prometheus
       - /error
       - /api/v1/internal/jwks
+      - /api/v1/internal/dev-customer-tokens # [LAN 시험 전용] 개발용 고객 토큰(2026-11-19 R-21) — 켠 환경(auth-service-lan.yml)에만 경로가 있다, 게이트웨이엔 없음
       # 계약 security: [] 작업(로그인·토큰 발급). 경로마다 메서드가 하나뿐이라 경로 단위 허용이 계약과 일치.
       - /api/v1/auth/social-logins
       - /api/v1/auth/social-logins/*
