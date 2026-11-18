@@ -174,7 +174,7 @@ spring:
             - id: mfc-capacity-service
               uri: ${pmart.gateway.upstream.mfc-capacity-service}
               predicates:
-                - Path=/api/v1/assignments/**,/api/v1/assignment-plans/**,/api/v1/operation-restrictions/**,/api/v1/mfcs/*/workers,/api/v1/mfcs/*/workers/**,/api/v1/mfcs/*/break-pin # 작업자·업무·근무(WK-02, 2026-11-08)
+                - Path=/api/v1/assignments/**,/api/v1/assignment-plans/**,/api/v1/operation-restrictions/**,/api/v1/mfcs/*/workers,/api/v1/mfcs/*/workers/**,/api/v1/mfcs/*/break-pin,/api/v1/mfcs/*/staff-contacts,/api/v1/mfcs/*/staff-contacts/** # 작업자·업무·근무(WK-02, 2026-11-08)
             - id: mfc-location-service
               uri: ${pmart.gateway.upstream.mfc-location-service}
               predicates:
