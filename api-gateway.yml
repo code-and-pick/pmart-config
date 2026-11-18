@@ -105,12 +105,12 @@ spring:
             - id: delivery-execution-service-deliveries
               uri: ${pmart.gateway.upstream.delivery-execution-service}
               predicates:
-                - Path=/api/v1/deliveries/**,/api/v1/delivery-help-requests,/api/v1/delivery-staff-actions,/api/v1/return-handovers,/api/v1/return-handovers/** # 직원 배송 찾기(/deliveries)·도움요청 대기 목록(execution 0.4.0, 2026-11-15)
+                - Path=/api/v1/deliveries/**,/api/v1/delivery-help-requests,/api/v1/delivery-staff-actions,/api/v1/return-handovers,/api/v1/return-handovers/**,/api/v1/rider-payouts,/api/v1/rider-payouts/** # 직원 배송 찾기(/deliveries)·도움요청 대기 목록(execution 0.4.0, 2026-11-15)
               order: -94
             - id: rider-service-riders
               uri: ${pmart.gateway.upstream.rider-service}
               predicates:
-                - Path=/api/v1/riders/**,/api/v1/rider-staff-actions
+                - Path=/api/v1/riders/**,/api/v1/rider-staff-actions,/api/v1/rider-appeals,/api/v1/rider-appeals/**
               order: -93
             - id: review-service # 2026-11-16 리뷰(ADR-0063)
               uri: ${pmart.gateway.upstream.review-service}
