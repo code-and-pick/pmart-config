@@ -128,7 +128,7 @@ spring:
             - id: customer-service
               uri: ${pmart.gateway.upstream.customer-service}
               predicates:
-                - Path=/api/v1/guest-delivery-addresses/**,/api/v1/device-consents,/api/v1/device-consent-changes,/api/v1/consent-terms
+                - Path=/api/v1/guest-delivery-addresses/**,/api/v1/device-consents,/api/v1/device-consent-changes,/api/v1/consent-terms,/api/v1/consent-terms/**
             - id: cart-service
               uri: ${pmart.gateway.upstream.cart-service}
               predicates:
@@ -319,6 +319,8 @@ pmart:
         path: /api/v1/device-consent-changes # customer-service
       - method: GET
         path: /api/v1/consent-terms # customer-service
+      - method: GET
+        path: /api/v1/consent-terms/*/* # customer-service 약관 본문(0.6.1)
       - method: GET
         path: /api/v1/categories/tree # product-service
       - method: GET

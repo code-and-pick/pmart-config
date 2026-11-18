@@ -20,7 +20,7 @@ pmart:
         location-based-service: '2026-11-19'
       # 수신 동의 처리 결과 안내의 전송자 이름(정보통신망법 — 전송자·일시·처리 내용, BR-59). 앱이 "수신동의 처리완료" 창에 쓴다
       sender-name: PMart
-      # 약관 본문 주소(항목 키 = versions 와 같은 이름). 없으면 GET /consent-terms 의 documentUrl 이 null — 약관 문구가 정해지면 넣는다(BR-59 ④)
+      # 약관 본문 주소 덮어쓰기(항목 키 = versions 와 같은 이름). 비우면 서버가 가진 본문 /api/v1/consent-terms/<항목>/<버전>(2026-11-19 시연용 초안, 회사 PMart)
       documents: {}
       # 구매 가능 여부(내부 계정 상태 purchasable)에 필수 동의를 넣을지 — 기능 스위치(정책값 아님). 고객앱 동의 흐름 반영 뒤 true —
       # CU-1 2026-11-17. 켤 때는 auth-service.yml require-consent 와 함께 true(하나만 켜면 동의할 길 없이 주문이 막히거나 묻기만 한다)
@@ -42,6 +42,7 @@ pmart:
       - /api/v1/device-consents # 로그인 전 기기 동의(2026-11-19 BR-59) — GET 만
       - /api/v1/device-consent-changes # POST 만
       - /api/v1/consent-terms # GET 만
+      - /api/v1/consent-terms/*/* # 약관 본문(0.6.1) — GET 만
 spring:
   # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ({토픽}.DLT)·커밋은 common-messaging 기본값.
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
