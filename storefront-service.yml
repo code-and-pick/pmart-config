@@ -24,6 +24,10 @@ pmart:
       - /api/v1/storefront/banners
       - /api/v1/storefront/banner-images/* # 배너 이미지(2026-11-20 ADR-0075) — 게시된 진열에 쓰인 것만 공개, 그 밖은 서비스가 404
 spring:
+  servlet:
+    multipart: # 배너 이미지(0.7.0) — 1장 상한은 LayoutRules.MAX_IMAGE_BYTES(5MB), 넘으면 422 IMAGE_INVALID 로 답하려고 조금 크게(2026-11-20 — 기본 1MB 라 2.3MB 배너가 413)
+      max-file-size: 6MB
+      max-request-size: 6MB
   # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ({토픽}.DLT)·커밋은 common-messaging 기본값.
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
