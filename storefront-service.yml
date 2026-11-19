@@ -21,8 +21,10 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: catalogEvents
+      definition: catalogEvents;handlingEvents
     stream:
       bindings:
         catalogEvents-in-0:
           destination: commerce.product.v1,commerce.pricing.v1
+        handlingEvents-in-0: # mfc-inventory SkuHandlingChanged → 센터 취급 사본(2026-11-19 BR-49 — mfcId 진열에서 미취급 빼기). 새 그룹 earliest = 처음부터 다시 읽어 채움
+          destination: mfc.sku-handling.v1
