@@ -9,6 +9,7 @@ pmart:
   approval-ref:
     approval-base-url: http://approval-service:8505
   capacity:
+    hr-base-url: http://hr-service:8512 # 직원 이름(0.23.0 staff-names·작업자 name — hr /internal/employee-names, #242 ADR-0070). 없으면 이름 null
     activities: # 작업자 오늘 업무 내역(F-7, #120) — 네 정본의 내부 조회. fulfillment·inbound 는 plan.* 주소를 그대로 쓴다
       mfc-inventory-base-url: http://mfc-inventory-service:8301
       mfc-quality-base-url: http://mfc-quality-service:8305
