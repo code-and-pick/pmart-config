@@ -28,7 +28,7 @@ pmart:
       max-chunk-chars: 1500
       min-sentence-overlap: 0.5
     answers:
-      store-question: false # 질문 원문 저장 [결정 필요] — 기본은 request_hash 만
+      store-question: true # 질문 원문 저장 — 사용자 2026-11-19 "응 해줘"(백오피스 질문 목록에 질문이 보이게, ADR-0036 결정 3). 운영자 질문만(이 서비스는 직원 전용), 본인만 조회, 보존은 답변과 같음
       # retention: 30d      # 답변 보존 기간 [결정 필요] — 비어 있으면 지우지 않는다
     ingest:
       prune-grace: 1h # RETIRED·FAILED 스냅숏 수동 정리 유예(lease×2 이상)
