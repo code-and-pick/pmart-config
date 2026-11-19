@@ -434,6 +434,10 @@ pmart:
         burst-capacity: 40
       exempt-paths:
         - /api/v1/webhooks/** # PG(토스) 웹훅: 발신 IP 가 몰리고 재전송은 PG 가 관리
+        # 공개 사진(2026-11-20, 고객 앱 목록·상세가 느린 원인): 앱 Image 요청은 토큰 없이 와서 IP 단위 익명 한도(10/s·20)에 걸려
+        # 카테고리 목록 스크롤 한 번에 21건 중 11건이 429 였다. 읽기 전용·1년 immutable 캐시라 제한에서 뺀다(올리기 POST 는 경로가 달라 제한 그대로)
+        - /api/v1/content-images/*
+        - /api/v1/review-photos/*
 management:
   health:
     redis:
