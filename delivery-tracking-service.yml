@@ -14,6 +14,10 @@ pmart:
     watch-max-age: PT5H # 배정 뒤 5시간 지나면 위치 감시 끝(사용자 결정 2026-11-14)
     # 실시간 구독(TR-3 SSE, 0.5.0) HEARTBEAT — 게이트웨이 response-timeout(10s, 읽기 사이 최대 간격)보다 짧게. 기본 15초면 조용한 구독이 게이트웨이에서 끊긴다
     stream-heartbeat: PT5S
+    # TR-4 곧 도착(2026-11-19 — 사용자 300m). 운영값은 pmart-config(PC 1)
+    approach-distance-m: 300
+    approach-check-interval: PT1S
+    approach-check-initial-delay: PT1S
 spring:
   # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다
   # 처음 켜기 전 소비 그룹 시작 위치 2026-11-10T00:30Z(dispatch·execution 과 같은 기준 — kickoff §6)

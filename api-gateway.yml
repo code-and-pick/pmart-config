@@ -160,7 +160,7 @@ spring:
             - id: mfc-inventory-service-sku-handlings
               uri: ${pmart.gateway.upstream.mfc-inventory-service}
               predicates:
-                - Path=/api/v1/stock-summaries,/api/v1/mfcs/*/sku-handlings/**,/api/v1/mfcs/*/sku-handling-batches/**,/api/v1/mfcs/*/stock,/api/v1/mfcs/*/stock-units,/api/v1/mfcs/*/stock-corrections,/api/v1/mfcs/*/count-sessions/**,/api/v1/mfcs/*/unshippable-lots,/api/v1/mfcs/*/replenishment-policies,/api/v1/mfcs/*/lot-labels,/api/v1/mfcs/*/lot-labels/**,/api/v1/mfcs/*/lot-resolutions # LOT 라벨(L1~L6, 2026-11-17 #101)·LOT 찾기 GS1(IV-4 #112) · 보충 기준(IV-04) · 순환 실사(IV-11)·출하 부적격 LOT 회수 목록(2026-11-08)
+                - Path=/api/v1/stock-summaries,/api/v1/mfcs/*/sku-handlings/**,/api/v1/mfcs/*/sku-handling-batches/**,/api/v1/mfcs/*/stock,/api/v1/mfcs/*/stock-units,/api/v1/mfcs/*/stock-corrections,/api/v1/mfcs/*/count-sessions/**,/api/v1/mfcs/*/unshippable-lots,/api/v1/mfcs/*/replenishment-policies,/api/v1/mfcs/*/lot-labels,/api/v1/mfcs/*/lot-labels/**,/api/v1/mfcs/*/lot-numbers,/api/v1/mfcs/*/lot-resolutions # LOT 라벨(L1~L6, 2026-11-17 #101)·LOT 찾기 GS1(IV-4 #112) · 보충 기준(IV-04) · 순환 실사(IV-11)·출하 부적격 LOT 회수 목록(2026-11-08)
               order: -90
             - id: cdc-inventory-service-sku-handlings
               uri: ${pmart.gateway.upstream.cdc-inventory-service}
@@ -174,7 +174,7 @@ spring:
             - id: mfc-capacity-service
               uri: ${pmart.gateway.upstream.mfc-capacity-service}
               predicates:
-                - Path=/api/v1/assignments/**,/api/v1/assignment-plans/**,/api/v1/operation-restrictions/**,/api/v1/mfcs/*/workers,/api/v1/mfcs/*/workers/**,/api/v1/mfcs/*/break-pin,/api/v1/mfcs/*/staff-contacts,/api/v1/mfcs/*/staff-contacts/** # 작업자·업무·근무(WK-02, 2026-11-08)
+                - Path=/api/v1/assignments/**,/api/v1/assignment-plans/**,/api/v1/operation-restrictions/**,/api/v1/mfcs/*/workers,/api/v1/mfcs/*/workers/**,/api/v1/mfcs/*/break-pin,/api/v1/mfcs/*/staff-names,/api/v1/mfcs/*/staff-contacts,/api/v1/mfcs/*/staff-contacts/** # 작업자·업무·근무(WK-02, 2026-11-08)
             - id: mfc-location-service
               uri: ${pmart.gateway.upstream.mfc-location-service}
               predicates:
