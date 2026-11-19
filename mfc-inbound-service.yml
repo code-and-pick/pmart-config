@@ -13,7 +13,7 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: approvalEvents;inventoryEvents;qualityEvents;capacityEvents
+      definition: approvalEvents;inventoryEvents;qualityEvents;capacityEvents;deliveryEvents
     stream:
       bindings:
         approvalEvents-in-0:
@@ -22,5 +22,7 @@ spring:
           destination: mfc.inventory.v1
         capacityEvents-in-0: # mfc-capacity AssignmentPublished → 이동 지시 담당(작업자 쪽 4단계, 2026-11-08)
           destination: mfc.capacity.v1
+        deliveryEvents-in-0: # delivery ReturnDelivered → 반납 도착 대기(MI-2, 2026-11-19)
+          destination: delivery.delivery.v1
         qualityEvents-in-0: # mfc-quality ReturnInspected → 재판매 회수품 적치 작업(IV-10, 2026-11-08)
           destination: mfc.quality.v1
