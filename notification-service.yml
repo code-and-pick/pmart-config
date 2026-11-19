@@ -15,7 +15,10 @@ pmart:
       # 고객 휴대폰 푸시로도 보낼 알림 종류(ADR-0067, 2026-11-17 사용자 "응 해줘") — 나머지는 알림함만. 라이더는 전부(고르지 않음).
       # 서버 키는 환경별(notification-service-<프로필>.yml {cipher}) — 키가 없으면 이 목록이 있어도 보내지 않는다
       customer-templates:
+        - PREPARATION_STARTED # 상품 준비 중(2026-11-19 레퍼런스 10-3-1, 사용자 "응 해줘")
         - DELIVERY_STARTED # 배송 출발
+        - DELIVERY_HEADING # 주문하신 곳으로 가고 있어요(2026-11-19 레퍼런스 10-3-3 — 묶음 배달, PC 5 사건 DE-6)
+        - DELIVERY_ARRIVING_SOON # 곧 도착(2026-11-19 레퍼런스 10-3-4 — 300m, PC 5 사건 TR-4)
         - DELIVERY_COMPLETED # 배송 완료
         - SHORTAGE_CANCELLED # 결품 부분 취소
         - ORDER_CANCELLED # 주문 취소
