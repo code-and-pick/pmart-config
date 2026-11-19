@@ -7,6 +7,9 @@ spring:
 pmart:
   customer:
     serviceability-base-url: http://delivery-serviceability-service:8401
+    # 휴대폰 번호 확인 OCTOMO API Key(2026-11-19) — 원본 deploy/lan/.secrets/octomo-api-key.txt. 무료 요금제 = 애플리케이션 1개(라이더도 같은 키 예정)
+    phone-verification:
+      api-key: '{cipher}58ffac73c0a8750acd11440d6f98baefb25eaaa62e189fa395ec41056e8b9820fc8db48943ea4fffc1312d9d02cdadb20fc4bcacb9133d1634beb1cc7bc37d70a99d077ba56d1cbb04beff0e760fa0e6fef4ca32c561756525c7b9332bb305b3'
   storage:
     s3:
       endpoint: 'http://s3:8333'

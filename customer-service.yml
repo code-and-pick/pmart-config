@@ -25,6 +25,15 @@ pmart:
       # 구매 가능 여부(내부 계정 상태 purchasable)에 필수 동의를 넣을지 — 기능 스위치(정책값 아님). 고객앱 동의 흐름 반영 뒤 true —
       # CU-1 2026-11-17. 켤 때는 auth-service.yml require-consent 와 함께 true(하나만 켜면 동의할 길 없이 주문이 막히거나 묻기만 한다)
       purchase-gate: true # 2026-11-19 사용자 "켜줘"(CU-1) — require-consent 와 함께
+    # 휴대폰 번호 확인(2026-11-19 사용자 "옥토모로" — OCTOMO, 고객이 대표번호로 문자를 보냄). api-key 는 <프로필>.yml 의 {cipher}.
+    # 하나라도 없으면 시작·확인 CONFIG_REQUIRED. 바꾸면 재시작. 조회마다 OCTOMO 월 한도(무료 1만 건)가 준다 — max-attempts·max-starts-per-day 로 막는다
+    phone-verification:
+      octomo-base-url: https://api.octoverse.kr
+      send-to: '1666-3538'
+      ttl: PT10M
+      within-minutes: 10
+      max-attempts: 5
+      max-starts-per-day: 10
     # 로그인 제공자 프로필 사진의 우리 사본(ADR-0024). 기술 설정값(업무 정책 아님). 받는 곳은 허용 호스트의 https 만
     profile-image:
       allowed-host-suffixes: googleusercontent.com
