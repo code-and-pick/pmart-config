@@ -182,11 +182,11 @@ spring:
             - id: mfc-quality-service
               uri: ${pmart.gateway.upstream.mfc-quality-service}
               predicates:
-                - Path=/api/v1/quality-decisions/**,/api/v1/return-inspections,/api/v1/return-inspections/**,/api/v1/disposal-approvals/**,/api/v1/quality-incidents/**
+                - Path=/api/v1/quality-decisions/**,/api/v1/return-inspections,/api/v1/return-inspections/**,/api/v1/disposal-approvals/**,/api/v1/quality-incidents/**,/api/v1/quality-evidence-photos,/api/v1/quality-evidence-photos/**
             - id: mfc-inbound-service
               uri: ${pmart.gateway.upstream.mfc-inbound-service}
               predicates:
-                - Path=/api/v1/inbound-promises/**,/api/v1/supply-requests/**,/api/v1/return-receipts,/api/v1/return-receipts/**,/api/v1/return-arrivals,/api/v1/dev-initial-stock-loads,/api/v1/initial-stock-loads,/api/v1/initial-stock-loads/**,/api/v1/inbound-tasks,/api/v1/inbound-tasks/**,/api/v1/move-orders,/api/v1/move-orders/** # 재고 이동 지시(IV-03, 2026-11-08)
+                - Path=/api/v1/inbound-promises/**,/api/v1/supply-requests/**,/api/v1/return-receipts,/api/v1/return-receipts/**,/api/v1/return-arrivals,/api/v1/dev-initial-stock-loads,/api/v1/initial-stock-loads,/api/v1/initial-stock-loads/**,/api/v1/inbound-tasks,/api/v1/inbound-tasks/**,/api/v1/move-orders,/api/v1/move-orders/**,/api/v1/task-exceptions # 재고 이동 지시(IV-03, 2026-11-08)
             - id: delivery-serviceability-service
               uri: ${pmart.gateway.upstream.delivery-serviceability-service}
               predicates:

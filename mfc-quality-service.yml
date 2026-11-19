@@ -6,6 +6,10 @@ pmart:
   messaging:
     domain: mfc
 spring:
+  servlet:
+    multipart:
+      max-file-size: 11MB # 품질 증빙 사진 1장 상한은 EvidencePhotoRules.MAX_PHOTO_BYTES(10MB) — 넘으면 422 PHOTO_INVALID 로 답하려고 조금 크게(0.9.0)
+      max-request-size: 11MB
   # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ·커밋은 common-messaging 기본값.
   cloud:
     function:
