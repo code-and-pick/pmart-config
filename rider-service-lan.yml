@@ -6,4 +6,13 @@ spring:
     password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
 pmart:
   rider:
+    # 휴대폰 번호 확인 OCTOMO(2026-11-19 #250, 사용자 "넣어") — customer 와 같은 키(무료 요금제 앱 1개)·같은 값. required 는 라이더 앱 배포 뒤 true
+    phone-verification:
+      octomo-base-url: https://api.octoverse.kr
+      api-key: '{cipher}58ffac73c0a8750acd11440d6f98baefb25eaaa62e189fa395ec41056e8b9820fc8db48943ea4fffc1312d9d02cdadb20fc4bcacb9133d1634beb1cc7bc37d70a99d077ba56d1cbb04beff0e760fa0e6fef4ca32c561756525c7b9332bb305b3'
+      send-to: '1666-3538'
+      ttl: PT10M
+      within-minutes: 10
+      max-attempts: 5
+      max-starts-per-day: 10
     license-hash-key: '{cipher}e5803ede6f57a2464417fe823e601f60e9f1613933d7757ba40327ab67432550c04db9f476b97eb7f97a7c1a0d6a66082e2101ef780384f92b2a67cbc2f3c63f3e7f85743d80a90390669fd0a78c937cd54ee5fd3aa8f061b096a2f467f5e596'  # 운전면허 중복 확인 HMAC 키(PR #66, 2026-11-16) — 평문 .secrets/rider-license-hash-key
