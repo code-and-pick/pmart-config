@@ -26,6 +26,7 @@ pmart:
         - ORDER_CANCELLED # 주문 취소
         - REFUND_SUCCEEDED # 환불 완료
         - DELIVERY_INCIDENT_RESHIPMENT # 사고·파손 재발송 안내(N-4, 2026-11-19)
+        - DISPATCH_DELAYED # 배차 지연(2026-11-19 — 원문 §3.6, 사용자 "1,2,3 전부")
         - REFUND_DELAYED # 환불 늦어짐
         - REDELIVERY_PAYMENT_REQUIRED # 오배송 다시 배송비 결제 — 30분 안에 내야 해서(ADR-0065) 푸시도(사용자 2026-11-17 "넣고")
 # 고객 알림함 구독(Spring Cloud Stream, ADR-0035 — 2026-11-16, 계약 0.2.0). 처음 켜기 전 소비 그룹 시작 위치 = latest(지난 주문에 알림을 몰아 쌓지 않게)
