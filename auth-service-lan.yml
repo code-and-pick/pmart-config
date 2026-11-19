@@ -26,3 +26,11 @@ pmart:
         # Android 클라이언트 ID 는 넣지 않는다 — Google 이 패키지·SHA-1 로 앱을 알아보는 데만 쓰고 ID 토큰 aud 는 늘 serverClientId 다
         # (2026-11-10 293585219605-29edshi9… 를 뺌: 고객 앱 serverClientId 가 웹 ID 라 이 값을 aud 로 가진 토큰은 없음)
         client-ids: '293585219605-p6akml03k4lpi01agvgah41g2imo1aes.apps.googleusercontent.com'
+
+      # 카카오·네이버 로그인(2026-11-19 ADR-0071, auth 0.4.0) — 허용 ID 토큰 aud. 공개 값(앱에도 들어감). 원본: 고객 앱 apps/customer_app/.secrets/customer.env
+      kakao:
+        # 카카오 네이티브 앱 키(고객 앱 카카오 SDK 초기화 키 = ID 토큰 aud). 콘솔에서 OpenID Connect 켬
+        client-ids: '4cb5da1f6f2a798ee135c072a8ebffe2'
+      naver:
+        # 네이버 애플리케이션 Client ID(= ID 토큰 aud). Client Secret 은 서버에 두지 않는다(PKCE)
+        client-ids: 'GKQjIobmiGjOTQDdCcIV'
