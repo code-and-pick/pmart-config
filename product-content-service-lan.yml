@@ -7,6 +7,7 @@ spring:
 pmart:
   content:
     inventory-base-url: http://mfc-inventory-service:8301 # 옵션별 취급·가용 표시
+    pricing-base-url: http://pricing-service:8107 # 옵션 기본가 사본(2026-11-19 BR-36)
   storage:
     s3:
       endpoint: 'http://s3:8333' # 비우면 AWS 기본. SeaweedFS 는 http://<host>:8333
