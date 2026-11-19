@@ -160,7 +160,7 @@ spring:
             - id: mfc-inventory-service-sku-handlings
               uri: ${pmart.gateway.upstream.mfc-inventory-service}
               predicates:
-                - Path=/api/v1/mfcs/*/sku-handlings/**,/api/v1/mfcs/*/sku-handling-batches/**,/api/v1/mfcs/*/stock,/api/v1/mfcs/*/stock-units,/api/v1/mfcs/*/stock-corrections,/api/v1/mfcs/*/count-sessions/**,/api/v1/mfcs/*/unshippable-lots,/api/v1/mfcs/*/replenishment-policies,/api/v1/mfcs/*/lot-labels,/api/v1/mfcs/*/lot-labels/**,/api/v1/mfcs/*/lot-resolutions # LOT 라벨(L1~L6, 2026-11-17 #101)·LOT 찾기 GS1(IV-4 #112) · 보충 기준(IV-04) · 순환 실사(IV-11)·출하 부적격 LOT 회수 목록(2026-11-08)
+                - Path=/api/v1/stock-summaries,/api/v1/mfcs/*/sku-handlings/**,/api/v1/mfcs/*/sku-handling-batches/**,/api/v1/mfcs/*/stock,/api/v1/mfcs/*/stock-units,/api/v1/mfcs/*/stock-corrections,/api/v1/mfcs/*/count-sessions/**,/api/v1/mfcs/*/unshippable-lots,/api/v1/mfcs/*/replenishment-policies,/api/v1/mfcs/*/lot-labels,/api/v1/mfcs/*/lot-labels/**,/api/v1/mfcs/*/lot-resolutions # LOT 라벨(L1~L6, 2026-11-17 #101)·LOT 찾기 GS1(IV-4 #112) · 보충 기준(IV-04) · 순환 실사(IV-11)·출하 부적격 LOT 회수 목록(2026-11-08)
               order: -90
             - id: cdc-inventory-service-sku-handlings
               uri: ${pmart.gateway.upstream.cdc-inventory-service}
@@ -170,7 +170,7 @@ spring:
             - id: mfc-fulfillment-service
               uri: ${pmart.gateway.upstream.mfc-fulfillment-service}
               predicates:
-                - Path=/api/v1/tasks/**,/api/v1/shipments/**,/api/v1/packages/**,/api/v1/work-orders/**,/api/v1/package-handovers/**,/api/v1/stop-requests/** # 직원 조회 work-orders(F-3)·package-handovers·stop-requests — 계약·허용 목록엔 있었는데 경로가 빠져 404(2026-11-17 시뮬레이터 알림)
+                - Path=/api/v1/tasks/**,/api/v1/shipments/**,/api/v1/packages/**,/api/v1/work-orders/**,/api/v1/package-handovers/**,/api/v1/stop-requests/**,/api/v1/metrics/picking-lines # 직원 조회 work-orders(F-3)·package-handovers·stop-requests — 계약·허용 목록엔 있었는데 경로가 빠져 404(2026-11-17 시뮬레이터 알림)
             - id: mfc-capacity-service
               uri: ${pmart.gateway.upstream.mfc-capacity-service}
               predicates:
