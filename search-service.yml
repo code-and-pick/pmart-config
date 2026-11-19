@@ -36,3 +36,12 @@ pmart:
       min-searchers: 2
       hidden-keywords: []
       refresh: 5m
+# 응답 시간 버킷(2026-11-19, 성능 분석 2순위 ④ — 운영 p95): 서비스 응답(http.server.requests)·ES 호출(pmart.search.es, SearchIndex 가 직접 관측).
+# Prometheus: histogram_quantile(0.95, sum by (le, uri) (rate(http_server_requests_seconds_bucket{application="search-service"}[5m]))),
+#             histogram_quantile(0.95, sum by (le, op) (rate(pmart_search_es_seconds_bucket[5m]))). 버킷을 바꾸면 재시작
+management:
+  metrics:
+    distribution:
+      slo:
+        http.server.requests: 5ms,10ms,25ms,50ms,100ms,250ms,500ms,1s,2500ms
+        pmart.search.es: 2ms,5ms,10ms,25ms,50ms,100ms,250ms,500ms,1s,2500ms
