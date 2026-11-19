@@ -8,3 +8,12 @@ pmart:
   storefront:
     # 콘텐츠 사건에 상품명·이미지가 없어 공개 카드 API 로 보강한다(product-content-service, Service DNS)
     content-base-url: http://product-content-service:8102
+  storage:
+    s3: # 배너 이미지(2026-11-20 ADR-0075 BO-05) — review 와 같은 SeaweedFS·자격 증명, 버킷만 다름
+      endpoint: 'http://s3:8333'
+      region: us-east-1
+      bucket: 'pmart-storefront'
+      access-key: '{cipher}78b9dba4ad490468f754d1bc5916a69980da70a0738f9917e36c6843bbd898fabbf9eed64df203e22041aec0c070b446'
+      secret-key: '{cipher}0d2c77486bf70618b4a2a2e223f7052482808a925afb4852b3d1177164ec05d925f5f35d7c13048de6017cee4ec25fdd935d742d0ff004cb9c508f2bbd7f99981ed2abe04b6ce09437e699cd2e259a27'
+      path-style: true
+      create-bucket: true # 처음 배포 때 버킷을 앱이 만든다(render 의 -bucket 목록에도 있다)

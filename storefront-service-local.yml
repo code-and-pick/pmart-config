@@ -7,3 +7,12 @@ spring:
 pmart:
   storefront:
     content-base-url: http://localhost:8102
+  storage:
+    s3: # 배너 이미지(ADR-0075) — deploy/local 의 s3(SeaweedFS), 로컬 전용 기본 자격 증명(review 와 같음)
+      endpoint: http://localhost:8333
+      bucket: pmart-storefront
+      access-key: pmart-local-s3
+      secret-key: pmart-local-s3-secret
+      region: us-east-1
+      path-style: true
+      create-bucket: true

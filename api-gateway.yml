@@ -361,6 +361,8 @@ pmart:
         path: /api/v1/storefront/sections/*/items # storefront-service
       - method: GET
         path: /api/v1/storefront/banners # storefront-service
+      - method: GET
+        path: /api/v1/storefront/banner-images/* # storefront-service(배너 이미지, 2026-11-20 ADR-0075 — 게시된 것만)
       - method: POST
         path: /api/v1/webhooks/toss # payment-service
       - method: POST
@@ -442,6 +444,7 @@ pmart:
         # 카테고리 목록 스크롤 한 번에 21건 중 11건이 429 였다. 읽기 전용·1년 immutable 캐시라 제한에서 뺀다(올리기 POST 는 경로가 달라 제한 그대로)
         - /api/v1/content-images/*
         - /api/v1/review-photos/*
+        - /api/v1/storefront/banner-images/*
 management:
   health:
     redis:
