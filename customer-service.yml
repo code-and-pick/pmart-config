@@ -27,6 +27,10 @@ pmart:
       purchase-gate: true # 2026-11-19 사용자 "켜줘"(CU-1) — require-consent 와 함께
     # 휴대폰 번호 확인(2026-11-19 사용자 "옥토모로" — OCTOMO, 고객이 대표번호로 문자를 보냄). api-key 는 <프로필>.yml 의 {cipher}.
     # 하나라도 없으면 시작·확인 CONFIG_REQUIRED. 바꾸면 재시작. 조회마다 OCTOMO 월 한도(무료 1만 건)가 준다 — max-attempts·max-starts-per-day 로 막는다
+    # 한 번호 한 계정(2026-11-20 ADR-0074, 사용자 "탈퇴 1달 재가입 금지"): 탈퇴로 풀린 번호를 다른 계정이 다시 확인하지 못하는 기간(라이더와 같은 30일).
+    # 없으면 번호 확정(가입 단계·/me 확인) CONFIG_REQUIRED
+    identity:
+      rejoin-block: P30D
     phone-verification:
       octomo-base-url: https://api.octoverse.kr
       send-to: '1666-3538'

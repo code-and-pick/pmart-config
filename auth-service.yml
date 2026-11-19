@@ -19,6 +19,8 @@ pmart:
       - /api/v1/auth/social-logins
       - /api/v1/auth/social-logins/*
       - /api/v1/auth/social-logins/*/completions
+      - /api/v1/auth/social-logins/*/identity-verifications # 휴대폰 확인 시작(2026-11-20 ADR-0074, 0.6.0)
+      - /api/v1/auth/social-logins/*/identity-verifications/*/confirmations # 휴대폰 확인
       - /api/v1/auth/tokens
       - /api/v1/auth/guest-sessions
       - /api/v1/auth/oauth-callbacks/naver/* # 네이버 로그인 콜백 중계(2026-11-19 BR-66, 0.5.0) — 앱 주소로 302 만
@@ -41,6 +43,7 @@ pmart:
       # 동의 화면을 거친다(판단은 customer-service — customer-service-base-url). 고객앱 동의 흐름 반영 뒤 true — CU-1 2026-11-17.
       # 켤 때는 customer-service.yml consents.purchase-gate 와 함께 true
       require-consent: true # 2026-11-19 사용자 "켜줘"(CU-1) — purchase-gate 와 함께
+      require-identity: false # 휴대폰 확인 단계(2026-11-20 ADR-0074) — 고객 앱이 AUTH_IDENTITY 를 반영한 뒤 사용자 허락으로 켠다(customer identity.rejoin-block 필요)
       failure-window: PT15M
       max-failures: 5
       restriction: PT10M
