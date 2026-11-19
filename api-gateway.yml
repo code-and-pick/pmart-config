@@ -330,6 +330,8 @@ pmart:
       - method: GET
         path: /api/v1/product-contents/* # product-content-service
       - method: GET
+        path: /api/v1/product-contents/*/rating-summary # product-content-service 평점 집계(2026-11-19, 0.2.1 — 비회원도)
+      - method: GET
         path: /api/v1/content-images/* # product-content-service
       - method: GET
         path: /api/v1/products/*/reviews # review-service

@@ -27,7 +27,7 @@ pmart:
       # 쿠키 CORS(ADR-0059) — 웹 백오피스 두 앱(HTTPS)만. 경로는 api-gateway.yml credentialed-paths
       # + 웹 개발 서버 출처(npm run dev:lan, 5173 backoffice·5174 hr·5175 mfc — 2026-11-16 사용자 승인, LAN 한정). refresh 쿠키(SameSite=Strict)는 localhost 에서 실리지 않는다
       credentialed-origins: 'https://192.168.0.40,https://d603-16,https://192.168.0.40:8444,https://d603-16:8444,https://192.168.0.40:8445,https://d603-16:8445,https://192.168.0.40:8446,https://d603-16:8446,http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:5176'
-      allowed-origins: 'http://192.168.0.40:8090,https://192.168.0.40,https://d603-16,https://192.168.0.40:8444,https://d603-16:8444,https://192.168.0.40:8445,https://d603-16:8445,https://192.168.0.40:8446,https://d603-16:8446,http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:5176' # 8090 = Swagger UI(api-docs, HTTP), 백오피스 https 443·인사팀 https 8444·MFC 백오피스 https 8445(2026-11-15)·라이더 백오피스 https 8446(2026-11-17)(2026-11-13 HTTP 화면 닫음, ADR-0057)
+      allowed-origins: 'http://192.168.0.40:8090,https://192.168.0.40,https://d603-16,https://192.168.0.40:8444,https://d603-16:8444,https://192.168.0.40:8445,https://d603-16:8445,https://192.168.0.40:8446,https://d603-16:8446,http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:5176,http://localhost:5180' # 5180 = MFC 시뮬레이터 개발 서버(2026-11-19 R-25 — 쓰기 요청 CORS 403), 8090 = Swagger UI(api-docs, HTTP), 백오피스 https 443·인사팀 https 8444·MFC 백오피스 https 8445(2026-11-15)·라이더 백오피스 https 8446(2026-11-17)(2026-11-13 HTTP 화면 닫음, ADR-0057)
     # 업스트림은 Eureka 에서 찾는다(ADR-0032, lb://<서비스 이름>). 등록이 없으면 503
     upstream:
       product-service: lb://product-service

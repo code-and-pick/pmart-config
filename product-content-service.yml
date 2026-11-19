@@ -9,13 +9,15 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: approvalEvents;productEvents
+      definition: approvalEvents;productEvents;reviewEvents
     stream:
       bindings:
         approvalEvents-in-0:
           destination: platform.approval.v1
         productEvents-in-0:
           destination: commerce.product.v1
+        reviewEvents-in-0: # 리뷰 별점 사본(2026-11-19 — rating-summary). 새 그룹은 처음부터 읽어 기존 리뷰도 채운다
+          destination: commerce.review.v1
 server:
   port: 8102
 pmart:
@@ -30,4 +32,5 @@ pmart:
       - /error
       - /api/v1/product-contents
       - /api/v1/product-contents/*
+      - /api/v1/product-contents/*/rating-summary # 평점 집계(2026-11-19, 0.2.1 — 비회원도)
       - /api/v1/content-images/*
