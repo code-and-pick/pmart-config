@@ -7,7 +7,8 @@ pmart:
     domain: platform
   notification:
     review-request: # 리뷰 요청 알림(2026-11-18 사용자 결정 "A해줘") — 둘 중 하나라도 없으면 보내지 않는다(CONFIG_REQUIRED). review-base-url 은 환경별
-      delay: PT1H # 배송 완료 뒤 이만큼 지나면 리뷰를 썼는지 묻고, 안 썼으면 고객 알림함에 한 번(앱 알림함만 — customer-templates 에 넣지 않는다)
+      delay: PT10M # 배송 완료 뒤 이만큼 지나면 리뷰를 썼는지 묻고, 안 썼으면 고객 알림함 + 휴대폰 푸시 한 번(2026-11-19 사용자 "레퍼런스처럼" — 레퍼런스 10-3-6 "배달완료 10분 후", 전에는 PT1H·알림함만)
+      sweep-interval: PT1M # 위 기다림을 몇 분마다 보는지(기본 PT5M 이면 10~15분 뒤가 된다)
       max-age: P3D # 배송 완료 뒤 이만큼 지나도록 못 물었으면(review-service 장애) 포기
     push-token:
       max-devices: 5 # 단말 푸시 토큰(0.3.0, BR-09 — 2026-11-17): 고객·라이더 한 명이 둘 수 있는 단말 수. 넘으면 가장 오래 갱신되지 않은 단말을 지운다
@@ -19,6 +20,7 @@ pmart:
         - DELIVERY_STARTED # 배송 출발
         - DELIVERY_HEADING # 주문하신 곳으로 가고 있어요(2026-11-19 레퍼런스 10-3-3 — 묶음 배달, PC 5 사건 DE-6)
         - DELIVERY_ARRIVING_SOON # 곧 도착(2026-11-19 레퍼런스 10-3-4 — 300m, PC 5 사건 TR-4)
+        - REVIEW_REQUESTED # 리뷰 요청(2026-11-19 사용자 "레퍼런스처럼" — 10분 뒤 휴대폰에도)
         - DELIVERY_COMPLETED # 배송 완료
         - SHORTAGE_CANCELLED # 결품 부분 취소
         - ORDER_CANCELLED # 주문 취소
