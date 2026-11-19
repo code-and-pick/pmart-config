@@ -5,6 +5,12 @@ server:
 pmart:
   messaging:
     domain: commerce
+  storefront:
+    # 상품 순위 신호(2026-11-19 ADR-0072 — 사용자 "추천대로": 인기순 = 최근 30일 판매, 별점순 = 베이지안 평균). 비면 신호를 내지 않는다
+    ranking:
+      sales-window-days: 30
+      rating-prior-count: 5 # 리뷰가 이 개수쯤 되어야 사전 평균에서 벗어난다
+      rating-prior-mean: 4.0 # 사전 평균(LAN 리뷰 평균 근처)
   security:
     # 계약 security: [] 작업(익명). 기본 목록을 덮어쓰므로 actuator·error 도 다시 적는다. 경로마다 메서드가 하나뿐이라 경로 단위 허용이 계약과 일치.
     permit-paths:
@@ -21,7 +27,7 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: catalogEvents;handlingEvents;reviewEvents
+      definition: catalogEvents;handlingEvents;reviewEvents;orderEvents
     stream:
       bindings:
         catalogEvents-in-0:
@@ -30,3 +36,5 @@ spring:
           destination: mfc.sku-handling.v1
         reviewEvents-in-0: # review ReviewPublished·ReviewDeleted → 진열 평점 사본(2026-11-19 BR-63). 새 그룹 earliest = 처음부터 다시 읽어 채움
           destination: commerce.review.v1
+        orderEvents-in-0: # 주문 확정·줄 수량 변경 → 인기순 판매 원장(2026-11-19 ADR-0072). 새 그룹 earliest = 처음부터 다시 읽어 채움
+          destination: order.order.v1
