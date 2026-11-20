@@ -8,6 +8,9 @@ pmart:
   customer:
     # 주소록 최대 건수(프로젝트 설계값, 운영 입력으로 바꾼다). 비우면 주소 추가는 CONFIG_REQUIRED.
     address-limit: 20
+    # 찜 최대 수(2026-11-20 ADR-0081, 사용자 "200개"). 비우면 찜하기 CONFIG_REQUIRED.
+    wishlist:
+      max-items: 200
     # 약관 동의(CU-1, 사용자 결정 2026-11-17): 항목별 현행 버전. 바꾸면 그 항목을 다시 받는다 — 필수 항목은 다음 로그인(AUTH_CONSENT)·주문 전.
     # 비우면 동의 조회·변경·로그인 동의 판단이 CONFIG_REQUIRED. 약관 원문·구성의 확정은 운영 승인 대상(Commerce 6.2)
     consents:
