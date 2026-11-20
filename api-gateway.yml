@@ -170,7 +170,7 @@ spring:
             - id: mfc-fulfillment-service
               uri: ${pmart.gateway.upstream.mfc-fulfillment-service}
               predicates:
-                - Path=/api/v1/tasks/**,/api/v1/shipments/**,/api/v1/packages/**,/api/v1/work-orders/**,/api/v1/package-handovers/**,/api/v1/stop-requests/**,/api/v1/metrics/picking-lines,/api/v1/shortages # 직원 조회 work-orders(F-3)·package-handovers·stop-requests — 계약·허용 목록엔 있었는데 경로가 빠져 404(2026-11-17 시뮬레이터 알림)
+                - Path=/api/v1/tasks/**,/api/v1/shipments/**,/api/v1/packages/**,/api/v1/work-orders/**,/api/v1/package-handovers/**,/api/v1/stop-requests/**,/api/v1/metrics/picking-lines,/api/v1/metrics/picking-lines/by-sku,/api/v1/shortages # 직원 조회 work-orders(F-3)·package-handovers·stop-requests — 계약·허용 목록엔 있었는데 경로가 빠져 404(2026-11-17 시뮬레이터 알림)
             - id: mfc-capacity-service
               uri: ${pmart.gateway.upstream.mfc-capacity-service}
               predicates:
