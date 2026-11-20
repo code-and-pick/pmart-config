@@ -8,6 +8,8 @@ pmart:
   review:
     order-base-url: http://order-service:8201 # 리뷰 자격 사본·반품 수량(GET /internal/orders/{id}, 내부 호출)
     customer-base-url: http://customer-service:8103 # 작성자 표시(GET /internal/accounts/{id}/review-author)
+    center-master-base-url: http://center-master-service:8507 # 리뷰관리 센터 이름(GET /internal/centers/{id}, BR-67 2026-11-20)
+    content-base-url: http://product-content-service:8102 # 리뷰관리 상품 사진·옵션 라벨(GET /product-contents?productIds=, BR-67)
   storage:
     s3:
       endpoint: 'http://s3:8333'
