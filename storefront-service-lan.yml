@@ -9,8 +9,8 @@ pmart:
     # 콘텐츠 사건에 상품명·이미지가 없어 공개 카드 API 로 보강한다(product-content-service, Service DNS)
     content-base-url: http://product-content-service:8102
     tabs: # 랭킹·신상품 탭 정책값(2026-11-20 ADR-0075 ①, 사용자 "너가 말한 추천대로 랭킹과 신상품탭 열자") — 없으면 그 탭 404
-      new-window-days: 14 # 처음 게시 14일 안 = 신상품(참고 기준 입점 2주)
-      ranking-size: 30 # 랭킹 1~30위(참고 TOP30)
+      new-window-days: 14 # 처음 게시 14일 안 = 신상품(참고 기준 입점 2주) — 2026-11-21 사용자 확정("추천대로")
+      ranking-size: 30 # 랭킹 1~30위(참고 TOP30) — 2026-11-21 사용자 확정
   storage:
     s3: # 배너 이미지(2026-11-20 ADR-0075 BO-05) — review 와 같은 SeaweedFS·자격 증명, 버킷만 다름
       endpoint: 'http://s3:8333'

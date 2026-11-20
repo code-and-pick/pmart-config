@@ -11,7 +11,9 @@ pmart:
       - /api/v1/internal/coupon-quotes
   promotion:
     zone: Asia/Seoul # 쿠폰 사용 기한 "받은 날부터 N일"의 날짜 경계
-    display-sync-interval: PT30S # 표시 할인 다시 계산·알림 주기(SkuDisplayDiscountChanged → 검색·홈, ADR-0082 4단계)
+    display-sync-interval: PT30S
+    # 가입 축하 쿠폰 지급 기록(번호 키) 보관 — 처리방침 "지급 후 5년"(2026-11-21 사용자 "추천대로"). 없으면 지우지 않는다
+    signup-grant-retention: P1826D # 표시 할인 다시 계산·알림 주기(SkuDisplayDiscountChanged → 검색·홈, ADR-0082 4단계)
 spring:
   # 구독(Spring Cloud Stream, ADR-0035). 처음 켤 때 earliest — 상품 사본(SKU → 카테고리)을 처음부터 채운다
   cloud:
