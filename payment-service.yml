@@ -25,3 +25,10 @@ pmart:
       - /actuator/prometheus
       - /error
       - /api/v1/webhooks/toss
+# 토스 호출 시간 버킷(2026-11-20 결제 모니터링 초안 — TossClient 가 직접 잰다, 경보 PaymentTossLatencyHigh·대시보드 pmart-payment).
+# Prometheus: histogram_quantile(0.95, sum by (le, op) (rate(pmart_payment_toss_seconds_bucket[10m]))). 바꾸면 재시작
+management:
+  metrics:
+    distribution:
+      slo:
+        pmart.payment.toss: 50ms,100ms,250ms,500ms,1s,2s,3s,5s,10s
