@@ -13,9 +13,11 @@ spring:
   # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ·커밋은 common-messaging 기본값.
   cloud:
     function:
-      definition: inboundEvents;fulfillmentEvents
+      definition: inboundEvents;fulfillmentEvents;caseEvents
     stream:
       bindings:
+        caseEvents-in-0: # case CaseOpened MFC_QUALITY_IMPACT → 품질 사고 caseId(MQ-2, 2026-11-20)
+          destination: platform.case.v1
         inboundEvents-in-0: # mfc-inbound ReturnItemReceived → 회수품 반입 사본(IV-10, 2026-11-08)
           destination: mfc.inbound.v1
         fulfillmentEvents-in-0: # mfc-fulfillment LineShortageReported DAMAGED → 품질 사고(0.6.0, 2026-11-19)
