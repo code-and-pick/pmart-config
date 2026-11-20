@@ -19,6 +19,7 @@ pmart:
       - /api/v1/rider-auth/social-logins
       - /api/v1/rider-auth/social-logins/*
       - /api/v1/rider-auth/tokens
+      - /api/v1/rider-auth/naver-token-exchanges # 네이버 인가 코드 서버 교환(ADR-0078, 2026-11-20 BR-69)
   rider-auth:
     session-cut-interval: PT1M # 정지 라이더 로그인 끊기 점검(dispatch 에 맡은 배송이 없으면 끊음 — 2026-11-15)
     # 수치는 보안 설정값(2026-11-10 기본값 — 고객 로그인과 같은 제한 15분 5회 → 10분, 세션은 마지막 사용 기준 30일)

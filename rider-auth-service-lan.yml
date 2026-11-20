@@ -6,11 +6,14 @@ spring:
     password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
 pmart:
   rider-auth:
-    # 카카오·네이버 ID 토큰 aud(#250). 공개 식별자라 비밀값이 아니다. 원본 PC 5 pmart-clients/.secrets/rider.env. NAVER_CLIENT_SECRET 은 넣지 않는다(서버는 aud 만 본다)
+    # 카카오·네이버 ID 토큰 aud(#250). 공개 식별자라 비밀값이 아니다. 원본 PC 5 pmart-clients/.secrets/rider.env. 네이버 Client Secret 은 아래 naver.client-secret(ADR-0078 — 서버가 인가 코드 교환)
     kakao:
       client-ids: '588337f9dd5f17ecd2c8ebf6177793ee'
     naver:
       client-ids: 'Q5oG3DT3P0u5127ohMGB'
+      # 원본 deploy/lan/.secrets/naver-rider-client-secret.txt(PC 5 rider.env 에서 옮김, 2026-11-20) — 앱·로그 금지
+      client-secret: '{cipher}2e2386f9bca8e43d9ba722e6f20da0fdc822de5cac7b19d036af9cab57dfeb15'
+      callback-url: 'http://192.168.0.40:8080/api/v1/auth/oauth-callbacks/naver/rider'
     issuer: 'http://rider-auth-service:8510'
     # 라이더 토큰 서명키(PKCS#8 PEM 본문, 첫 키가 활성) — auth-service 와 다른 키. 원본 deploy/lan/.secrets/rider-auth-signing-key.pem(git 제외)
     signing:

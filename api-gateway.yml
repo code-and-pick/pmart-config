@@ -384,11 +384,15 @@ pmart:
       - method: GET
         path: /api/v1/auth/oauth-callbacks/naver/rider # auth-service 네이버 콜백 중계(라이더 앱)
       - method: POST
+        path: /api/v1/auth/naver-token-exchanges # auth-service 네이버 인가 코드 서버 교환(2026-11-20 ADR-0078)
+      - method: POST
         path: /api/v1/rider-auth/social-logins # rider-auth-service (라이더 Google 로그인)
       - method: GET
         path: /api/v1/rider-auth/social-logins/* # rider-auth-service
       - method: POST
         path: /api/v1/rider-auth/tokens # rider-auth-service
+      - method: POST
+        path: /api/v1/rider-auth/naver-token-exchanges # rider-auth-service 네이버 인가 코드 서버 교환(ADR-0078)
       # employee-auth-service(ADR-0056): 브라우저가 여는 로그인 시작·Keycloak 콜백(302), 티켓 교환·갱신
       - method: GET
         path: /api/v1/employee-auth/logins

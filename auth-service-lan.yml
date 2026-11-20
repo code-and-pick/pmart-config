@@ -32,5 +32,8 @@ pmart:
         # 카카오 네이티브 앱 키(고객 앱 카카오 SDK 초기화 키 = ID 토큰 aud). 콘솔에서 OpenID Connect 켬
         client-ids: '4cb5da1f6f2a798ee135c072a8ebffe2'
       naver:
-        # 네이버 애플리케이션 Client ID(= ID 토큰 aud). Client Secret 은 서버에 두지 않는다(PKCE)
+        # 네이버 애플리케이션 Client ID(= ID 토큰 aud, 서버 교환 client_id 는 첫 값). Client Secret 은 서버가 인가 코드를 교환할 때만(ADR-0078, 2026-11-20 BR-69)
+        # 원본 deploy/lan/.secrets/naver-customer-client-secret.txt(고객 앱 customer.env 에서 옮김) — 앱·로그 금지
         client-ids: 'GKQjIobmiGjOTQDdCcIV'
+        client-secret: '{cipher}f4af43a74ff70d643b791beec0230924d4568005f31078161fecab0d1662b375'
+        callback-url: 'http://192.168.0.40:8080/api/v1/auth/oauth-callbacks/naver/customer'
