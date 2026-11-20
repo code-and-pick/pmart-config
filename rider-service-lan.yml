@@ -15,4 +15,5 @@ pmart:
       within-minutes: 10
       max-attempts: 5
       max-starts-per-day: 10
+      rejoin-block: PT5M  # 탈퇴 뒤 같은 번호 재가입 막는 기간 — LAN 개발 단계 5분(사용자 2026-11-20, 기본 30일, #304)
     license-hash-key: '{cipher}e5803ede6f57a2464417fe823e601f60e9f1613933d7757ba40327ab67432550c04db9f476b97eb7f97a7c1a0d6a66082e2101ef780384f92b2a67cbc2f3c63f3e7f85743d80a90390669fd0a78c937cd54ee5fd3aa8f061b096a2f467f5e596'  # 운전면허 중복 확인 HMAC 키(PR #66, 2026-11-16) — 평문 .secrets/rider-license-hash-key
