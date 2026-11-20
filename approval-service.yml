@@ -34,9 +34,11 @@ pmart:
       MFC_STOCK_ADJUSTMENT: INVENTORY_APPROVER # 실사 조정·폐기·정정·격리 해제 본사 승인(Q-11: 한 건 손실 10만 원 이상 또는 한 SKU 20개 이상, 그 아래는 센터 관리자)
       MFC_OPERATION_RESTRICTION: OPERATOR_ADMIN # 운영 제한 해제(재개, BO-08 "본사 승인") — 본사 운영 역할이 따로 생기면 바꾼다
       SEARCH_SYNONYM: OPERATOR_ADMIN # 검색 동의어 규칙(ADR-0073, 사용자 2026-11-20 "MD 요청, 관리자 승인")
+      PROMOTION: MARKETING,OPERATOR_ADMIN # 기간 할인·쿠폰 행사(ADR-0082, 사용자 2026-11-20 "새 역할 MARKETING" — 다른 MARKETING 또는 관리자, 쉼표 = 여럿 중 하나)
     # 승인 종류 → 변경 요청을 만들 수 있는 역할(하나라도). 여기 없는 종류는 운영자 누구나(예전 그대로)
     requester-roles:
       SEARCH_SYNONYM: [MD, OPERATOR_ADMIN]
+      PROMOTION: [MARKETING, OPERATOR_ADMIN] # ADR-0082
     # 자동 승인 규칙 표(ADR-0056 결정 6, 사용자 2026-11-12 "소속 센터 현장 역할만"). 바꾸면 version 을 올린다 —
     # 자동 승인 기록의 승인자 = RULE:<id>@v<version>. 이 표에 맞지 않는 행은 모두 승인자 심사
     auto-approval-rules:

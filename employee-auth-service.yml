@@ -52,6 +52,7 @@ pmart:
       - CS_AGENT
       - DISPLAY_APPROVER
       - INVENTORY_APPROVER
+      - MARKETING # 기간 할인·쿠폰 행사 만들기·승인(ADR-0082, 사용자 2026-11-20 "새 역할 MARKETING")
       - MD
       - MFC_SUPERVISOR
       - MFC_WORKER
@@ -70,6 +71,7 @@ pmart:
       - { code: CS_AGENT, name: 고객센터 상담원 }
       - { code: DISPLAY_APPROVER, name: 전시 승인자 }
       - { code: INVENTORY_APPROVER, name: 재고 승인자 }
+      - { code: MARKETING, name: 마케팅(행사·쿠폰) }
       - { code: MD, name: MD(상품 담당) }
       - { code: MFC_SUPERVISOR, name: 센터 관리자, center-scoped: true }
       - { code: MFC_WORKER, name: 센터 작업자, center-scoped: true }

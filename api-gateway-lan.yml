@@ -33,6 +33,7 @@ pmart:
       product-service: lb://product-service
       product-content-service: lb://product-content-service
       review-service: lb://review-service
+      promotion-service: lb://promotion-service
       customer-service: lb://customer-service
       cart-service: lb://cart-service
       search-service: lb://search-service
