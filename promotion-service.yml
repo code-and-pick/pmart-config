@@ -16,12 +16,21 @@ spring:
   # 구독(Spring Cloud Stream, ADR-0035). 처음 켤 때 earliest — 상품 사본(SKU → 카테고리)을 처음부터 채운다
   cloud:
     function:
-      definition: productEvents;pricingEvents;approvalEvents
+      definition: productEvents;pricingEvents;approvalEvents;customerEvents;orderEvents
     stream:
       bindings:
         productEvents-in-0: # product-service ProductVersionPublished → SKU·카테고리 사본(카테고리 행사 판정)
           destination: commerce.product.v1
         pricingEvents-in-0: # pricing-service PriceVersionEffective → SKU 기본가 사본(표시 할인 — 가장 큰 1개 고르기, ADR-0082 4단계)
           destination: commerce.pricing.v1
+        customerEvents-in-0: # customer CustomerIdentityVerified(stage SIGNUP) → 가입 축하 쿠폰(ADR-0082 5단계)
+          destination: commerce.customer.v1
+        orderEvents-in-0: # order OrderCancelled(DISPATCH_UNAVAILABLE) → 보상 쿠폰(CL-5). 처음 켤 때 latest — 이전 취소는 소급하지 않는다
+          destination: order.order.v1
         approvalEvents-in-0: # approval-service ApprovalDecided(PROMOTION) → 행사 발효·조기 종료
           destination: platform.approval.v1
+      kafka:
+        bindings:
+          orderEvents-in-0:
+            consumer:
+              start-offset: latest # 처음 켤 때 지난 주문 사건을 읽지 않는다(보상 쿠폰 소급 없음)

@@ -11,6 +11,8 @@ pmart:
     # 기본·운영은 customer-service.yml P30D — 처리방침 "탈퇴 후 30일", 라이더 LAN 5분과 같게)
     identity:
       rejoin-block: PT1M # 2026-11-20 사용자 "개발용 1분으로"(전엔 5분)
+      # 가입 쿠폰 중복 방지 키(번호 HMAC)의 비밀값(2026-11-21 ADR-0082 5단계 — 무작위, 평문은 어디에도 두지 않음). 바꾸면 이미 준 번호를 못 알아본다
+      signup-key-secret: '{cipher}a8c94d90753ed7590a8d9329c5dc7ec4d4f8b5f68327fb30ad73620be99ef75e6e45a8b494bd98928e72657cab9e9d1dd5d29a1917af8c54b71c78ea9cf00d79a70e250327cfd280dd6858687b96984de6d2c587d74ed7b4bd1b88bb8eb5d1d4'
     # 고객 탈퇴(2026-11-20 ADR-0077): 재인증 확인(auth)·의무 확인(order·claim) 내부 호출
     withdrawal:
       auth-base-url: http://auth-service:8501
