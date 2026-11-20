@@ -33,7 +33,7 @@ pmart:
 spring:
   cloud:
     function:
-      definition: orderEvents;deliveryEvents;claimEvents;paymentEvents;caseEvents;slotEvents;riderEvents;trackingEvents;customerEvents
+      definition: orderEvents;deliveryEvents;claimEvents;paymentEvents;caseEvents;slotEvents;riderEvents;trackingEvents;customerEvents;couponEvents
     stream:
       bindings:
         orderEvents-in-0: # 주문 확정·상품 준비 시작·취소·결품 부분 취소
@@ -54,3 +54,5 @@ spring:
           destination: delivery.tracking.v1
         customerEvents-in-0: # CustomerWithdrawalCompleted — 탈퇴 고객 단말 푸시 토큰 지움(ADR-0077, 2026-11-20, 알림함은 남김)
           destination: commerce.customer.v1
+        couponEvents-in-0: # promotion CouponIssued → 쿠폰 도착 알림(가입 축하·배차 불가 보상·직원 지정, 2026-11-21 ADR-0082 5단계)
+          destination: commerce.coupon.v1
