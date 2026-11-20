@@ -43,7 +43,7 @@ pmart:
       # 동의 화면을 거친다(판단은 customer-service — customer-service-base-url). 고객앱 동의 흐름 반영 뒤 true — CU-1 2026-11-17.
       # 켤 때는 customer-service.yml consents.purchase-gate 와 함께 true
       require-consent: true # 2026-11-19 사용자 "켜줘"(CU-1) — purchase-gate 와 함께
-      require-identity: false # 휴대폰 확인 단계(2026-11-20 ADR-0074) — 고객 앱이 AUTH_IDENTITY 를 반영한 뒤 사용자 허락으로 켠다(customer identity.rejoin-block 필요)
+      require-identity: true # 휴대폰 확인 단계(2026-11-20 ADR-0074) — 2026-11-20 사용자 "require-identity 스위치 켜줘"(고객 앱 AUTH_IDENTITY 반영 확인). customer identity.rejoin-block 필요
       failure-window: PT15M
       max-failures: 5
       restriction: PT10M
