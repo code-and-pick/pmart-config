@@ -31,6 +31,7 @@ pmart:
         RETURN: 5 # 임시 구현값(2026-11-08) — fulfillment 늦음 표시의 RETURN PT5M 과 같게, 실측 뒤 조정
         REPLENISH: 5 # 임시 구현값 — 이동·보충 배정 추천(작업자 쪽), 원문에 기준 없음
         MOVE: 5 # 임시 구현값 — 위와 같음
+        QUARANTINE_MOVE: 5 # 임시 구현값(2026-11-20 #286 MC-2) — MOVE 와 같게, 실측 뒤 조정
       time-limit: PT5S # CP-SAT 시간 제한(게이트웨이 10초보다 짧게)
       input-max-bytes: 2147483648 # 계산 입력 저장 총량 상한 2GB(사용자 결정 2026-11-09, 기간 없음) — 넘으면 오래된 것부터(확정 안 된 계획 먼저)
       packing-stations: 4 # 동시 PACK 상한 — 원문 기준안 기본 가동 4대, 사용자 확정 시작값(2026-11-08)
