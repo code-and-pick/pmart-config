@@ -11,14 +11,17 @@ pmart:
       - /api/v1/internal/coupon-quotes
   promotion:
     zone: Asia/Seoul # 쿠폰 사용 기한 "받은 날부터 N일"의 날짜 경계
+    display-sync-interval: PT30S # 표시 할인 다시 계산·알림 주기(SkuDisplayDiscountChanged → 검색·홈, ADR-0082 4단계)
 spring:
   # 구독(Spring Cloud Stream, ADR-0035). 처음 켤 때 earliest — 상품 사본(SKU → 카테고리)을 처음부터 채운다
   cloud:
     function:
-      definition: productEvents;approvalEvents
+      definition: productEvents;pricingEvents;approvalEvents
     stream:
       bindings:
         productEvents-in-0: # product-service ProductVersionPublished → SKU·카테고리 사본(카테고리 행사 판정)
           destination: commerce.product.v1
+        pricingEvents-in-0: # pricing-service PriceVersionEffective → SKU 기본가 사본(표시 할인 — 가장 큰 1개 고르기, ADR-0082 4단계)
+          destination: commerce.pricing.v1
         approvalEvents-in-0: # approval-service ApprovalDecided(PROMOTION) → 행사 발효·조기 종료
           destination: platform.approval.v1
