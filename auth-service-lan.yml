@@ -37,3 +37,6 @@ pmart:
         client-ids: 'GKQjIobmiGjOTQDdCcIV'
         client-secret: '{cipher}f4af43a74ff70d643b791beec0230924d4568005f31078161fecab0d1662b375'
         callback-url: 'http://192.168.0.40:8080/api/v1/auth/oauth-callbacks/naver/customer'
+        # (A) LAN 시험용(2026-11-20 BR-74): true 면 로그인 교환마다 네이버 앱 연결을 끊어 매번 정보 제공 동의를 다시 받는다. 켜기 전에
+        # 네이버 "연결된 서비스"에서 한 번 끊고 같은 계정으로 다시 로그인해 같은 PMart 계정(sub 유지)인지 먼저 확인. 운영에는 넣지 않는다
+        unlink-after-exchange: false
