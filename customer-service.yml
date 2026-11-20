@@ -40,7 +40,7 @@ pmart:
       max-starts-per-day: 10
     # 로그인 제공자 프로필 사진의 우리 사본(ADR-0024). 기술 설정값(업무 정책 아님). 받는 곳은 허용 호스트의 https 만
     profile-image:
-      allowed-host-suffixes: googleusercontent.com
+      allowed-host-suffixes: googleusercontent.com,pstatic.net,kakaocdn.net # 구글·네이버(앱이 넘긴 프로필 사진, auth 0.8.0)·카카오(ID 토큰 picture) — 2026-11-20 사용자 "네이버 프로필 넣어줘야지"
       size-px: 256
       max-bytes: 1048576
   security:
