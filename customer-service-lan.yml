@@ -10,7 +10,7 @@ pmart:
     # 탈퇴 뒤 같은 번호 재가입 막는 기간·풀린 확인 번호 삭제 — LAN 시험 5분(사용자 2026-11-20 "계정 탈퇴 테스트 5분으로",
     # 기본·운영은 customer-service.yml P30D — 처리방침 "탈퇴 후 30일", 라이더 LAN 5분과 같게)
     identity:
-      rejoin-block: PT5M
+      rejoin-block: PT1M # 2026-11-20 사용자 "개발용 1분으로"(전엔 5분)
     # 고객 탈퇴(2026-11-20 ADR-0077): 재인증 확인(auth)·의무 확인(order·claim) 내부 호출
     withdrawal:
       auth-base-url: http://auth-service:8501
