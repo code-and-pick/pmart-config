@@ -2,9 +2,23 @@
 # 옮긴 원본: pmart-backend services/.../application.yml (2026-11-02)
 server:
   port: 8501
+spring:
+  # 이벤트 소비(Spring Cloud Stream, ADR-0035): 함수(빈) 이름 → 토픽. 그룹·재시도·DLQ({토픽}.DLT)·커밋은 common-messaging 기본값.
+  # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
+  cloud:
+    function:
+      definition: customerEvents # 고객 탈퇴 완료 CustomerWithdrawalCompleted(2026-11-20 ADR-0077)
+    stream:
+      bindings:
+        customerEvents-in-0:
+          destination: commerce.customer.v1
 pmart:
   messaging:
     domain: platform
+  web:
+    # 고객 재인증 확인(2026-11-20 ADR-0077)은 상태를 바꾸지 않는 조회성 POST — 계약에 Idempotency-Key 가 없다(customer 가 헤더 없이 부른다)
+    excluded-paths:
+      - /api/v1/internal/customers/*/reauthentications
   security:
     # JWT 검증은 자기 서명키로(KeyConfig 의 JwtDecoder) — jwk-set-uri 를 두지 않는다.
     # 공개키는 토큰 없이 접근. /internal 이라 게이트웨이로는 노출되지 않는다.

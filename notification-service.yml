@@ -33,7 +33,7 @@ pmart:
 spring:
   cloud:
     function:
-      definition: orderEvents;deliveryEvents;claimEvents;paymentEvents;caseEvents;slotEvents;riderEvents;trackingEvents
+      definition: orderEvents;deliveryEvents;claimEvents;paymentEvents;caseEvents;slotEvents;riderEvents;trackingEvents;customerEvents
     stream:
       bindings:
         orderEvents-in-0: # 주문 확정·상품 준비 시작·취소·결품 부분 취소
@@ -52,3 +52,5 @@ spring:
           destination: delivery.rider.v1
         trackingEvents-in-0: # DeliveryReceiptCheckRequested — 고객에게 받았는지 묻기(2026-11-17, #153). 시작 위치 latest
           destination: delivery.tracking.v1
+        customerEvents-in-0: # CustomerWithdrawalCompleted — 탈퇴 고객 단말 푸시 토큰 지움(ADR-0077, 2026-11-20, 알림함은 남김)
+          destination: commerce.customer.v1

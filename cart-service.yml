@@ -17,8 +17,10 @@ spring:
   # 함수를 더하거나 빼면 코드(PmartEventConsumer 빈)와 함께 바꾼다 — 빠지면 기동이 멈춘다. 바꾸면 재시작한다
   cloud:
     function:
-      definition: orderEvents
+      definition: orderEvents;customerEvents
     stream:
       bindings:
         orderEvents-in-0:
           destination: order.order.v1
+        customerEvents-in-0: # CustomerWithdrawalCompleted — 탈퇴 회원 장바구니 지움(ADR-0077, 2026-11-20)
+          destination: commerce.customer.v1
