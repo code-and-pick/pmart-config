@@ -9,6 +9,7 @@ pmart:
     audit-base-url: http://localhost:8503 # 직원 배송지 원문 열람 기록(BO-25)
     customer-base-url: http://localhost:8103
     product-base-url: http://localhost:8101
+    promotion-base-url: http://localhost:8109 # 쿠폰 점유(ADR-0082)
     pricing-base-url: http://localhost:8107
     center-master-base-url: http://localhost:8507
     capacity-base-url: http://localhost:8402

@@ -7,3 +7,4 @@ spring:
 pmart:
   pricing:
     product-base-url: http://localhost:8101 # 가격 일괄 등록: 원천 키 → SKU (/internal/source-link-lookups)
+    promotion-base-url: http://localhost:8109 # 견적 기간 할인·쿠폰(ADR-0082, /internal/price-discounts·coupon-quotes)

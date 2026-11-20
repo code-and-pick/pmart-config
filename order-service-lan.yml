@@ -15,3 +15,4 @@ pmart:
     orchestration-base-url: http://order-orchestration-service:8202 # 결제 진입 사가(내부, 서비스 토큰)
     content-base-url: http://product-content-service:8102 # 상품명·옵션 라벨 사본(BR-35)
     inventory-base-url: http://mfc-inventory-service:8301 # 주문 초안 재고 확인(2026-11-16 — 부족하면 422 INSUFFICIENT_STOCK)
+    promotion-base-url: http://promotion-service:8109 # 쿠폰 점유·확정·해제·복원(ADR-0082)
