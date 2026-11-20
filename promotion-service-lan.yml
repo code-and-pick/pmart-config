@@ -4,3 +4,8 @@ spring:
     url: 'jdbc:postgresql://postgres-pc2:15432/promotion_service'
     username: 'pmart'
     password: '{cipher}29eb4261f88151e247af86806e860a904c44358f8aa451229e5c6661766a668aa2ca9a5a94475f10d8e101b46b97e59bdcf5ae825a69c15c63c67bbb74d9fbff7e7ae41afa56c0045558aec968b87ef1'
+pmart:
+  promotion:
+    compensation:
+      # 배차 불가 취소(CL-5) 보상 쿠폰 행사 — LAN "배차 불가 보상 2,000원"(ADMIN·30일·최소 주문 없음, 사용자 2026-11-21). 승인 전에는 보상이 대기했다가 승인되면 준다
+      dispatch-unavailable-promotion-id: PRM-f1be8d6d-6954-47a2-a3ac-c76d8fe6bbc7
