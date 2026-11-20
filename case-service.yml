@@ -23,7 +23,7 @@ spring:
   # 사건함 구독(Spring Cloud Stream, ADR-0035 — 2026-11-16). 처음 켜기 전 소비 그룹 시작 위치 = latest
   cloud:
     function:
-      definition: deliveryEvents;trackingEvents;sagaEvents;paymentEvents;claimEvents
+      definition: deliveryEvents;trackingEvents;sagaEvents;paymentEvents;claimEvents;qualityEvents
     stream:
       bindings:
         deliveryEvents-in-0: # delivery-execution DeliveryIncidentRaised → 라이더 도움요청·전달 실패 사건(R-4), delivery-dispatch DispatchFailed → 배차 실패 사건
@@ -36,3 +36,5 @@ spring:
           destination: order.payment.v1
         claimEvents-in-0: # claim ReturnRecoveryFailed → 반품 회수 실패 사건(R-8, 2026-11-17)
           destination: order.claim.v1
+        qualityEvents-in-0: # mfc-quality QualityIncidentImpactAssessed → 품질 사고 영향 주문마다 상담원 사건(CS-MFC-Q, 2026-11-20)
+          destination: mfc.quality.v1
