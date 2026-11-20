@@ -23,6 +23,8 @@ pmart:
         disable-thinking: true
         keep-alive: 24h
         request-timeout: 25s
+    product-search:
+      base-url: http://search-service:8105 # 상품 질문 → LAN 상품 검색(#313, 2026-11-21 사용자 "먼저 켜줘" — 새 고객 APK 전 폰은 상품 질문 오류)
     retrieval:
       # 시작값은 운영자용 맞춤값(0.40·0.45). 고객 질문 평가셋으로 다시 맞춘다(docs/rag/verification)
       threshold: 0.40
