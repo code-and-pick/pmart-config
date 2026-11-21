@@ -20,6 +20,7 @@ pmart:
       - /error
       - /api/v1/storefront/home
       - /api/v1/storefront/tabs/*
+      - /api/v1/storefront/custom-tabs/* # MD 탭(0.9.0, 2026-11-21)
       - /api/v1/storefront/sections/*/items
       - /api/v1/storefront/banners
       - /api/v1/storefront/banner-images/* # 배너 이미지(2026-11-20 ADR-0075) — 게시된 진열에 쓰인 것만 공개, 그 밖은 서비스가 404

@@ -364,6 +364,8 @@ pmart:
       - method: GET
         path: /api/v1/storefront/tabs/* # storefront-service
       - method: GET
+        path: /api/v1/storefront/custom-tabs/* # storefront-service MD 탭(0.9.0, 2026-11-21)
+      - method: GET
         path: /api/v1/storefront/sections/*/items # storefront-service
       - method: GET
         path: /api/v1/storefront/banners # storefront-service
